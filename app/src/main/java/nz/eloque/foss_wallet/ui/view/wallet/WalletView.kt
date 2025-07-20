@@ -11,12 +11,9 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FolderDelete
 import androidx.compose.material.icons.filled.SelectAll
 import androidx.compose.material.icons.filled.Wallet
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -25,7 +22,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshots.SnapshotStateSet
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,8 +31,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.model.Pass
 import nz.eloque.foss_wallet.ui.card.ShortPassCard
@@ -54,7 +48,6 @@ fun WalletView(
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     selectedPasses: SnapshotStateSet<Pass>,
 ) {
-    val coroutineScope = rememberCoroutineScope()
     val list = passViewModel.uiState.collectAsState()
 
     val comparator by remember { mutableStateOf( Comparator<Pass> { left, right ->
@@ -79,7 +72,7 @@ fun WalletView(
     LazyColumn(
         state = listState,
         verticalArrangement = Arrangement
-            .spacedBy(10.dp),
+            .spacedBy(8.dp),
         modifier = modifier
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection)
@@ -102,12 +95,8 @@ fun WalletView(
                 onClick = {
                     navController.navigate("pass/${it.id}")
                 },
-                actions = {
-                    IconButton(onClick = { coroutineScope.launch(Dispatchers.IO) { groupId.let { passViewModel.deleteGroup(it) } } }
-                    ) {
-                        Icon(imageVector = Icons.Default.FolderDelete, contentDescription = stringResource(R.string.ungroup))
-                    }
-                }
+                passViewModel = passViewModel,
+                selectedPasses = selectedPasses
             )
         }
         items(ungrouped) { pass ->
@@ -115,7 +104,8 @@ fun WalletView(
                 leftSwipeIcon = Icons.Default.SelectAll,
                 allowRightSwipe = false,
                 onLeftSwipe = { if (selectedPasses.contains(pass)) selectedPasses.remove(pass) else selectedPasses.add(pass) },
-                onRightSwipe = { }
+                onRightSwipe = { },
+                modifier = Modifier.padding(2.dp)
             ) {
                 ShortPassCard(
                     pass = pass,

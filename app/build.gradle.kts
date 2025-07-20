@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -5,6 +7,13 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.androidx.room)
     alias(libs.plugins.hilt.android)
+}
+
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xwhen-guards")
+        jvmTarget = JvmTarget.JVM_17
+    }
 }
 
 android {
@@ -39,8 +48,8 @@ android {
         applicationId = "nz.eloque.foss_wallet"
         minSdk = 28
         targetSdk = 36
-        versionCode = 53
-        versionName = "0.20.0"
+        versionCode = 66
+        versionName = "0.23.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -65,9 +74,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
 
     room {
         schemaDirectory("$projectDir/schemas")
@@ -77,6 +83,9 @@ android {
     }
     testOptions {
         unitTests.isReturnDefaultValues = true
+    }
+    hilt {
+        enableAggregatingTask = true
     }
 }
 

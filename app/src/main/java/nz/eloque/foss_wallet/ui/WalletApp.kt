@@ -3,6 +3,8 @@
 package nz.eloque.foss_wallet.ui
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
@@ -25,11 +27,12 @@ import nz.eloque.foss_wallet.shortcut.Shortcut
 import nz.eloque.foss_wallet.ui.screens.AboutScreen
 import nz.eloque.foss_wallet.ui.screens.PassScreen
 import nz.eloque.foss_wallet.ui.screens.SettingsScreen
+import nz.eloque.foss_wallet.ui.screens.UpdateFailureScreen
 import nz.eloque.foss_wallet.ui.screens.WalletScreen
 import nz.eloque.foss_wallet.ui.view.settings.SettingsViewModel
 import nz.eloque.foss_wallet.ui.view.wallet.PassViewModel
 
-sealed class Screen(val route: String, val icon: ImageVector, @StringRes val resourceId: Int) {
+sealed class Screen(val route: String, val icon: ImageVector, @param:StringRes val resourceId: Int) {
     data object Wallet : Screen("wallet", Icons.Default.Wallet, R.string.wallet)
     data object About : Screen("about", Icons.Default.Info, R.string.about)
     data object Settings : Screen("settings", Icons.Default.Settings, R.string.settings)
@@ -49,6 +52,10 @@ fun WalletApp(
         NavHost(
             navController = navController,
             startDestination = Screen.Wallet.route,
+            enterTransition = { slideIntoContainer(SlideDirection.Start, tween()) },
+            exitTransition = { slideOutOfContainer(SlideDirection.Start, tween()) },
+            popEnterTransition = { slideIntoContainer(SlideDirection.End, tween()) },
+            popExitTransition = { slideOutOfContainer(SlideDirection.End, tween()) }
         ) {
             composable(Screen.Wallet.route) {
                 WalletScreen(navController, passViewModel)
@@ -68,6 +75,17 @@ fun WalletApp(
             ) { backStackEntry ->
                 val passId = backStackEntry.arguments?.getString("passId")!!
                 PassScreen(passId, navController, passViewModel)
+            }
+            composable(
+                route = "updateFailure/{reason}/{rationale}",
+                arguments = listOf(
+                    navArgument("reason") { type = NavType.StringType },
+                    navArgument("rationale") { type = NavType.StringType }
+                )
+            ) { backStackEntry ->
+                val reason = backStackEntry.arguments?.getString("reason")!!
+                val rationale = backStackEntry.arguments?.getString("rationale")!!
+                UpdateFailureScreen(reason, rationale, navController)
             }
         }
     }

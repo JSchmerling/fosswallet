@@ -1,8 +1,8 @@
 package nz.eloque.foss_wallet.ui.card
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -34,14 +34,14 @@ private val linkStyle = TextLinkStyles(
     )
 )
 
-enum class LabelAlign(val textAlign: TextAlign, val horizontal: Alignment.Horizontal) {
-    LEFT(TextAlign.Left, Alignment.Start),
-    RIGHT(TextAlign.Right, Alignment.End),
+enum class LabelAlign(val textAlign: TextAlign, val horizontalAlignment: Alignment.Horizontal, val horizontalArrangement: Arrangement.Horizontal) {
+    LEFT(TextAlign.Start, Alignment.Start, Arrangement.Start),
+    RIGHT(TextAlign.End, Alignment.End, Arrangement.End),
 }
 
 @Composable
 fun MainLabel(
-    label: String,
+    label: String?,
     content: PassContent
 ) {
     Column(
@@ -50,7 +50,7 @@ fun MainLabel(
             .padding(12.dp)
             .fillMaxWidth()
     ) {
-        if (label.isNotEmpty()) {
+        if (!label.isNullOrEmpty()) {
             AbbreviatingText(
                 text = label,
                 maxLines = 1,
@@ -71,7 +71,7 @@ fun MainLabel(
 
 @Composable
 fun ElevatedPassLabel(
-    label: String,
+    label: String?,
     content: PassContent,
     modifier: Modifier = Modifier,
     labelAlign: LabelAlign = LabelAlign.LEFT,
@@ -87,7 +87,7 @@ fun ElevatedPassLabel(
 
 @Composable
 fun OutlinedPassLabel(
-    label: String,
+    label: String?,
     content: PassContent,
     modifier: Modifier = Modifier,
     labelAlign: LabelAlign = LabelAlign.LEFT,
@@ -103,7 +103,7 @@ fun OutlinedPassLabel(
 
 @Composable
 fun PlainPassLabel(
-    label: String,
+    label: String?,
     content: PassContent,
     modifier: Modifier = Modifier,
     labelAlign: LabelAlign = LabelAlign.LEFT,
@@ -113,21 +113,22 @@ fun PlainPassLabel(
 
 @Composable
 private fun PassLabelContents(
-    label: String,
+    label: String?,
     content: PassContent,
     modifier: Modifier = Modifier,
     labelAlign: LabelAlign = LabelAlign.LEFT,
 ) {
-    Box(
-        modifier
+    Row(
+        horizontalArrangement = labelAlign.horizontalArrangement,
+        modifier = modifier
     ) {
         Column(
-            horizontalAlignment = labelAlign.horizontal,
+            horizontalAlignment = labelAlign.horizontalAlignment,
             verticalArrangement = Arrangement.spacedBy(5.dp),
             modifier = Modifier
                 .padding(12.dp)
         ) {
-            if (label.isNotEmpty()) {
+            if (!label.isNullOrEmpty()) {
                 AbbreviatingText(
                     text = label,
                     maxLines = 1,
@@ -136,7 +137,7 @@ private fun PassLabelContents(
                 )
             }
             SelectionContainer {
-                val contentString = content.prettyPrint()
+                val contentString = content.prettyPrint().sanitize()
                 Text(
                     text = if (contentString.isNotEmpty()) {
                         AnnotatedString.fromHtml(contentString, linkStyle) } else { AnnotatedString("-") },
@@ -146,6 +147,10 @@ private fun PassLabelContents(
             }
         }
     }
+}
+
+private fun String.sanitize(): String {
+    return this.replace("\r", "").replace("\n", "<br>")
 }
 
 @Preview
@@ -186,13 +191,6 @@ private fun LongPassLabelPreview() {
 private fun HtmlPassLabelPreview() {
     OutlinedPassLabel(
         label = "Information",
-        content = PassContent.Plain("""
-            <p>
-            This is a paragraph
-            </p>
-            This should <b> bold. </b>
-            <a href="https://example.com">This is a link</a>
-             Lorem Ipsum
-        """.trimIndent())
+        content = PassContent.Plain("Panne und Unfall telefonisch melden\r\n👉 Pannenhilfe Deutschland: <a href=\"tel:+498920204000\">089 20 20 40 00</a>\r\n👉 Pannenhilfe Ausland: <a href=\"tel:+4989222222\">+49 89 22 22 22</a> \r\n\r\nPanne oder Unfall bequem online melden \r\n👉 <a href=\"https://www.adac.de/der-adac/verein/pannenhilfe/pannenhilfe-online/eingabeseite/\">Panne melden</a>\r\n\r\nAmbulanz-Service \r\n<a href=\"tel:+4989767676\">+49 89 76 76 76</a>\r\nbei akuten Erkrankungen und Verletzungen\r\n".trimIndent())
     )
 }

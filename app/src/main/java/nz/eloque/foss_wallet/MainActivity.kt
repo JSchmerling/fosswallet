@@ -72,13 +72,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private suspend fun Uri.handleIntent(passViewModel: PassViewModel, coroutineScope: CoroutineScope, navController: NavHostController) {
+    private fun Uri.handleIntent(passViewModel: PassViewModel, coroutineScope: CoroutineScope, navController: NavHostController) {
         contentResolver.openInputStream(this).use {
             it?.let {
                 try {
                     val loadResult = PassLoader(PassParser(this@MainActivity)).load(it)
                     passViewModel.add(loadResult)
-                    val id: String = loadResult.pass.id
+                    val id: String = loadResult.pass.pass.id
                     coroutineScope.launch(Dispatchers.Main) { navController
                         .navigate("pass/$id") }
                 } catch (e: InvalidPassException) {

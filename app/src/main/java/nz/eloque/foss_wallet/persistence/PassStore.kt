@@ -4,6 +4,8 @@ import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import jakarta.inject.Inject
 import nz.eloque.foss_wallet.api.PassbookApi
+import nz.eloque.foss_wallet.api.UpdateContent
+import nz.eloque.foss_wallet.api.UpdateResult
 import nz.eloque.foss_wallet.api.UpdateScheduler
 import nz.eloque.foss_wallet.model.Pass
 import nz.eloque.foss_wallet.model.PassGroup
@@ -16,7 +18,7 @@ import java.io.InputStream
 import java.util.Locale
 
 class PassStore @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val notificationService: NotificationService,
     private val passRepository: PassRepository,
     private val localizationRepository: PassLocalizationRepository,
@@ -25,50 +27,54 @@ class PassStore @Inject constructor(
 
     fun allPasses() = passRepository.all()
 
-    suspend fun passById(id: String) = passRepository.byId(id)
+    fun passById(id: String) = passRepository.byId(id)
 
-    suspend fun filtered(query: String) = passRepository.filtered(query)
+    fun filtered(query: String) = passRepository.filtered(query)
 
-    suspend fun add(loadResult: PassLoadResult) {
+    fun add(loadResult: PassLoadResult) {
         insert(loadResult)
-        if (loadResult.pass.updatable()) {
-            updateScheduler.scheduleUpdate(loadResult.pass)
+        if (loadResult.pass.pass.updatable()) {
+            updateScheduler.scheduleUpdate(loadResult.pass.pass)
         }
     }
 
-    suspend fun update(pass: Pass): Pass? {
+    suspend fun update(pass: Pass): UpdateResult {
         val updated = PassbookApi.getUpdated(pass)
-        return if (updated != null) {
-            insert(updated)
+        return if (updated is UpdateResult.Success && updated.content is UpdateContent.LoadResult) {
+            insert(updated.content.result)
             notificationService.createNotificationChannel()
-            updated.pass.updatedFields(pass).forEach { notificationService.post(it.changeMessage()) }
-            passById(updated.pass.id).applyLocalization(Locale.getDefault().language)
+            val localizedPass = updated.content.result.pass.applyLocalization(Locale.getDefault().language)
+            localizedPass.updatedFields(pass).forEach { notificationService.post(it.changeMessage) }
+            UpdateResult.Success(UpdateContent.Pass(localizedPass))
         } else {
-            null
+            updated
         }
     }
 
-    suspend fun group(passes: Set<Pass>): PassGroup {
+    fun group(passes: Set<Pass>): PassGroup {
         val group = passRepository.insert(PassGroup())
         passes.forEach { passRepository.associate(it, group) }
         return group
     }
 
-    suspend fun delete(pass: Pass) {
+    fun delete(pass: Pass) {
         passRepository.delete(pass)
         updateScheduler.cancelUpdate(pass)
         Shortcut.remove(context, pass)
     }
 
-    suspend fun load(context: Context, inputStream: InputStream) {
+    fun load(context: Context, inputStream: InputStream) {
         val loaded = PassLoader(PassParser(context)).load(inputStream)
         add(loaded)
     }
 
-    private suspend fun insert(loadResult: PassLoadResult) {
-        passRepository.insert(loadResult.pass, loadResult.bitmaps, loadResult.originalPass)
-        loadResult.localizations.map { it.copy(passId = loadResult.pass.id) }.forEach { localizationRepository.insert(it) }
+    private fun insert(loadResult: PassLoadResult) {
+        val passWithLocalization = loadResult.pass
+        passRepository.insert(passWithLocalization.pass, loadResult.bitmaps, loadResult.originalPass)
+        passWithLocalization.localizations.map { it.copy(passId = passWithLocalization.pass.id) }.forEach { localizationRepository.insert(it) }
     }
 
-    suspend fun deleteGroup(groupId: Long) = passRepository.deleteGroup(groupId)
+    fun deleteGroup(groupId: Long) = passRepository.deleteGroup(groupId)
+    fun associate(groupId: Long, passes: Set<Pass>) = passRepository.associate(groupId, passes)
+    fun dessociate(pass: Pass, groupId: Long) = passRepository.dessociate(pass, groupId)
 }

@@ -19,6 +19,7 @@ import nz.eloque.foss_wallet.model.Pass
 import nz.eloque.foss_wallet.model.PassType
 import nz.eloque.foss_wallet.model.field.PassContent
 import nz.eloque.foss_wallet.model.field.PassField
+import nz.eloque.foss_wallet.persistence.BarcodePosition
 import nz.eloque.foss_wallet.ui.card.PassCard
 import java.time.Instant
 
@@ -26,7 +27,9 @@ import java.time.Instant
 @Composable
 fun PassView(
     pass: Pass,
+    barcodePosition: BarcodePosition,
     modifier: Modifier = Modifier,
+    increaseBrightness: Boolean,
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
 ) {
     val context = LocalContext.current
@@ -41,7 +44,7 @@ fun PassView(
                 verticalArrangement = Arrangement.spacedBy(25.dp)
             ) {
                 AsyncPassImage(model = pass.footerFile(context), modifier = Modifier.fillMaxWidth())
-                BarcodesView(pass.barCodes)
+                BarcodesView(pass.barCodes, barcodePosition, increaseBrightness)
             }
         }
         Column(
@@ -70,25 +73,24 @@ private fun PassPreview() {
         false,
         false,
         false,
-        false
-    ).also {
-        it.relevantDate = 1800000000L
-        it.headerFields = mutableListOf(
+        false,
+        relevantDate = 1800000000L,
+        headerFields = mutableListOf(
             PassField("block", "Block", PassContent.Plain("S1")),
             PassField("seat", "Seat", PassContent.Plain("47")),
-        )
-        it.primaryFields = mutableListOf(
+        ),
+        primaryFields = mutableListOf(
             PassField("name", "Name", PassContent.Plain("Max Mustermann")),
             PassField("seat", "Seat", PassContent.Plain("47")),
-        )
-        it.auxiliaryFields = mutableListOf(
+        ),
+        auxiliaryFields = mutableListOf(
             PassField("block", "Block", PassContent.Plain("S1 | Gegengerade")),
             PassField("seat", "Seat", PassContent.Plain("36E")),
-        )
-        it.secondaryFields = mutableListOf(
+        ),
+        secondaryFields = mutableListOf(
             PassField("data1", "data1", PassContent.Plain("Longer Value here i guess")),
             PassField("data2", "data2", PassContent.Plain("Shorter Value")),
-        )
-    }
-    PassView(pass)
+        ),
+    )
+    PassView(pass, BarcodePosition.Center, increaseBrightness = false)
 }

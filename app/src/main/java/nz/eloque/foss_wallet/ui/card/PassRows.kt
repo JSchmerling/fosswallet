@@ -30,7 +30,7 @@ fun HeaderRow(
     val context = LocalContext.current
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Absolute.SpaceBetween,
+        horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth()
             .padding(12.dp)
     ) {
@@ -92,14 +92,14 @@ fun FieldsRow(
 ) {
     if (fields.isNotEmpty()) {
         Row(
-            horizontalArrangement = Arrangement.Absolute.SpaceBetween,
+            horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ) {
             when (fields.size) {
                 1 -> PlainPassLabel(fields[0].label, fields[0].content)
                 in 1 .. Int.MAX_VALUE -> {
-                    fields.dropLast(1).forEach { PlainPassLabel(it.label, it.content) }
-                    fields.lastOrNull()?.let { PlainPassLabel(it.label, it.content, Modifier, LabelAlign.RIGHT) }
+                    fields.dropLast(1).forEach { PlainPassLabel(it.label, it.content, Modifier.weight(1f)) }
+                    fields.lastOrNull()?.let { PlainPassLabel(it.label, it.content, Modifier.weight(1f), LabelAlign.RIGHT) }
                 }
             }
         }

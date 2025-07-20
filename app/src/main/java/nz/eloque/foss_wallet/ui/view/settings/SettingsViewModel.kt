@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import nz.eloque.foss_wallet.api.UpdateScheduler
+import nz.eloque.foss_wallet.persistence.BarcodePosition
 import nz.eloque.foss_wallet.persistence.SettingsStore
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
@@ -18,6 +19,8 @@ import kotlin.time.toDuration
 data class SettingsUiState(
     val enableSync: Boolean = false,
     val syncInterval: Duration = 1.toDuration(DurationUnit.HOURS),
+    val barcodePosition: BarcodePosition = BarcodePosition.Center,
+    val increasePassViewBrightness: Boolean = false,
 )
 
 @HiltViewModel
@@ -37,12 +40,14 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(
                 enableSync = settingsStore.isSyncEnabled(),
-                syncInterval = settingsStore.syncInterval()
+                syncInterval = settingsStore.syncInterval(),
+                barcodePosition = settingsStore.barcodePosition(),
+                increasePassViewBrightness = settingsStore.increasePassViewBrightness(),
             )
         }
     }
 
-    suspend fun enableSync(enabled: Boolean) {
+    fun enableSync(enabled: Boolean) {
         settingsStore.enableSync(enabled)
         if (enabled) {
             updateScheduler.enableSync()
@@ -51,9 +56,19 @@ class SettingsViewModel @Inject constructor(
         }
         update()
     }
-    suspend fun setSyncInterval(duration: Duration) {
+    fun setSyncInterval(duration: Duration) {
         settingsStore.setSyncInterval(duration)
         updateScheduler.updateSyncInterval()
+        update()
+    }
+
+    fun setBarcodePosition(barcodePosition: BarcodePosition) {
+        settingsStore.setBarcodePosition(barcodePosition)
+        update()
+    }
+
+    fun enablePassViewBrightness(enabled: Boolean) {
+        settingsStore.enablePassViewBrightness(enabled)
         update()
     }
 }
