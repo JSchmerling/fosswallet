@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.Default.Visibility
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Folder
@@ -72,6 +73,12 @@ fun WalletScreen(
         navController = navController,
         title = stringResource(id = R.string.wallet),
         actions = {
+            IconButton(onClick = {}) {
+                Icon(
+                    imageVector = Icons.Default.Visibility,
+                    contentDescription = stringResource(R.string.unhide)
+                )
+            }
             IconButton(onClick = {
                 navController.navigate(Screen.Settings.route)
             }) {
