@@ -1,4 +1,4 @@
-package nz.eloque.utils.biometric
+package nz.eloque.foss_wallet.utils.biometric
 
 import android.content.Context
 import android.os.Build
@@ -21,6 +21,7 @@ fun BiometricAuthPrompt(
     LaunchedEffect(Unit) {
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle("++++++title++++++")
+            .setSubtitle("+++++subtitle++++")
             .setDescription("+++++how to++++++")
             .apply {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
