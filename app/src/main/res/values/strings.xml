@@ -51,6 +51,6 @@
     <string name="barcode_top_center">Top / Center</string>
     <string name="hide_pass">Hide pass</string>
     <string name="unhide_pass">Unhide pass</string>
-    <string name="hide_passes">Hide passes</string>
-    <string name="unhide_passes">Unhide passes<string>
+    <string name="hide">Hide passes</string>
+    <string name="unhide">Unhide passes<string>
 </resources>
