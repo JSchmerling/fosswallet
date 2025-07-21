@@ -38,6 +38,7 @@ import nz.eloque.foss_wallet.model.Pass
 import nz.eloque.foss_wallet.shortcut.Shortcut
 import nz.eloque.foss_wallet.ui.AllowOnLockscreen
 import nz.eloque.foss_wallet.ui.WalletScaffold
+import nz.eloque.foss_wallet.ui.PassHideUnhideButton
 import nz.eloque.foss_wallet.ui.view.pass.PassShareButton
 import nz.eloque.foss_wallet.ui.view.pass.PassView
 import nz.eloque.foss_wallet.ui.view.wallet.PassViewModel
