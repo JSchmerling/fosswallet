@@ -41,7 +41,7 @@ fun WalletHideUnhideButton(
             )
         }
     } else if (!isHidden) {
-        IconButton(onClick = { showBiometricPrompt = true }) {
+        IconButton(onClick = isAuthenticated ? onClick : { showBiometricPrompt = true }) {
             Icon(
                 imageVector = Icons.Filled.VisibilityOff,
                 contentDescription = stringResource(R.string.hide_pass)
