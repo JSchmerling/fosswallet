@@ -101,7 +101,7 @@ class PassParser(val context: Context? = null) {
             secondaryFields = fieldContainer?.collectFields("secondaryFields")?:listOf(),
             auxiliaryFields = fieldContainer?.collectFields("auxiliaryFields")?:listOf(),
             backFields = fieldContainer?.collectFields("backFields")?:listOf(),
-            hidden = false
+            isHidden = false
         )
     }
 
