@@ -38,7 +38,7 @@ fun BiometricAuthPrompt(
 
         val biometricPrompt = BiometricPrompt(activity, executor, object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                onSuccess()
+                onSuccess(isAuthenticated = ! isAuthenticated)
             }
 
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
