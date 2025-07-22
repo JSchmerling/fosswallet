@@ -40,6 +40,7 @@ data class Pass(
     val hasStrip: Boolean = false,
     val hasThumbnail: Boolean = false,
     val hasFooter: Boolean = false,
+    var isHidden: Boolean = false,
     /**
      * Device UUID used for updating passes.
      * We use a unique UUID per pass so devices can not be linked across servers from the UUID
