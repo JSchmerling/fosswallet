@@ -32,16 +32,18 @@ fun WalletHideUnhideButton(
     }
 
     if (isAuthenticated) {
-    IconButton(onClick = onClick) {
-        Icon(
-            imageVector = Icons.Filled.Visibility,
-            contentDescription = stringResource(R.string.unhide)
-        )
-    }} else {
-    IconButton(onClick = { showBiometricPrompt = true }) {
-        Icon(
-            imageVector = Icons.Filled.VisibilityOff,
-            contentDescription = stringResource(R.string.hide)
-        )
+        IconButton(onClick = onClick) {
+            Icon(
+                imageVector = Icons.Filled.Visibility,
+                contentDescription = stringResource(R.string.unhide)
+            )
+        }
+    } else {
+        IconButton(onClick = { showBiometricPrompt = true }) {
+            Icon(
+                imageVector = Icons.Filled.VisibilityOff,
+                contentDescription = stringResource(R.string.hide)
+            )
+        }
     }
 }
