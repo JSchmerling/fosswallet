@@ -51,8 +51,8 @@ fun WalletScreen(
 
     val listState = rememberLazyListState()
     val toastMessage = stringResource(R.string.invalid_pass_toast)
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { res ->
-        res?.let {
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { 
+        res -> res?.let {
             println("selected file URI $res")
             coroutineScope.launch(Dispatchers.IO) {
                 contentResolver.openInputStream(res)?.use { inputStream ->
