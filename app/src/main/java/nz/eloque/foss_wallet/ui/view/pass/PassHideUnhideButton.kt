@@ -33,24 +33,30 @@ fun WalletHideUnhideButton(
         )
     }
 
+    visibilityIconImageVariant = when {
+        isAuthenticated && isHidden -> Icons.Filled.Visibility
+        !isHidden -> Icons.Filled.VisibilityOff
+        else -> Icons.Filled.VisibilityLock
+    }
+
     if (isAuthenticated && isHidden) {
         IconButton(onClick = onClick) {
             Icon(
-                imageVector = Icons.Filled.Visibility,
+                imageVector = visibilityIconImageVariant,
                 contentDescription = stringResource(R.string.unhide_pass)
             )
         }
     } else if (!isHidden) {
         IconButton(onClick = isAuthenticated ? onClick : { showBiometricPrompt = true }) {
             Icon(
-                imageVector = Icons.Filled.VisibilityOff,
+                imageVector = visibilityIconImageVariant,
                 contentDescription = stringResource(R.string.hide_pass)
             )
         }
     } else {
         IconButton(onClick = { showBiometricPrompt = true }) {
             Icon(
-                imageVector = Icons.Filled.VisibilityLock,
+                imageVector = visibilityIconImageVariant,
                 contentDescription = stringResource(R.string.unhide_pass)
             )
         }
