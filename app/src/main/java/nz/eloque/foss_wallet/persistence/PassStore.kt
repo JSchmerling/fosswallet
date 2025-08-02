@@ -28,6 +28,8 @@ class PassStore @Inject constructor(
 
     fun allPasses() = passRepository.all()
 
+    fun allUnhiddenPasses() = passRepository.allUnhidden()
+
     fun passById(id: String) = passRepository.byId(id)
 
     fun filtered(query: String) = passRepository.filtered(query)
