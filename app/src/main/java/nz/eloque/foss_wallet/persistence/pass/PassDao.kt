@@ -17,6 +17,9 @@ interface PassDao {
     @Query("SELECT * FROM pass")
     fun all(): Flow<List<PassWithLocalization>>
 
+    @Query("SELECT * FROM pass WHERE hidden = 0")
+    fun allUnhidden(): List<Pass>
+
     @Query("SELECT * FROM pass WHERE webServiceUrl != ''")
     fun updatable(): List<Pass>
 
