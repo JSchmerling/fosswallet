@@ -48,8 +48,8 @@ android {
         applicationId = "nz.eloque.foss_wallet"
         minSdk = 28
         targetSdk = 36
-        versionCode = 70
-        versionName = "0.24.2"
+        versionCode = 67
+        versionName = "0.23.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -99,6 +99,12 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.mockito)
+
+    // AppCompat
+    implementation(libs.androidx.appcompat)
+
+    //BiometricPrompt
+    implementation(libs.androidx.biometric)
 
     // Compose
     implementation(libs.androidx.activity.compose)
