@@ -22,10 +22,10 @@ fun LocationButton(
     val context = LocalContext.current
     IconButton(
         onClick = {
-            val uri = "geo:${location.latitude},${location.longitude}?q=${location.latitude},${location.longitude}".toUri()
-
             try {
-                context.startActivity(Intent(Intent.ACTION_VIEW, uri))
+                context.startActivity(Intent(Intent.ACTION_VIEW).also {
+                    it.data = "geo:${location.latitude},${location.longitude}?q=${location.latitude},${location.longitude}".toUri()
+                })
             } catch (e: ActivityNotFoundException) {
                 Log.e("LocationButton", "No map app found!", e)
             }
