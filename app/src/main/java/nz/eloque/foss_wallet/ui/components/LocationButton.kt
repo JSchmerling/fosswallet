@@ -3,8 +3,8 @@ package nz.eloque.foss_wallet.ui.components
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.location.Location
-import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Icon
@@ -22,7 +22,7 @@ fun LocationButton(
     val context = LocalContext.current
     IconButton(
         onClick = {
-            val uri = Uri.parse("geo:${location.latitude},${location.longitude}?q=${location.latitude},${location.longitude}")
+            val uri = "geo:${location.latitude},${location.longitude}?q=${location.latitude},${location.longitude}".toUri()
 
             try {
                 context.startActivity(Intent(Intent.ACTION_VIEW, uri))
