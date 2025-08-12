@@ -1,7 +1,7 @@
 package nz.eloque.foss_wallet.utils
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import android.os.Build
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -9,7 +9,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 
 class BiometricPromptManager(
-    private val activity: AppCompatActivity
+    val activity: FragmentActivity
 ) {
     private val resultChannel = Channel<BiometricResult>()
     val promptResults = resultChannel.receiveAsFlow()
@@ -19,25 +19,16 @@ class BiometricPromptManager(
         description: String
     ) {
         val manager = BiometricManager.from(activity)
-        val authenticators = if(Build.VERSION.SDK_INT >= 30) {
+        val authenticators = if(Build.VERSION.SDK_INT > 29) {
             BiometricManager.Authenticators.BIOMETRIC_STRONG or
             BiometricManager.Authenticators.DEVICE_CREDENTIAL
         } else BiometricManager.Authenticators.BIOMETRIC_STRONG
 
-        val promptInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            BiometricPrompt.PromptInfo.Builder()
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle(title)
             .setDescription(description)
             .setAllowedAuthenticators(authenticators)
             .build()
-        } else {
-        BiometricPrompt.PromptInfo.Builder()
-            .setTitle(title)
-            .setDescription(description)
-            .setDeviceCredentialAllowed(false)
-            .setNegativeButtonText("Cancel")
-            .build()
-        }
 
         when(manager.canAuthenticate(authenticators)) {
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
