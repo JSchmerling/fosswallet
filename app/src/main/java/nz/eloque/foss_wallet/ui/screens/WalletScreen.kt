@@ -85,7 +85,7 @@ fun WalletScreen(
         navController = navController,
         title = stringResource(id = R.string.wallet),
         actions = {
-            WalletVisibilityToggleButton(true) {
+            WalletVisibilityToggleButton(false) {
                 Log.i("bar", "foo") }
             IconButton(onClick = {
                 navController.navigate(Screen.Settings.route)
@@ -122,6 +122,7 @@ fun WalletScreen(
                                 passViewModel.group(selectedPasses.toSet())
                                 selectedPasses.clear()
                             }
+
                         },
                     )
                 }
