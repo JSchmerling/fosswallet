@@ -100,10 +100,10 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.mockito)
 
-    // AppCompat
-    implementation(libs.androidx.appcompat)
+    // Fragment
+    implementation(libs.androidx.fragment.ktx)
 
-    //BiometricPrompt
+    // BiometricPrompt
     implementation(libs.androidx.biometric)
 
     // Compose
