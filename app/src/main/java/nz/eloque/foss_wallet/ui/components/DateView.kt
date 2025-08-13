@@ -1,6 +1,8 @@
 package nz.eloque.foss_wallet.ui.components
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
@@ -18,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.utils.prettyDateTime
 import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 @Composable
 fun DateView(
@@ -38,10 +41,17 @@ fun DateView(
                     it.type = "vnd.android.cursor.item/event"
                     it.putExtra("beginTime", Instant.ofEpochSecond(start).toEpochMilli())
                     it.putExtra("allDay", false)
-                    it.putExtra("endTime", if (end != 0L) { end } else 1800000) //30 min default
+                    it.putExtra("endTime", if (end != 0L) Instant.ofEpochSecond(end).toEpochMilli()
+                        else Instant.ofEpochSecond(start).plus(30, ChronoUnit.MINUTES).toEpochMilli()) //30 min default
                     it.putExtra("title", title)
                 }
-                context.startActivity(intent)
+                
+                try {
+                    context.startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    Log.e("DateView", "No calendar app found!", e)
+                }
+                
             }) {
                 Icon(imageVector = Icons.Default.CalendarToday, contentDescription = stringResource(R.string.date))
             }
