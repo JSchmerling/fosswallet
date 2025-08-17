@@ -91,6 +91,5 @@ class PassViewModel @Inject constructor(
     
     fun showAllPasses(): List<Pass> = uiState.value.passes
 
-    fun showUnhiddenPasses(): List<Pass> =
-        uiState.value.passes.filterNot { pass -> pass.hidden }
+    fun showUnhiddenPasses(): List<Pass> = uiState.value.passes.filterNot { pass -> pass.hidden }
 }
