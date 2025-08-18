@@ -16,7 +16,7 @@ import nz.eloque.foss_wallet.utils.BiometricPromptManager
 
 @Composable
 fun WalletVisibilityToggleButton(
-    isAuthenticated: Boolean,
+    authStatus: Boolean,
     onClick: () -> Unit
 ) {
     val context = LocalContext.current
@@ -45,7 +45,7 @@ fun WalletVisibilityToggleButton(
         }
     }
 
-    if (isAuthenticated) {
+    if (authStatus) {
         IconButton(onClick = onClick) {
             Icon(
                 imageVector = Icons.Filled.Visibility,
