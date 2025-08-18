@@ -58,8 +58,7 @@ class PassRepository @Inject constructor(
     fun archive(pass: Pass) = passDao.archive(pass.id)
     fun unarchive(pass: Pass) = passDao.unarchive(pass.id)
 
-    fun unhidden(): Flow<List<PassWithLocalization>> =
-    passDao.unhidden()
+    fun unhidden(): Flow<List<PassWithLocalization>> = passDao.unhidden()
 
     fun filteredUnhidden(query: String): Flow<List<PassWithLocalization>> {
         return if (query.isEmpty()) {
