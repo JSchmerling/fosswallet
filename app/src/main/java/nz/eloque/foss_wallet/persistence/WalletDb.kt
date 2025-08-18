@@ -15,7 +15,7 @@ import nz.eloque.foss_wallet.persistence.pass.PassDao
 
 
 @Database(
-    version = 14,
+    version = 15,
     entities = [Pass::class, PassLocalization::class, PassGroup::class],
     autoMigrations = [
         AutoMigration (from = 4, to = 5),
@@ -27,6 +27,7 @@ import nz.eloque.foss_wallet.persistence.pass.PassDao
         AutoMigration (from = 11, to = 12),
         AutoMigration (from = 12, to = 13),
         AutoMigration (from = 13, to = 14),
+        AutoMigration (from = 14, to = 15),
     ],
     exportSchema = true
 )

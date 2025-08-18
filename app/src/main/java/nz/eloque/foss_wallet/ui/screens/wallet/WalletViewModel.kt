@@ -87,4 +87,8 @@ class PassViewModel @Inject constructor(
     fun barcodePosition(): BarcodePosition = settingsStore.barcodePosition()
 
     fun increasePassViewBrightness(): Boolean = settingsStore.increasePassViewBrightness()
+    
+    fun showAllPasses(): List<Pass> = uiState.value.passes
+
+    fun showUnhiddenPasses(): List<Pass> = uiState.value.passes.filterNot { pass -> pass.hidden }
 }
