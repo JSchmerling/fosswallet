@@ -56,7 +56,7 @@ fun WalletVisibilityToggleButton(
         IconButton(onClick = { 
             biometricPromptManager.showBiometricPrompt(
                 title = "Authenticate",
-                description = "Use biometric authentication to show wallet balance"
+                description = "Use biometric authentication to show hidden passes"
             )
         }) {
             Icon(
