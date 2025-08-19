@@ -12,8 +12,8 @@ import nz.eloque.foss_wallet.model.PassColors
 import nz.eloque.foss_wallet.model.PassType
 import nz.eloque.foss_wallet.model.TransitType
 import nz.eloque.foss_wallet.model.field.PassField
-import nz.eloque.foss_wallet.persistence.InvalidPassException
-import nz.eloque.foss_wallet.persistence.PassBitmaps
+import nz.eloque.foss_wallet.persistence.loader.InvalidPassException
+import nz.eloque.foss_wallet.persistence.loader.PassBitmaps
 import nz.eloque.foss_wallet.utils.Hash
 import nz.eloque.foss_wallet.utils.forEach
 import nz.eloque.foss_wallet.utils.map
@@ -176,10 +176,11 @@ class PassParser(val context: Context? = null) {
     private fun parseColor(key: String, passJson: JSONObject): Color? {
         return if (passJson.has(key)) {
             val representation = passJson.getString(key).filterNot { it.isWhitespace() }
-            val regexResult = "rgb\\((\\d+),(\\d+),(\\d+)\\)".toRegex().find((representation))
+            val regexResult = "rgba?\\((\\d+),(\\d+),(\\d+)(?:,([\\d.]+))?\\)".toRegex().find((representation))
             if (regexResult != null) {
-                val (red, green, blue) = regexResult.destructured
-                return Color(red.toInt(), green.toInt(), blue.toInt(), 255)
+                val (red, green, blue, alpha) = regexResult.destructured
+                val parsedAlpha = alpha.ifEmpty { "1.0" }.toDoubleOrNull() ?: return null
+                return Color(red.toInt(), green.toInt(), blue.toInt(), (parsedAlpha * 255.0).toInt())
             } else null
         } else null
     }
