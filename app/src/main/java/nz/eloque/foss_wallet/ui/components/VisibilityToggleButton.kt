@@ -1,7 +1,7 @@
 package nz.eloque.foss_wallet.ui.view.wallet
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityLock
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -48,15 +48,15 @@ fun VisibilityToggleButton(
     if (authStatus) {
         IconButton(onClick = onClick) {
             Icon(
-                imageVector = Icons.Filled.Visibility,
+                imageVector = Icons.Filled.VisibilityLock,
                 contentDescription = stringResource(R.string.unhide)
             )
         }
     } else {
         IconButton(onClick = { 
             biometricPromptManager.showBiometricPrompt(
-                title = "Authenticate",
-                description = "Use biometric authentication to show hidden passes"
+                title = stringResource(R.string.auth),
+                description = stringResource(R.string.auth_description)
             )
         }) {
             Icon(
