@@ -1,4 +1,4 @@
-package nz.eloque.foss_wallet.ui.view.wallet
+package nz.eloque.foss_wallet.ui.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.VisibilityLock
