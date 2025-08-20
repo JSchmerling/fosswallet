@@ -33,8 +33,8 @@ import kotlinx.coroutines.withContext
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.model.Pass
 import nz.eloque.foss_wallet.persistence.loader.Loader
+import nz.eloque.foss_wallet.ui.components
 import nz.eloque.foss_wallet.ui.Screen
-import nz.eloque.foss_wallet.ui.view.wallet.WalletVisibilityToggleButton
 import nz.eloque.foss_wallet.ui.WalletScaffold
 import nz.eloque.foss_wallet.utils.isScrollingUp
 
