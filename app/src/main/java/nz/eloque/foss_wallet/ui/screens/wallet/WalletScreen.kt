@@ -77,7 +77,7 @@ fun WalletScreen(
         navController = navController,
         title = stringResource(id = Screen.Wallet.resourceId),
         actions = {
-            WalletVisibilityToggleButton(false) { Log.i("bar", "foo") }
+            VisibilityToggleButton(false) { Log.i("bar", "foo") }
             IconButton(onClick = {
                 navController.navigate(Screen.Archive.route)
             }) {
