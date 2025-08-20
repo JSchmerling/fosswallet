@@ -47,9 +47,7 @@ fun VisibilityToggleButton(
 
     if (authStatus) {
         IconButton(onClick = onClick) {
-            Icon(
-                imageVector = Icons.Filled.VisibilityLock,
-                contentDescription = stringResource(R.string.unhide)
+            Icon(imageVector = Icons.Filled.VisibilityLock)
             )
         }
     } else {
@@ -59,10 +57,7 @@ fun VisibilityToggleButton(
                 description = stringResource(R.string.auth_description)
             )
         }) {
-            Icon(
-                imageVector = Icons.Filled.VisibilityOff,
-                contentDescription = stringResource(R.string.hide)
-            )
+            Icon(imageVector = Icons.Filled.VisibilityOff)
         }
     }
 }
