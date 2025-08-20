@@ -25,6 +25,7 @@ import nz.eloque.foss_wallet.persistence.loader.PassLoadResult
 import java.util.Locale
 
 data class PassUiState(
+    var isAuthenticated = false,
     val query: String = "",
     val passes: List<Pass> = ArrayList()
 )
