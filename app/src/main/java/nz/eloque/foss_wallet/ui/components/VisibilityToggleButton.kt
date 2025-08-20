@@ -15,7 +15,7 @@ import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.utils.BiometricPromptManager
 
 @Composable
-fun WalletVisibilityToggleButton(
+fun VisibilityToggleButton(
     authStatus: Boolean,
     onClick: () -> Unit
 ) {
