@@ -1,5 +1,7 @@
 package nz.eloque.foss_wallet.ui.screens.wallet
 
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -31,6 +33,7 @@ import kotlinx.coroutines.withContext
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.model.Pass
 import nz.eloque.foss_wallet.persistence.loader.Loader
+import nz.eloque.foss_wallet.ui.components
 import nz.eloque.foss_wallet.ui.Screen
 import nz.eloque.foss_wallet.ui.WalletScaffold
 import nz.eloque.foss_wallet.utils.isScrollingUp
@@ -74,6 +77,7 @@ fun WalletScreen(
         navController = navController,
         title = stringResource(id = Screen.Wallet.resourceId),
         actions = {
+            VisibilityToggleButton(false) { Log.i("bar", "foo") }
             IconButton(onClick = {
                 navController.navigate(Screen.Archive.route)
             }) {

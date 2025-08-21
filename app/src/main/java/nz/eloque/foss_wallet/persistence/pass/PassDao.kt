@@ -73,4 +73,14 @@ interface PassDao {
 
     @Query("UPDATE pass SET archived = 0 WHERE id = :passId")
     fun unarchive(passId: String)
+
+    @Transaction
+    @Query("SELECT * FROM pass WHERE hidden = 0")
+    fun unhidden(): Flow<List<PassWithLocalization>>
+
+    @Query("UPDATE pass SET hidden = 1 WHERE id = :passId")
+    fun hide(passId: String)
+
+    @Query("UPDATE pass SET hidden = 0 WHERE id = :passId")
+    fun unhide(passId: String)
 }
