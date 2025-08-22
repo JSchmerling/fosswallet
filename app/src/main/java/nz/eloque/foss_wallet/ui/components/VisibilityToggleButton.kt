@@ -30,16 +30,19 @@ fun VisibilityToggleButton(
                     onClick()
                 }
                 is BiometricPromptManager.BiometricResult.AuthenticationError -> {
-                    // Handle error if needed
+                    Toast.makeText(context, "Authentication error. Please try again.", Toast.LENGTH_SHORT).show()
                 }
                 is BiometricPromptManager.BiometricResult.AuthenticationFailed -> {
-                    // Handle failed authentication if needed
+                    Toast.makeText(context, "Authentication failed. Try again.", Toast.LENGTH_SHORT).show()
                 }
-                is BiometricPromptManager.BiometricResult.HardwareUnavailable,
-                is BiometricPromptManager.BiometricResult.FeatureUnavailable,
+                is BiometricPromptManager.BiometricResult.HardwareUnavailable -> {
+                    Toast.makeText(context, "Biometric hardware is unavailable.", Toast.LENGTH_SHORT).show()
+                }
+                is BiometricPromptManager.BiometricResult.FeatureUnavailable -> {
+                    Toast.makeText(context, "Biometric feature is not available on this device.", Toast.LENGTH_SHORT).show()
+                }
                 is BiometricPromptManager.BiometricResult.AuthenticationNotSet -> {
-                    // Handle unavailable biometric features if needed
-                    // Maybe fallback to direct onClick() or show alternative auth
+                    Toast.makeText(context, "No biometric credentials are set up.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
