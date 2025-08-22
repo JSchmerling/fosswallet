@@ -60,6 +60,10 @@ class PassViewModel @Inject constructor(
         }
     }
 
+    fun toggleAuthentication() {
+        _uiState.value = _uiState.value.copy(isAuthenticated = !_uiState.value.isAuthenticated)
+    }
+
     fun passById(id: String): PassWithLocalization = passStore.passById(id).apply { updatePasses() }
 
     fun group(passes: Set<Pass>) = passStore.group(passes).apply { updatePasses() }
