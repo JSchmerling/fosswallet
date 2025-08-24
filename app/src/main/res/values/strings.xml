@@ -61,10 +61,12 @@
     <string name="more_options">More options</string>
     <string name="hide">Hide pass</string>
     <string name="unhide">Unhide pass</string>
-    <string name="hide_passes">Don't show hidden passes</string>
-    <string name="unhide_passes">Show hidden passes</string>
+    <string name="conceal">Conceal hidden passes</string>
+    <string name="reveal">Reveal hidden passes</string>
     <string name="pin">Pin pass on top</string>
     <string name="unpin">Unpin pass</string>
     <string name="auth">Authentication</string>
     <string name="auth_by">using the device's own biometrics/password/pattern/PIN</string>
+    <string name="auth_to_hide"></string>
+    <string name="auth_to_reveal"></string>
 </resources>
