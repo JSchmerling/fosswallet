@@ -102,7 +102,7 @@ class PassParser(val context: Context? = null) {
             auxiliaryFields = fieldContainer?.collectFields("auxiliaryFields")?:listOf(),
             backFields = fieldContainer?.collectFields("backFields")?:listOf(),
             hidden = false,
-            favorite = false
+            pinned = false
         )
     }
 
