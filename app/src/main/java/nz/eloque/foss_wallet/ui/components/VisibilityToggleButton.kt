@@ -1,5 +1,6 @@
 package nz.eloque.foss_wallet.ui.components
 
+import android.widget.Toast
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.VisibilityLock
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -51,7 +52,6 @@ fun VisibilityToggleButton(
     if (authStatus) {
         IconButton(onClick = onClick) {
             Icon(imageVector = Icons.Filled.VisibilityLock)
-            )
         }
     } else {
         IconButton(onClick = { 
