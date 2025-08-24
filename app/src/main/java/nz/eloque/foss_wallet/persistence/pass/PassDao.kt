@@ -59,13 +59,8 @@ interface PassDao {
         deleteEmptyGroup(groupId)
     }
 
-    @Query("""
-        DELETE FROM PassGroup
-        WHERE id = :groupId 
-        AND (
-          SELECT COUNT(*) FROM Pass WHERE Pass.groupId = :groupId
-        ) = 1
-    """)
+    @Query("""DELETE FROM PassGroup WHERE id = :groupId AND (
+          SELECT COUNT(*) FROM Pass WHERE Pass.groupId = :groupId) = 1""")
     fun deleteEmptyGroup(groupId: Long)
 
     @Query("UPDATE pass SET archived = 1 WHERE id = :passId")
@@ -83,4 +78,10 @@ interface PassDao {
 
     @Query("UPDATE pass SET hidden = 0 WHERE id = :passId")
     fun unhide(passId: String)
+
+    @Query("UPDATE pass SET pinned = 1 WHERE id = :passId")
+    fun pin(passId: String)
+
+    @Query("UPDATE pass SET pinned = 0 WHERE id = :passId")
+    fun unpin(passId: String)
 }
