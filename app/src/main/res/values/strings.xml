@@ -65,4 +65,6 @@
     <string name="unhide_passes">Show hidden passes</string>
     <string name="pin">Pin pass on top</string>
     <string name="unpin">Unpin pass</string>
+    <string name="auth">Authentication</string>
+    <string name="auth_by">using the device's own biometrics/password/pattern/PIN</string>
 </resources>
