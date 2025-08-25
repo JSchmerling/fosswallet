@@ -47,6 +47,7 @@ import nz.eloque.foss_wallet.shortcut.Shortcut
 import nz.eloque.foss_wallet.ui.AllowOnLockscreen
 import nz.eloque.foss_wallet.ui.WalletScaffold
 import nz.eloque.foss_wallet.ui.screens.wallet.PassViewModel
+import nz.eloque.foss_wallet.ui.theme.deleteRed
 import nz.eloque.foss_wallet.utils.asString
 import java.util.Locale
 
@@ -156,9 +157,9 @@ fun Actions(
                 }
             )
             DropdownMenuItem(
-                text = { Text(stringResource(R.string.delete)), color = DeleteRed },
+                text = { Text(stringResource(R.string.delete)), color = MaterialTheme.colorScheme.deleteRed },
                 leadingIcon =  {
-                    Icon(imageVector = Icons.Default.Delete, contentDescription = stringResource(R.string.delete), tint = DeleteRed)
+                    Icon(imageVector = Icons.Default.Delete, contentDescription = stringResource(R.string.delete), tint = MaterialTheme.colorScheme.deleteRed)
                 },
                 onClick = {
                     coroutineScope.launch(Dispatchers.IO) { passViewModel.delete(pass.value) }
