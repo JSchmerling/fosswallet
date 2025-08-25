@@ -25,6 +25,7 @@ import kotlinx.coroutines.launch
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.model.Pass
 import nz.eloque.foss_wallet.share.share
+import nz.eloque.foss_wallet.theme.color.delete
 import nz.eloque.foss_wallet.utils.isScrollingUp
 
 @Composable
