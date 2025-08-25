@@ -40,7 +40,7 @@ fun SelectionActions(
         horizontalAlignment = Alignment.End
     ) {
         FloatingActionButton(
-            containerColor = MaterialTheme.colorScheme.error,
+            containerColor = DeleteRed,
             onClick = {
                 coroutineScope.launch(Dispatchers.IO) {
                     selectedPasses.forEach { passViewModel.delete(it) }
