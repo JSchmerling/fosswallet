@@ -12,5 +12,5 @@ val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
-val ColorScheme.deleteRed: Color
+val ColorScheme.delete: Color
 @Composable get() = if (isSystemInDarkTheme()) Color(0xFFFF453A) else Color(0xFFFF3B30)
