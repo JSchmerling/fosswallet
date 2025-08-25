@@ -47,7 +47,7 @@ import nz.eloque.foss_wallet.shortcut.Shortcut
 import nz.eloque.foss_wallet.ui.AllowOnLockscreen
 import nz.eloque.foss_wallet.ui.WalletScaffold
 import nz.eloque.foss_wallet.ui.screens.wallet.PassViewModel
-import nz.eloque.foss_wallet.ui.theme.delete
+import nz.eloque.foss_wallet.ui.theme.color.delete
 import nz.eloque.foss_wallet.utils.asString
 import java.util.Locale
 
