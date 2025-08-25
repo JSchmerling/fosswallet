@@ -156,9 +156,9 @@ fun Actions(
                 }
             )
             DropdownMenuItem(
-                text = { Text(stringResource(R.string.delete)), color = Red500 },
+                text = { Text(stringResource(R.string.delete)), color = DeleteRed },
                 leadingIcon =  {
-                    Icon(imageVector = Icons.Default.Delete, contentDescription = stringResource(R.string.delete), tint = Red500)
+                    Icon(imageVector = Icons.Default.Delete, contentDescription = stringResource(R.string.delete), tint = DeleteRed)
                 },
                 onClick = {
                     coroutineScope.launch(Dispatchers.IO) { passViewModel.delete(pass.value) }
