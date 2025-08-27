@@ -15,9 +15,11 @@ class BiometricPromptManager(
     val promptResults = resultChannel.receiveAsFlow()
 
     fun showBiometricPrompt(
-        title: String,
         description: String
     ) {
+        val title = activity.getString(R.string.auth)
+        val subtitle = activity.getString(R.string.auth_by)
+        
         val manager = BiometricManager.from(activity)
         val authenticators = if(Build.VERSION.SDK_INT > 29) {
             BiometricManager.Authenticators.BIOMETRIC_STRONG or
@@ -26,6 +28,7 @@ class BiometricPromptManager(
 
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle(title)
+            .setSubtitle(subtitle)
             .setDescription(description)
             .setAllowedAuthenticators(authenticators)
             .build()
