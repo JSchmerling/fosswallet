@@ -37,7 +37,7 @@ fun VisibilityToggleButton(
     ) {
         Icon(
             imageVector = if (authStatus) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-            contentDescription = if (authStatus) "Hide" else "Show"
+            contentDescription = if (authStatus) stringResource(R.string.conceal) else stringResource(R.string.reveal)
         )
     }
 }
