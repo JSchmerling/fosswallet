@@ -20,24 +20,30 @@ fun VisibilityToggleButton(
     onClick: () -> Unit
 ) {
     val context = LocalContext.current
-    val biometricPromptManager = remember { BiometricPromptManager(context as FragmentActivity) }
+    val activity = remember(context) { context as FragmentActivity }
+    val biometricPromptManager = remember { BiometricPromptManager(activity) }
 
     LaunchedEffect(biometricPromptManager) {
         biometricPromptManager.promptResults.collect { result ->
-            if (result is BiometricPromptManager.BiometricResult.AuthenticationSuccess) {
-                onClick()
+            when (result) {
+                is BiometricPromptManager.BiometricResult.AuthenticationSuccess -> {
+                    onClick()
+                }
             }
         }
     }
 
-    IconButton(
-        onClick = if (authStatus) onClick else {
-            { biometricPromptManager.showBiometricPrompt(stringResource(R.string.reveal)) }
+    if (authStatus) {
+        IconButton(onClick = onClick) {
+            Icon(imageVector = Icons.Filled.Visibility, contentDescription = "Hide")
         }
-    ) {
-        Icon(
-            imageVector = if (authStatus) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-            contentDescription = if (authStatus) stringResource(R.string.conceal) else stringResource(R.string.reveal)
-        )
+    } else {
+        IconButton(onClick = { 
+            biometricPromptManager.showBiometricPrompt(
+                description = stringResource(R.string.reveal)
+            )
+        }) {
+            Icon(imageVector = Icons.Filled.VisibilityOff, contentDescription = "Show")
+        }
     }
 }
