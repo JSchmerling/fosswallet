@@ -158,11 +158,12 @@ fun Actions(
             )
             val pinned = pinned()
             val pinText = { if (pinned) Text(stringResource(R.string.unpin)) else Text(stringResource(R.string.pin)) }
+            val pinIcon = { if (pinned) Icons.Default.KeepOff else Icons.Default.Keep }
             val pinContentDescription = { if (pinned) stringResource(R.string.unpin) else stringResource(R.string.pin) }
             DropdownMenuItem(
                 text = pinText,
                 leadingIcon =  {
-                    Icon(imageVector = if (pinned) Icons.Default.KeepOff else Icons.Default.Keep, contentDescription = pinContentDescription)
+                    Icon(imageVector = pinIcon, contentDescription = pinContentDescription)
                 },
                 onClick = {
                     if (pinned) { passViewModel.unpin(pass.value) } else { passViewModel.pin(pass.value) }
