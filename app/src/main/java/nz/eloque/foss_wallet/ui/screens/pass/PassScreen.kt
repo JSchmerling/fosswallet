@@ -106,10 +106,6 @@ fun Actions(
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false }
         ) {
-            val passFile = pass.value.originalPassFile(context)
-            if (passFile != null) {
-                PassShareButton(passFile)
-            }
             val pinned = pinned()
             val pinText = { if (pinned) Text(stringResource(R.string.unpin)) else Text(stringResource(R.string.pin)) }
             val pinIcon = { if (pinned) Icons.Default.KeepOff else Icons.Default.Keep }
@@ -134,7 +130,10 @@ fun Actions(
                 }
             )
 
-            
+            val passFile = pass.value.originalPassFile(context)
+            if (passFile != null) {
+                PassShareButton(passFile)
+            }
             
             if (pass.value.updatable()) {
                 val uriHandler = LocalUriHandler.current
