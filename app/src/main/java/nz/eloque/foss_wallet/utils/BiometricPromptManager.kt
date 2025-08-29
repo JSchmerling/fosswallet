@@ -42,32 +42,17 @@ class Biometric(
 
         when(manager.canAuthenticate(authenticators)) {
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                coroutineScope.launch {
-                    snackbarHostState.showSnackbar(
-                        message = "Biometric hardware is unavailable.",
-                        withDismissAction = true
-                    )
-                }
+                showErrorSnackbar("Biometric hardware is unavailable.")
                 resultChannel.trySend(BiometricResult.HardwareUnavailable)
                 return
             }
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                coroutineScope.launch {
-                    snackbarHostState.showSnackbar(
-                        message = "Biometric feature is not available on this device.",
-                        withDismissAction = true
-                    )
-                }
+                showErrorSnackbar("Biometric feature is not available on this device.")
                 resultChannel.trySend(BiometricResult.FeatureUnavailable)
                 return
             }
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                coroutineScope.launch {
-                    snackbarHostState.showSnackbar(
-                        message = "No biometric credentials are set up.",
-                        withDismissAction = true
-                    )
-                }
+                showErrorSnackbar("No biometric credentials are set up.")
                 resultChannel.trySend(BiometricResult.AuthenticationNotSet)
                 return
             }
@@ -82,12 +67,7 @@ class Biometric(
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
-                    coroutineScope.launch {
-                        snackbarHostState.showSnackbar(
-                            message = "Authentication error. Please try again.",
-                            withDismissAction = true
-                        )
-                    }
+                    showErrorSnackbar("Authentication error. Please try again.")
                     resultChannel.trySend(BiometricResult.AuthenticationError(errString.toString()))
                 }
 
@@ -99,12 +79,7 @@ class Biometric(
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-                    coroutineScope.launch {
-                        snackbarHostState.showSnackbar(
-                            message = "Authentication failed. Try again.",
-                            withDismissAction = true
-                        )
-                    }
+                    showErrorSnackbar("Authentication failed. Try again.")
                     resultChannel.trySend(BiometricResult.AuthenticationFailed)
                 }
             }
@@ -112,7 +87,14 @@ class Biometric(
         prompt.authenticate(promptInfo)
     }
 
-
+    private fun showErrorSnackbar(message: String) {
+        coroutineScope.launch {
+            snackbarHostState.showSnackbar(
+                message = message,
+                withDismissAction = true
+            )
+        }
+    }
 
     sealed interface BiometricResult {
         data class AuthenticationError(val error: String): BiometricResult
