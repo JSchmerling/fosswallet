@@ -26,9 +26,8 @@ fun VisibilityToggleButton(
     LaunchedEffect(biometricPromptManager) {
         biometricPromptManager.promptResults.collect { result ->
             when (result) {
-                is BiometricPromptManager.BiometricResult.AuthenticationSuccess -> {
-                    onClick()
-                }
+                is BiometricPromptManager.BiometricResult.AuthenticationSuccess -> { onClick() }
+                else -> Unit
             }
         }
     }
