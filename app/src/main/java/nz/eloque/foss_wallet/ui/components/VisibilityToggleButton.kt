@@ -11,16 +11,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.FragmentActivity
 import nz.eloque.foss_wallet.R
-import nz.eloque.foss_wallet.utils.BiometricPromptManager
+import nz.eloque.foss_wallet.utils.Biometric
 
 @Composable
-fun VisibilityToggleButton(
+fun VisibilityButton(
     authStatus: Boolean,
     onClick: () -> Unit
 ) {
     val context = LocalContext.current
     val activity = remember(context) { context as FragmentActivity }
-    val biometricPromptManager = remember { BiometricPromptManager(activity) }
+    val biometric = remember { Biometric(activity) }
 
     if (authStatus) {
         IconButton(onClick = onClick) {
@@ -28,7 +28,7 @@ fun VisibilityToggleButton(
         }
     } else {
         IconButton(onClick = { 
-            biometricPromptManager.showBiometricPrompt(
+            biometric.showBiometricPrompt(
                 description = stringResource(R.string.reveal),
                 onSuccess = onClick
             )
