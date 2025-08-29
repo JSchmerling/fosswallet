@@ -11,7 +11,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import nz.eloque.foss_wallet.R
 
-class BiometricPromptManager(
+class Biometric(
     private val activity: FragmentActivity
 ) {
     private val resultChannel = Channel<BiometricResult>()
@@ -83,8 +83,6 @@ class BiometricPromptManager(
         )
         prompt.authenticate(promptInfo)
     }
-
-
 
     private fun showErrorToast(context: Context, message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
