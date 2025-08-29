@@ -1,18 +1,21 @@
 package nz.eloque.foss_wallet.utils
 
-import android.content.Context
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import android.os.Build
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
+import androidx.compose.material3.SnackbarHostState
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import nz.eloque.foss_wallet.R
 
 class Biometric(
-    private val activity: FragmentActivity
+    private val activity: FragmentActivity,
+    private val snackbarHostState: SnackbarHostState,
+    private val coroutineScope: CoroutineScope
 ) {
     private val resultChannel = Channel<BiometricResult>()
     val promptResults = resultChannel.receiveAsFlow()
@@ -39,17 +42,32 @@ class Biometric(
 
         when(manager.canAuthenticate(authenticators)) {
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
-                showErrorToast(activity, "Biometric hardware is unavailable.")
+                coroutineScope.launch {
+                    snackbarHostState.showSnackbar(
+                        message = "Biometric hardware is unavailable.",
+                        withDismissAction = true
+                    )
+                }
                 resultChannel.trySend(BiometricResult.HardwareUnavailable)
                 return
             }
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                showErrorToast(activity, "Biometric feature is not available on this device.")
+                coroutineScope.launch {
+                    snackbarHostState.showSnackbar(
+                        message = "Biometric feature is not available on this device.",
+                        withDismissAction = true
+                    )
+                }
                 resultChannel.trySend(BiometricResult.FeatureUnavailable)
                 return
             }
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                showErrorToast(activity, "No biometric credentials are set up.")
+                coroutineScope.launch {
+                    snackbarHostState.showSnackbar(
+                        message = "No biometric credentials are set up.",
+                        withDismissAction = true
+                    )
+                }
                 resultChannel.trySend(BiometricResult.AuthenticationNotSet)
                 return
             }
@@ -64,7 +82,12 @@ class Biometric(
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
-                    showErrorToast(activity, "Authentication error. Please try again.")
+                    coroutineScope.launch {
+                        snackbarHostState.showSnackbar(
+                            message = "Authentication error. Please try again.",
+                            withDismissAction = true
+                        )
+                    }
                     resultChannel.trySend(BiometricResult.AuthenticationError(errString.toString()))
                 }
 
@@ -76,7 +99,12 @@ class Biometric(
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-                    showErrorToast(activity, "Authentication failed. Try again.")
+                    coroutineScope.launch {
+                        snackbarHostState.showSnackbar(
+                            message = "Authentication failed. Try again.",
+                            withDismissAction = true
+                        )
+                    }
                     resultChannel.trySend(BiometricResult.AuthenticationFailed)
                 }
             }
@@ -84,14 +112,12 @@ class Biometric(
         prompt.authenticate(promptInfo)
     }
 
-    private fun showErrorToast(context: Context, message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
+
 
     sealed interface BiometricResult {
+        data class AuthenticationError(val error: String): BiometricResult
         data object HardwareUnavailable: BiometricResult
         data object FeatureUnavailable: BiometricResult
-        data class AuthenticationError(val error: String): BiometricResult
         data object AuthenticationFailed: BiometricResult
         data object AuthenticationSuccess: BiometricResult
         data object AuthenticationNotSet: BiometricResult
