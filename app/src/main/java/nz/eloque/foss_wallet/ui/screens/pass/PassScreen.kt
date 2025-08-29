@@ -175,11 +175,20 @@ fun Actions(
             
             val hidden = hidden()
             DropdownMenuItem(
-                text = {if (hidden) stringResource(R.string.unhide) else stringResource(R.string.hide) }
+                text = {if (hidden) Text(stringResource(R.string.unhide)) else Text(stringResource(R.string.hide)) },
                 leadingIcon = {
-                    Icon()
+                    Icon(
+                        imageVector = { if (hidden) Icon.Default.Visibility else Icon.Default.VisibilityOff },
+                        contentDescription = { if (hidden) Text(stringResource(R.string.unhide)) else Text(stringResource(R.string.hide)) }
+                    )
+                },
+                onClick = { 
+                    if (authenticated()) {
+                        if (hidden) { passViewModel.unhide(pass.value) } else { passViewModel.hide(pass.value) }
+                    } else {
+                        TODO()
+                    }
                 }
-                onClick = { }
             )
             
             DropdownMenuItem(
