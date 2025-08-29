@@ -156,6 +156,18 @@ fun Actions(
                     Shortcut.create(context, pass.value, pass.value.description)
                 }
             )
+            val pinned = pinned()
+            val pinText = { if (pinned) Text(stringResource(R.string.unpin)) else Text(stringResource(R.string.pin)) }
+            val pinContentDescription = { if (pinned) stringResource(R.string.unpin) else stringResource(R.string.pin) }
+            DropdownMenuItem(
+                text = pinText,
+                leadingIcon =  {
+                    Icon(imageVector = if (pinned) Icons.Default.KeepOff else Icons.Default.Keep, contentDescription = pinContentDescription)
+                },
+                onClick = {
+                    if (pinned) { passViewModel.unpin(pass.value) } else { passViewModel.pin(pass.value) }
+                }
+            )
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.delete)) },
                 leadingIcon =  {
