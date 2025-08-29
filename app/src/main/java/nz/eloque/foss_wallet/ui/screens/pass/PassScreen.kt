@@ -169,6 +169,14 @@ fun Actions(
                     if (pinned) { passViewModel.unpin(pass.value) } else { passViewModel.pin(pass.value) }
                 }
             )
+            val hidden = hidden()
+            DropdownMenuItem(
+                text = {if (hidden) stringResource(R.string.unhide) else stringResource(R.string.hide) }
+                leadingIcon = {
+                    Icon()
+                }
+                onClick = { }
+            )
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.delete)) },
                 leadingIcon =  {
