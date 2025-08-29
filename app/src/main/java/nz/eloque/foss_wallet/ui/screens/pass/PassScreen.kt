@@ -107,13 +107,13 @@ fun Actions(
             onDismissRequest = { expanded.value = false }
         ) {
             val pinned = pinned()
-            val pinText = { if (pinned) Text(stringResource(R.string.unpin)) else Text(stringResource(R.string.pin)) }
-            val pinIcon = { if (pinned) Icons.Default.KeepOff else Icons.Default.Keep }
-            val pinContentDescription = { if (pinned) stringResource(R.string.unpin) else stringResource(R.string.pin) }
             DropdownMenuItem(
-                text = pinText,
+                text = { if (pinned) Text(stringResource(R.string.unpin)) else Text(stringResource(R.string.pin)) },
                 leadingIcon =  {
-                    Icon(imageVector = pinIcon, contentDescription = pinContentDescription)
+                    Icon(
+                        imageVector = { if (pinned) Icons.Default.KeepOff else Icons.Default.Keep },
+                        contentDescription = { if (pinned) Text(stringResource(R.string.unpin)) else Text(stringResource(R.string.pin)) }
+                    )
                 },
                 onClick = {
                     if (pinned) { passViewModel.unpin(pass.value) } else { passViewModel.pin(pass.value) }
@@ -175,7 +175,7 @@ fun Actions(
             
             val hidden = hidden()
             DropdownMenuItem(
-                text = {if (hidden) Text(stringResource(R.string.unhide)) else Text(stringResource(R.string.hide)) },
+                text = { if (hidden) Text(stringResource(R.string.unhide)) else Text(stringResource(R.string.hide)) },
                 leadingIcon = {
                     Icon(
                         imageVector = { if (hidden) Icon.Default.Visibility else Icon.Default.VisibilityOff },
