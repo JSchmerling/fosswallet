@@ -18,7 +18,8 @@ class BiometricPromptManager(
     val promptResults = resultChannel.receiveAsFlow()
 
     fun showBiometricPrompt(
-        description: String
+        description: String,
+        onSuccess: () -> Unit
     ) {
         val title = activity.getString(R.string.auth)
         val subtitle = activity.getString(R.string.auth_by)
@@ -70,6 +71,7 @@ class BiometricPromptManager(
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
                     resultChannel.trySend(BiometricResult.AuthenticationSuccess)
+                    onSuccess()
                 }
 
                 override fun onAuthenticationFailed() {
@@ -81,6 +83,8 @@ class BiometricPromptManager(
         )
         prompt.authenticate(promptInfo)
     }
+
+
 
     private fun showErrorToast(context: Context, message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
