@@ -114,8 +114,8 @@ fun Actions(
                             imageVector = Icons.Default.KeepOff,
                             contentDescription = stringResource(R.string.unpin)
                         )
-                     },
-                     onClick = { passViewModel.unpin(pass.value) }
+                    },
+                    onClick = { passViewModel.unpin(pass.value) }
                 )
             } else {
                 DropdownMenuItem(
@@ -223,7 +223,7 @@ fun Actions(
                                 description = stringResource(R.string.hide),
                                 onSuccess = {
                                     
-                                    passViewModel.hide(pass.value
+                                    passViewModel.hide(pass.value)
                                 }
                             )
                         }
