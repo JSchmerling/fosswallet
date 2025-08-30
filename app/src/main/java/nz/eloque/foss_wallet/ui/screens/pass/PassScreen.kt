@@ -106,19 +106,29 @@ fun Actions(
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false }
         ) {
-            val pinned = pinned()
-            DropdownMenuItem(
-                text = { if (pinned) Text(stringResource(R.string.unpin)) else Text(stringResource(R.string.pin)) },
-                leadingIcon =  {
-                    Icon(
-                        imageVector = { if (pinned) Icons.Default.KeepOff else Icons.Default.Keep },
-                        contentDescription = { if (pinned) Text(stringResource(R.string.unpin)) else Text(stringResource(R.string.pin)) }
-                    )
-                },
-                onClick = {
-                    if (pinned) { passViewModel.unpin(pass.value) } else { passViewModel.pin(pass.value) }
-                }
-            )
+            if (pinned()) {
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.unpin)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.KeepOff,
+                            contentDescription = stringResource(R.string.unpin)
+                        )
+                     },
+                     onClick = { passViewModel.unpin(pass.value) }
+                )
+            } else {
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.pin)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Keep,
+                            contentDescription = stringResource(R.string.pin)
+                        )
+                    },
+                    onClick = { passViewModel.pin(pass.value) }
+                )
+            }
             
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.add_shortcut)) },
