@@ -198,7 +198,10 @@ fun Actions(
                         } else {
                             biometric.showBiometricPrompt(
                                 description = stringResource(R.string.unhide),
-                                onSuccess = onClick
+                                onSuccess = {
+
+                                    passViewModel.unhide(pass.value) 
+                                }
                             )
                         }
                      }
@@ -218,7 +221,10 @@ fun Actions(
                         } else {
                             biometric.showBiometricPrompt(
                                 description = stringResource(R.string.hide),
-                                onSuccess = onClick
+                                onSuccess = {
+                                    
+                                    passViewModel.hide(pass.value
+                                }
                             )
                         }
                     }
