@@ -196,7 +196,10 @@ fun Actions(
                         if (authenticated()) {
                             passViewModel.unhide(pass.value)
                         } else {
-                            TODO()
+                            biometric.showBiometricPrompt(
+                                description = stringResource(R.string.unhide),
+                                onSuccess = onClick
+                            )
                         }
                      }
                 )
@@ -213,7 +216,10 @@ fun Actions(
                         if (authenticated()) {
                             passViewModel.hide(pass.value)
                         } else {
-                            TODO()
+                            biometric.showBiometricPrompt(
+                                description = stringResource(R.string.hide),
+                                onSuccess = onClick
+                            )
                         }
                     }
                 )
