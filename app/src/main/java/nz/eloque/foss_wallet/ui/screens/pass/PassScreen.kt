@@ -188,7 +188,7 @@ fun Actions(
                     text = { Text(stringResource(R.string.unhide)) },
                     leadingIcon = {
                         Icon(
-                            imageVector = Icons.Default.VisibilityOff,
+                            imageVector = Icons.Default.Visibility,
                             contentDescription = stringResource(R.string.unhide)
                         )
                      },
@@ -197,6 +197,7 @@ fun Actions(
                             passViewModel.unhide(pass.value)
                         } else {
                             TODO()
+                        }
                      }
                 )
             } else {
@@ -204,7 +205,7 @@ fun Actions(
                     text = { Text(stringResource(R.string.hide)) },
                     leadingIcon = {
                         Icon(
-                            imageVector = Icons.Default.Visibility,
+                            imageVector = Icons.Default.VisibilityOff,
                             contentDescription = stringResource(R.string.hide)
                         )
                     },
@@ -213,6 +214,7 @@ fun Actions(
                             passViewModel.hide(pass.value)
                         } else {
                             TODO()
+                        }
                     }
                 )
             }
