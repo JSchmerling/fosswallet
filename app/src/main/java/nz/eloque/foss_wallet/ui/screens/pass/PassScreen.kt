@@ -183,23 +183,39 @@ fun Actions(
                 }
             }
             
-            val hidden = hidden()
-            DropdownMenuItem(
-                text = { if (hidden) Text(stringResource(R.string.unhide)) else Text(stringResource(R.string.hide)) },
-                leadingIcon = {
-                    Icon(
-                        imageVector = { if (hidden) Icon.Default.Visibility else Icon.Default.VisibilityOff },
-                        contentDescription = { if (hidden) Text(stringResource(R.string.unhide)) else Text(stringResource(R.string.hide)) }
-                    )
-                },
-                onClick = { 
-                    if (authenticated()) {
-                        if (hidden) { passViewModel.unhide(pass.value) } else { passViewModel.hide(pass.value) }
-                    } else {
-                        TODO()
+            if (hidden()) {
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.unhide)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.VisibilityOff,
+                            contentDescription = stringResource(R.string.unhide)
+                        )
+                     },
+                     onClick = {
+                        if (authenticated()) {
+                            passViewModel.unhide(pass.value)
+                        } else {
+                            TODO()
+                     }
+                )
+            } else {
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.hide)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Visibility,
+                            contentDescription = stringResource(R.string.hide)
+                        )
+                    },
+                    onClick = {
+                        if (authenticated()) {
+                            passViewModel.hide(pass.value)
+                        } else {
+                            TODO()
                     }
-                }
-            )
+                )
+            }
             
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.delete)) },
