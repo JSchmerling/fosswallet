@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 16,
-    "identityHash": "b74af7615e825b07568fc9c3d5b11d0b",
+    "identityHash": null,
     "entities": [
       {
         "tableName": "Pass",
@@ -175,13 +175,15 @@
             "fieldPath": "hidden",
             "columnName": "hidden",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "pinned",
             "columnName": "pinned",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           }
         ],
         "primaryKey": {
