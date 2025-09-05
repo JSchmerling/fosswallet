@@ -106,7 +106,16 @@ fun WalletScreen(
                     onClick = {
                         launcher.launch(arrayOf(
                             "application/json",
+                            "application/octet-stream",
+                            "application/pkpass",
+                            "application/pkpasses",
+                            "application/vnd.espass-espass",
+                            "application/vnd.google.wallet-object",
                             "application/vnd.apple.pkpass",
+                            "application/vnd.apple.pkpasses",
+                            "application/vnd-com.apple.pkpass",
+                            "application/vnd-com.apple.pkpasses",
+                            "application/x-zip-compressed",
                             "application/zip",
                             "text/json"
                         ))
