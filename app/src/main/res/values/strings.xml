@@ -6,7 +6,7 @@
     <string name="back">Back</string>
     <string name="permission_rationale">Without the permission(s), Wallet does not work correctly</string>
     <string name="request_permissions">Request Permission</string>
-    <string name="wallet" translatable="false">Wallet</string>
+    <string name="wallet">Wallet</string>
     <string name="image">Image</string>
     <string name="pass">Pass</string>
     <string name="barcode">Barcode</string>
