@@ -65,6 +65,11 @@ fun WalletScreen(
                     }
                 }
                 loading.value = false
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.imported),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -115,6 +120,7 @@ fun WalletScreen(
                             "application/vnd.google.wallet-object",
                             "application/vnd-com.apple.pkpass",
                             "application/vnd-com.apple.pkpasses",
+                            "application/vnd-com.espass-espass",
                             "application/vnd-com.google.wallet-object",
                             "application/x-zip-compressed",
                             "application/zip",
