@@ -103,7 +103,14 @@ fun WalletScreen(
                     text = { Text(stringResource(R.string.add_pass)) },
                     icon = { Icon(imageVector = Icons.Default.Add, contentDescription = stringResource(R.string.add_pass)) },
                     expanded = listState.isScrollingUp(),
-                    onClick = { launcher.launch(arrayOf("*/*")) }
+                    onClick = {
+                        launcher.launch(arrayOf(
+                            "application/json",
+                            "application/vnd.apple.pkpass",
+                            "application/zip",
+                            "text/json"
+                        ))
+                    }
                 )
             }
         },
