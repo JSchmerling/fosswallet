@@ -111,7 +111,28 @@ fun WalletScreen(
                     text = { Text(stringResource(R.string.add_pass)) },
                     icon = { Icon(imageVector = Icons.Default.Add, contentDescription = stringResource(R.string.add_pass)) },
                     expanded = listState.isScrollingUp(),
-                    onClick = { launcher.launch(arrayOf("*/*")) }
+                    onClick = {
+                        launcher.launch(arrayOf(
+                            "application/google-wallet",
+                            "application/json",
+                            "application/octet-stream",
+                            "application/pkpass",
+                            "application/pkpass+zip",
+                            "application/pkpasses",
+                            "application/vnd.apple.pkpass",
+                            "application/vnd.espass-espass",
+                            "application/vnd.google.wallet-object",
+                            "application/x-apple-aspen-config",
+                            "application/x-apple-pkpass",
+                            "application/x-espass",
+                            "application/x-google-wallet",
+                            "application/x-passbook",
+                            "application/x-pkpass",
+                            "application/x-zip-compressed",
+                            "application/zip",
+                            "text/json"
+                        ))
+                    }
                 )
             }
         },

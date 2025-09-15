@@ -135,6 +135,9 @@ fun WalletView(
                     onClick = {
                         navController.navigate("pass/${pass.id}")
                     },
+                    onLongClick = {
+                        navController.navigate("barcodes/${pass.id}/${barcodePosition}/${increaseBrightness}")
+                    },
                     selected = selectedPasses.contains(pass)
                 )
             }
