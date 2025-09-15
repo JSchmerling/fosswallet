@@ -58,7 +58,7 @@ fun WalletScaffold(
                             Icon(imageVector = Icons.AutoMirrored.Default.ArrowBack, contentDescription = stringResource(R.string.back))
                         }
                     } else {
-                        IconButton(onClick = { navController.navigate(Screen.About.route) }) {
+                        IconButton(onClick = { }) {
                             Icon(painter = painterResource(R.drawable.icon), contentDescription = stringResource(R.string.about))
                     }
                 },
