@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.icons.Icons
@@ -59,7 +61,7 @@ fun WalletScaffold(
                         IconButton(onClick = { navController.popBackStack() }) {
                             Icon(imageVector = Icons.AutoMirrored.Default.ArrowBack, contentDescription = stringResource(R.string.back))
                         }
-                    } else { Icon(painter = painterResource(R.drawable.icon), contentDescription = stringResource(R.string.app_name)) }
+                    } else { Icon(painter = painterResource(R.drawable.icon), contentDescription = null) }
                 },
                 actions = actions,
                 scrollBehavior = scrollBehavior
@@ -70,9 +72,7 @@ fun WalletScaffold(
         floatingActionButton = {
             Box(
                 modifier = Modifier.padding(
-                    bottom = WindowInsets.navigationBars
-                        .asPaddingValues()
-                        .calculateBottomPadding()
+                    bottom = navigationBarsPadding().imePadding()
                 )
             ) {
                 floatingActionButton()
