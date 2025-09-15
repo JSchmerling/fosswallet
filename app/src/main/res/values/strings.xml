@@ -63,4 +63,5 @@
     <string name="filter">Sort by</string>
     <string name="deleted">Pass successfully deleted</string>
     <string name="imported">Pass successfully imported</string>
+    <string name="libraries">Libraries</string>
 </resources>
