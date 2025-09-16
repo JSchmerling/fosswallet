@@ -55,6 +55,13 @@ fun SelectionActions(
                 coroutineScope.launch(Dispatchers.IO) {
                     selectedPasses.forEach { passViewModel.archive(it) }
                     selectedPasses.clear()
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.deleted),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             },
         ) {
