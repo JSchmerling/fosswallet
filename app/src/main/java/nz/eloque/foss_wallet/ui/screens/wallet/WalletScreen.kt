@@ -65,10 +65,12 @@ fun WalletScreen(
                         )
                     }
                 }
+                
                 if (uris.size == 1) {
                     if (result is LoaderResult.Single) {
                         withContext(Dispatchers.Main) {
                             navController.navigate("pass/${result.passId}")
+                            Toast.makeText(context, context.getString(R.string.imported), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -76,6 +78,7 @@ fun WalletScreen(
             loading.value = false
         }
     }
+
     val selectedPasses = remember { mutableStateSetOf<Pass>() }
 
     WalletScaffold(
