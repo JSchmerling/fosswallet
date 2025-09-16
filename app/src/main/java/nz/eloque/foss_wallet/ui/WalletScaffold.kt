@@ -3,8 +3,6 @@ package nz.eloque.foss_wallet.ui
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.icons.Icons
@@ -21,7 +19,6 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -38,7 +35,6 @@ fun WalletScaffold(
     toolWindow: Boolean = false,
     showBack: Boolean = true,
     actions: @Composable RowScope.() -> Unit = {},
-    floatingActionButton: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     content: @Composable (scrollBehavior: TopAppBarScrollBehavior) -> Unit,
@@ -57,25 +53,14 @@ fun WalletScaffold(
                         IconButton(onClick = { navController.popBackStack() }) {
                             Icon(imageVector = Icons.AutoMirrored.Default.ArrowBack, contentDescription = stringResource(R.string.back))
                         }
-                    } else { Icon(painter = painterResource(R.drawable.icon), contentDescription = null) }
+                    }
                 },
                 actions = actions,
                 scrollBehavior = scrollBehavior
             )
         },
         contentWindowInsets = WindowInsets.statusBars,
-        bottomBar = bottomBar,
-        floatingActionButton = {
-            Box(
-                modifier = Modifier.padding(
-                    bottom = WindowInsets.navigationBars
-                        .asPaddingValues()
-                        .calculateBottomPadding()
-                )
-            ) {
-                floatingActionButton()
-            }
-        }
+        bottomBar = bottomBar
     ) { innerPadding ->
         Box(modifier = modifier
             .padding(innerPadding)
