@@ -1,1 +1,0 @@
-FossWallet is een MDY-portemonnee voor Apple Passbook-bestanden.
