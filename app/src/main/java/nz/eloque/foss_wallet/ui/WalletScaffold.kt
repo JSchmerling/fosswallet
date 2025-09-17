@@ -32,7 +32,7 @@ import nz.eloque.foss_wallet.ui.components.AbbreviatingText
 fun WalletScaffold(
     navController: NavController,
     modifier: Modifier = Modifier,
-    title: String = "",
+    title: String? = null,
     toolWindow: Boolean = false,
     showBack: Boolean = true,
     actions: @Composable RowScope.() -> Unit = {},
@@ -60,7 +60,7 @@ fun WalletScaffold(
                 scrollBehavior = scrollBehavior
             )
         },
-        contentWindowInsets = WindowInsets.statusBars,
+        contentWindowInsets = WindowInsets.safeDrawing,
         bottomBar = bottomBar
     ) { innerPadding ->
         Box(modifier = modifier
