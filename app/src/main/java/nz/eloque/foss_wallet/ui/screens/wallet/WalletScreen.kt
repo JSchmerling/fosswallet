@@ -65,7 +65,6 @@ fun WalletScreen(
                         )
                     }
                 }
-                
                 if (uris.size == 1) {
                     if (result is LoaderResult.Single) {
                         withContext(Dispatchers.Main) {
