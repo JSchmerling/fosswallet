@@ -3,7 +3,10 @@ package nz.eloque.foss_wallet.ui
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -36,6 +39,7 @@ fun WalletScaffold(
     toolWindow: Boolean = false,
     showBack: Boolean = true,
     actions: @Composable RowScope.() -> Unit = {},
+    floatingActionButton: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     content: @Composable (scrollBehavior: TopAppBarScrollBehavior) -> Unit,
@@ -61,7 +65,18 @@ fun WalletScaffold(
             )
         },
         contentWindowInsets = WindowInsets.safeDrawing,
-        bottomBar = bottomBar
+        bottomBar = bottomBar,
+        floatingActionButton = {
+            Box(
+                modifier = Modifier.padding(
+                    bottom = WindowInsets.navigationBars
+                        .asPaddingValues()
+                        .calculateBottomPadding()
+                )
+            ) {
+                floatingActionButton()
+            }
+        }
     ) { innerPadding ->
         Box(modifier = modifier
             .padding(innerPadding)
