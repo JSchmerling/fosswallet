@@ -1,6 +1,7 @@
 package nz.eloque.foss_wallet.ui.card
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.CardColors
@@ -20,6 +21,7 @@ fun ShortPassCard(
     pass: Pass,
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
+    onLongClick: (() -> Unit)? = null,
     selected: Boolean = false,
     colors: CardColors = CardDefaults.elevatedCardColors(),
 ) {
@@ -36,6 +38,10 @@ fun ShortPassCard(
                 modifier = modifier
                     .fillMaxWidth()
                     .scale(scale)
+                    .combinedClickable(
+                        onClick = onClick,
+                        onLongClick = onLongClick
+                    )
             ) {
                 ShortPassContent(pass, cardColors)
             }
