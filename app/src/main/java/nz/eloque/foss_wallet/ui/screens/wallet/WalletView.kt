@@ -1,5 +1,6 @@
 package nz.eloque.foss_wallet.ui.screens.wallet
 
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
