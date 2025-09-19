@@ -79,6 +79,7 @@ fun GroupCard(
                         )
                     ),
                     onClick = { onClick?.invoke(item) },
+                    onLongClick = onClick
                 )
             }
             Box(
