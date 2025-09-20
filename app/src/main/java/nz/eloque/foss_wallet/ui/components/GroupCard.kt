@@ -54,6 +54,7 @@ fun GroupCard(
     passViewModel: PassViewModel,
     modifier: Modifier = Modifier,
     onClick: ((Pass) -> Unit)? = null,
+    onLongClick: ((Pass) -> Unit)? = null,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -79,7 +80,7 @@ fun GroupCard(
                         )
                     ),
                     onClick = { onClick?.invoke(item) },
-                    onLongClick = onClick
+                    onLongClick = { onLongClick?.invoke(item) },
                 )
             }
             Box(

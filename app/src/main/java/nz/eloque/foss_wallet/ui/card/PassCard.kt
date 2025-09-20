@@ -38,7 +38,7 @@ fun ShortPassCard(
                 .fillMaxWidth()
                 .scale(scale)
                 .combinedClickable(
-                    onClick = onClick,
+                    onClick = onClick ?: {},
                     onLongClick = onLongClick
                 )
         ) {
