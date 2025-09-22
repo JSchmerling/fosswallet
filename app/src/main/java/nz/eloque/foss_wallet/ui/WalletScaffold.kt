@@ -57,7 +57,7 @@ fun WalletScaffold(
                         IconButton(onClick = { navController.popBackStack() }) {
                             Icon(imageVector = Icons.AutoMirrored.Default.ArrowBack, contentDescription = stringResource(R.string.back))
                         }
-                    } else { Icon(painter = painterResource(R.drawable.icon), contentDescription = null) }
+                    } else { Image(painter = painterResource(R.drawable.icon), contentDescription = null) }
                 },
                 actions = actions,
                 scrollBehavior = scrollBehavior
