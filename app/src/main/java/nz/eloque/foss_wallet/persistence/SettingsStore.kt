@@ -26,6 +26,7 @@ sealed class BarcodePosition(val arrangement: Arrangement.Vertical, val key: Str
             return when (representation) {
                 Top.key -> Top
                 Center.key -> Center
+                Bottom.key -> Bottom
                 else -> Center
             }
         }
