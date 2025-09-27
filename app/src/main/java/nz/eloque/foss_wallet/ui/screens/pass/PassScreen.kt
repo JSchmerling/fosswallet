@@ -163,6 +163,9 @@ fun Actions(
                 onClick = {
                     coroutineScope.launch(Dispatchers.IO) { passViewModel.delete(pass.value) }
                     navController.popBackStack()
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, context.getString(R.string.deleted), Toast.LENGTH_SHORT).show()
+                    }
                 }
             )
         }
