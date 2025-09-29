@@ -40,7 +40,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.api.FailureReason
 import nz.eloque.foss_wallet.api.UpdateContent
@@ -166,9 +165,7 @@ fun Actions(
                 onClick = {
                     coroutineScope.launch(Dispatchers.IO) { passViewModel.delete(pass.value) }
                     navController.popBackStack()
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(context, context.getString(R.string.deleted), Toast.LENGTH_SHORT).show()
-                    }
+                    Toast.makeText(context, context.getString(R.string.deleted), Toast.LENGTH_SHORT).show()
                 }
             )
         }
