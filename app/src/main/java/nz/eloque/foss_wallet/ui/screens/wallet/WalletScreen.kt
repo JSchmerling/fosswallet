@@ -119,7 +119,6 @@ fun WalletScreen(
                             "application/json+zip",
                             "application/octet-stream",
                             "application/pkpass",
-                            "application/pkpass+zip",
                             "application/pkpasses",
                             "application/vnd.apple.pkpass",
                             "application/x-apple-pkpass",
