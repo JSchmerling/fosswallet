@@ -50,32 +50,21 @@ fun ShortPassCard(
 fun PassCard(
     pass: Pass,
     modifier: Modifier = Modifier,
-    onClick: (() -> Unit)? = null,
+    onClick: () -> Unit = {},
     selected: Boolean = false,
     colors: CardColors = CardDefaults.elevatedCardColors(),
     content: @Composable ((cardColors: CardColors) -> Unit),
 ) {
     val cardColors = pass.colors?.toCardColors() ?: colors
     val scale by animateFloatAsState(if (selected) 0.95f else 1f)
-    if (onClick == null) {
-        ElevatedCard(
-            colors = cardColors,
-            modifier = modifier
-                .fillMaxWidth()
-                .scale(scale)
-        ) {
-            PassContent(pass, cardColors, Modifier, content)
-        }
-    } else {
-        ElevatedCard(
-            onClick = onClick,
-            colors = cardColors,
-            modifier = modifier
-                .fillMaxWidth()
-                .scale(scale)
-        ) {
-            PassContent(pass, cardColors, Modifier, content)
-        }
+    ElevatedCard(
+        onClick = onClick,
+        colors = cardColors,
+        modifier = modifier
+            .fillMaxWidth()
+            .scale(scale)
+    ) {
+        PassContent(pass, cardColors, Modifier, content)
     }
 }
 
