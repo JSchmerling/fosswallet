@@ -29,8 +29,7 @@ import nz.eloque.foss_wallet.share.share
 import nz.eloque.foss_wallet.utils.isScrollingUp
 
 @Composable
-fun SelectionActions(
-    isArchive: Boolean,
+fun LeftSelectionActions(
     selectedPasses: SnapshotStateSet<Pass>,
     listState: LazyListState,
     passViewModel: PassViewModel,
