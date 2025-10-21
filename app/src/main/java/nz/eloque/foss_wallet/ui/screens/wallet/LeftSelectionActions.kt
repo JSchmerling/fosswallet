@@ -42,19 +42,12 @@ fun SelectionActions(
         horizontalAlignment = Alignment.End
     ) {
         FloatingActionButton(
-            onClick = {
-            
-            },
-        ) {
-            Icon(imageVector = Icons.Default.Delete, contentDescription = stringResource(R.string.delete))
-        }
-        FloatingActionButton(
                 onClick = {
                   
                 }
             },
         ) {
-            Icon(imageVector = Icons.Default.Unarchive, contentDescription = stringResource(R.string.unarchive))
+            Icon(imageVector = Icons.Default.Unarchive, contentDescription = stringResource(R.string.shortcut))
         }
         FloatingActionButton(
             onClick = {
@@ -62,7 +55,7 @@ fun SelectionActions(
                 }
             },
         ) {
-            Icon(imageVector = Icons.Default.Share, contentDescription = stringResource(R.string.share_passes))
+            Icon(imageVector = Icons.Default.Share, contentDescription = stringResource(R.string.update))
         }
     }
 }
