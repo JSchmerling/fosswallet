@@ -4,12 +4,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Archive
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Folder
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Unarchive
-import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material.icons.filled.AppShortcut
+import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,7 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.model.Pass
-import nz.eloque.foss_wallet.share.share
+import nz.eloque.foss_wallet.shortcut.Shortcut
 import nz.eloque.foss_wallet.utils.isScrollingUp
 
 @Composable
@@ -41,20 +37,19 @@ fun LeftSelectionActions(
         horizontalAlignment = Alignment.End
     ) {
         FloatingActionButton(
-                onClick = {
-                  
-                }
-            },
+            onClick = {
+                Shortcut.create(context, pass, pass.description)
+            }
         ) {
-            Icon(imageVector = Icons.Default.Unarchive, contentDescription = stringResource(R.string.shortcut))
+            Icon(imageVector = Icons.Default.AppShortcut, contentDescription = stringResource(R.string.shortcut))
         }
         FloatingActionButton(
             onClick = {
-                
-                }
-            },
+                coroutineScope.launch(Dispatchers.IO) { passViewModel.delete(pass) }
+                navController.popBackStack()
+            }
         ) {
-            Icon(imageVector = Icons.Default.Share, contentDescription = stringResource(R.string.update))
+            Icon(imageVector = Icons.Default.Sync, contentDescription = stringResource(R.string.update))
         }
     }
 }
