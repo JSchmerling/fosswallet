@@ -105,6 +105,7 @@ fun PassCard(
     ) {
         PassContent(pass, cardColors, Modifier, content)
     }
+    Tags(pass, pass.passColors.label)
 }
 
 @Composable
