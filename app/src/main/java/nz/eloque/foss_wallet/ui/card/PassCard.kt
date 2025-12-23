@@ -61,6 +61,7 @@ fun ShortPassCard(
         if (selected) {
             SelectionIndicator(Modifier.align(Alignment.TopEnd))
         }
+        Tags(pass, pass.passColors.label)
     }
 
     pass.barCodes.firstOrNull()?.let { barcode ->
