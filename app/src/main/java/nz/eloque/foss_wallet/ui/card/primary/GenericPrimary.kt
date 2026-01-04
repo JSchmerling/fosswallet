@@ -42,7 +42,7 @@ fun GenericPrimary(pass: Pass) {
                 contentDescription = stringResource(R.string.image),
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
-                    .padding(5.dp)
+                    .padding(4.dp)
                     .width(120.dp)
                     .height(150.dp)
             )
