@@ -8,6 +8,8 @@ import java.time.ZonedDateTime
 const val TIME_ADDED = "TimeAdded"
 const val RELEVANT_DATE_NEWEST = "RelevantDateNewest"
 const val RELEVANT_DATE_OLDEST = "RelevantDateOldest"
+const val PUBLISHER_A_Z = "PublisherAZ"
+const val PUBLISHER_Z_A = "PublisherZA"
 
 private val oldestFirst = Comparator.comparing<LocalizedPassWithTags, ZonedDateTime?>(
     { it.pass.relevantDates.firstOrNull()?.startDate() },
@@ -19,6 +21,16 @@ private val newestFirst = Comparator.comparing<LocalizedPassWithTags, ZonedDateT
     Comparator.nullsLast(Comparator.reverseOrder())
 )
 
+private val publisherAZ = Comparator.comparing<LocalizedPassWithTags, String>(
+    { it.pass.organizationName?.lowercase() ?: it.pass.logoText?.lowercase() ?: "" },
+    Comparator.naturalOrder()
+)
+
+private val publisherZA = Comparator.comparing<LocalizedPassWithTags, String>(
+    { it.pass.organizationName?.lowercase() ?: it.pass.logoText?.lowercase() ?: "" },
+    Comparator.reverseOrder()
+)
+
 
 sealed class SortOption(val name: String, @param:StringRes val l18n: Int, val comparator: Comparator<LocalizedPassWithTags>) {
     object TimeAdded : SortOption(TIME_ADDED, R.string.date_added, Comparator { left, right ->
@@ -26,10 +38,12 @@ sealed class SortOption(val name: String, @param:StringRes val l18n: Int, val co
     })
     object RelevantDateNewest : SortOption(RELEVANT_DATE_NEWEST, R.string.relevant_date_newest, newestFirst)
     object RelevantDateOldest : SortOption(RELEVANT_DATE_OLDEST, R.string.relevant_date_oldest, oldestFirst)
+    object PublisherAZ : SortOption(PUBLISHER_A_Z, R.string.publisher_a_z, publisherAZ)
+    object PublisherZA : SortOption(PUBLISHER_Z_A, R.string.publisher_z_a, publisherZA)
 
     companion object {
         fun all(): List<SortOption> {
-            return listOf(TimeAdded, RelevantDateNewest, RelevantDateOldest)
+            return listOf(TimeAdded, RelevantDateNewest, RelevantDateOldest, PublisherAZ, PublisherZA)
         }
     }
 }
@@ -37,4 +51,4 @@ sealed class SortOption(val name: String, @param:StringRes val l18n: Int, val co
 val SortOptionSaver: Saver<SortOption, String> = Saver(
     save = { it.name },
     restore = { SortOption.all().find { option -> option.name == it } }
-)
+    
