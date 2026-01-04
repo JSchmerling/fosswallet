@@ -89,6 +89,5 @@
     <string name="tag_label">Tag label</string>
     <string name="collapse">Collapse</string>
     <string name="expand">Expand</string>
-    <string name="publisher_a_z">Publisher (alphabetically)</string>
-    <string name="publisher_z_a">Publisher (reversed alphabetically)</string>
+    <string name="publisher_a_z">Publisher</string>
 </resources>
