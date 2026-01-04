@@ -52,3 +52,4 @@ sealed class SortOption(val name: String, @param:StringRes val l18n: Int, val co
 val SortOptionSaver: Saver<SortOption, String> = Saver(
     save = { it.name },
     restore = { SortOption.all().find { option -> option.name == it } }
+)
