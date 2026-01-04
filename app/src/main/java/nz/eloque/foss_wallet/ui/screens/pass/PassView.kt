@@ -72,7 +72,7 @@ fun PassView(
             onTagCreate = onTagCreate
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(25.dp)
+                verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
                 barCode?.let {
                     AsyncPassImage(model = pass.footerFile(context))
@@ -86,7 +86,7 @@ fun PassView(
             }
         }
         Column(
-            verticalArrangement = Arrangement.spacedBy(25.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp),
             modifier = Modifier
                 .padding(10.dp)
         ) {
