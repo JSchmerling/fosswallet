@@ -23,12 +23,12 @@ private val newestFirst = Comparator.comparing<LocalizedPassWithTags, ZonedDateT
 )
 
 private val publisherAZ = Comparator.comparing<LocalizedPassWithTags, String>(
-    { it.pass.organization?.lowercase() ?: it.pass.logoText?.lowercase() ?: "" },
+    { it.pass.organization.ifEmpty{it.pass.logoText?:""}.lowercase() },
     Comparator.naturalOrder()
 )
 
 private val publisherZA = Comparator.comparing<LocalizedPassWithTags, String>(
-    { it.pass.organization?.lowercase() ?: it.pass.logoText?.lowercase() ?: "" },
+    { it.pass.organization.ifEmpty{it.pass.logoText?:""}.lowercase() },
     Comparator.reverseOrder()
 )
 
