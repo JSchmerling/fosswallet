@@ -30,13 +30,13 @@ sealed class SortOption(val name: String, @param:StringRes val l18n: Int, val co
     object TimeAdded : SortOption(TIME_ADDED, R.string.date_added, Comparator { left, right ->
         -left.pass.addedAt.compareTo(right.pass.addedAt)
     })
-    object PublisherAlphabetically : SortOption(PUBLISHER_ALPHABETICALLY, R.string.publisher, publisherAlphabetically)
+    object Publisher : SortOption(PUBLISHER_ALPHABETICALLY, R.string.publisher, publisherAlphabetically)
     object RelevantDateNewest : SortOption(RELEVANT_DATE_NEWEST, R.string.relevant_date_newest, newestFirst)
     object RelevantDateOldest : SortOption(RELEVANT_DATE_OLDEST, R.string.relevant_date_oldest, oldestFirst)
 
     companion object {
         fun all(): List<SortOption> {
-            return listOf(TimeAdded, PublisherAlphabetically, RelevantDateNewest, RelevantDateOldest)
+            return listOf(TimeAdded, Publisher, RelevantDateNewest, RelevantDateOldest)
         }
     }
 }
