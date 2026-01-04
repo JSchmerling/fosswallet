@@ -78,7 +78,7 @@ private fun DestinationCard(
             maxLines = 1,
             textAlign = TextAlign.Center,
             modifier = Modifier
-                .padding(5.dp)
+                .padding(4.dp)
                 .align(Alignment.CenterHorizontally),
         )
     }
