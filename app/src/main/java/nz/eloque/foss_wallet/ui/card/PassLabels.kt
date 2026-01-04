@@ -45,7 +45,7 @@ fun MainLabel(
     content: PassContent
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(5.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
         modifier = Modifier
             .padding(12.dp)
             .fillMaxWidth()
@@ -124,7 +124,7 @@ private fun PassLabelContents(
     ) {
         Column(
             horizontalAlignment = labelAlign.horizontalAlignment,
-            verticalArrangement = Arrangement.spacedBy(5.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
             modifier = Modifier
                 .padding(12.dp)
         ) {
