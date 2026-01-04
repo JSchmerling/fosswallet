@@ -16,14 +16,14 @@ private val publisherAlphabetically = Comparator.comparing<LocalizedPassWithTags
     Comparator.naturalOrder()
 )
 
-private val oldestFirst = Comparator.comparing<LocalizedPassWithTags, ZonedDateTime?>(
-    { it.pass.relevantDates.firstOrNull()?.startDate() },
-    Comparator.nullsLast(Comparator.naturalOrder())
-)
-
 private val newestFirst = Comparator.comparing<LocalizedPassWithTags, ZonedDateTime?>(
     { it.pass.relevantDates.firstOrNull()?.startDate() },
     Comparator.nullsLast(Comparator.reverseOrder())
+)
+
+private val oldestFirst = Comparator.comparing<LocalizedPassWithTags, ZonedDateTime?>(
+    { it.pass.relevantDates.firstOrNull()?.startDate() },
+    Comparator.nullsLast(Comparator.naturalOrder())
 )
 
 sealed class SortOption(val name: String, @param:StringRes val l18n: Int, val comparator: Comparator<LocalizedPassWithTags>) {
