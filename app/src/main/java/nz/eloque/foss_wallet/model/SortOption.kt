@@ -7,7 +7,7 @@ import java.time.ZonedDateTime
 
 
 const val TIME_ADDED = "TimeAdded"
-const val PUBLISHER_Alphabetically = "PublisherAlphabetically"
+const val PUBLISHER_ALPHABETICALLY = "PublisherAlphabetically"
 const val RELEVANT_DATE_NEWEST = "RelevantDateNewest"
 const val RELEVANT_DATE_OLDEST = "RelevantDateOldest"
 
@@ -30,7 +30,7 @@ sealed class SortOption(val name: String, @param:StringRes val l18n: Int, val co
     object TimeAdded : SortOption(TIME_ADDED, R.string.date_added, Comparator { left, right ->
         -left.pass.addedAt.compareTo(right.pass.addedAt)
     })
-    object PublisherAlphabetically : SortOption(PUBLISHER_Alphabetically, R.string.publisher, publisherAlphabetically)
+    object PublisherAlphabetically : SortOption(PUBLISHER_ALPHABETICALLY, R.string.publisher, publisherAlphabetically)
     object RelevantDateNewest : SortOption(RELEVANT_DATE_NEWEST, R.string.relevant_date_newest, newestFirst)
     object RelevantDateOldest : SortOption(RELEVANT_DATE_OLDEST, R.string.relevant_date_oldest, oldestFirst)
 
