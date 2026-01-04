@@ -5,6 +5,7 @@ import androidx.compose.runtime.saveable.Saver
 import nz.eloque.foss_wallet.R
 import java.time.ZonedDateTime
 
+
 const val TIME_ADDED = "TimeAdded"
 const val RELEVANT_DATE_NEWEST = "RelevantDateNewest"
 const val RELEVANT_DATE_OLDEST = "RelevantDateOldest"
@@ -22,12 +23,12 @@ private val newestFirst = Comparator.comparing<LocalizedPassWithTags, ZonedDateT
 )
 
 private val publisherAZ = Comparator.comparing<LocalizedPassWithTags, String>(
-    { it.pass.organizationName?.lowercase() ?: it.pass.logoText?.lowercase() ?: "" },
+    { it.pass.organization?.lowercase() ?: it.pass.logoText?.lowercase() ?: "" },
     Comparator.naturalOrder()
 )
 
 private val publisherZA = Comparator.comparing<LocalizedPassWithTags, String>(
-    { it.pass.organizationName?.lowercase() ?: it.pass.logoText?.lowercase() ?: "" },
+    { it.pass.organization?.lowercase() ?: it.pass.logoText?.lowercase() ?: "" },
     Comparator.reverseOrder()
 )
 
@@ -51,4 +52,3 @@ sealed class SortOption(val name: String, @param:StringRes val l18n: Int, val co
 val SortOptionSaver: Saver<SortOption, String> = Saver(
     save = { it.name },
     restore = { SortOption.all().find { option -> option.name == it } }
-    
