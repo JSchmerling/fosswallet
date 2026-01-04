@@ -11,7 +11,7 @@ const val PUBLISHER = "Publisher"
 const val RELEVANT_DATE_NEWEST = "RelevantDateNewest"
 const val RELEVANT_DATE_OLDEST = "RelevantDateOldest"
 
-private val publisherAlphabetically = Comparator.comparing<LocalizedPassWithTags, String>(
+private val publisher = Comparator.comparing<LocalizedPassWithTags, String>(
     { it.pass.organization.ifEmpty{it.pass.logoText?:""}.lowercase() },
     Comparator.naturalOrder()
 )
@@ -30,7 +30,7 @@ sealed class SortOption(val name: String, @param:StringRes val l18n: Int, val co
     object TimeAdded : SortOption(TIME_ADDED, R.string.date_added, Comparator { left, right ->
         -left.pass.addedAt.compareTo(right.pass.addedAt)
     })
-    object Publisher : SortOption(PUBLISHER, R.string.publisher, publisherAlphabetically)
+    object Publisher : SortOption(PUBLISHER, R.string.publisher, publisher)
     object RelevantDateNewest : SortOption(RELEVANT_DATE_NEWEST, R.string.relevant_date_newest, newestFirst)
     object RelevantDateOldest : SortOption(RELEVANT_DATE_OLDEST, R.string.relevant_date_oldest, oldestFirst)
 
