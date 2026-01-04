@@ -57,7 +57,7 @@ private fun LogoView(
             model = it,
             contentDescription = stringResource(R.string.image),
             contentScale = ContentScale.FillHeight,
-            modifier = Modifier.padding(5.dp)
+            modifier = Modifier.padding(4.dp)
                 .height(28.dp)
         ) }
         logoText?.let {
