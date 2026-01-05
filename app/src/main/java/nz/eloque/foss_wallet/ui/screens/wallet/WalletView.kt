@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -55,7 +56,7 @@ fun WalletView(
     navController: NavController,
     passViewModel: PassViewModel,
     modifier: Modifier = Modifier,
-    emptyIcon: ImageVector = Icons.Default.Wallet,
+    emptyIcon: ImageVector? = null,
     archive: Boolean = false,
     listState: LazyListState = rememberLazyListState(),
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
@@ -84,14 +85,25 @@ fun WalletView(
         Box(modifier = modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Image(
-                imageVector = emptyIcon,
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary),
-                contentDescription = stringResource(R.string.wallet),
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier.fillMaxWidth(0.5f),
-                alpha = 0.25f
-            )
+            if (emptyIcon != null) {
+                Image(
+                    imageVector = emptyIcon,
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary),
+                    contentDescription = stringResource(R.string.wallet),
+                    contentScale = ContentScale.FillWidth,
+                    modifier = Modifier.fillMaxWidth(0.5f),
+                    alpha = 0.25f
+                )
+            } else {
+                Image(
+                    painter = painterResource(id = R.drawable.icon_monochrome),
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary),
+                    contentDescription = stringResource(R.string.wallet),
+                    contentScale = ContentScale.FillWidth,
+                    modifier = Modifier.fillMaxWidth(0.5f),
+                    alpha = 0.25f
+                )
+            }
         }
     }
 
