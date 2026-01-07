@@ -85,20 +85,18 @@ fun WalletView(
             contentAlignment = Alignment.Center
         ) {
             if (emptyIcon != null) {
-                Image(
+                Icon(
                     imageVector = emptyIcon,
-                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary),
+                    tint = MaterialTheme.colorScheme.secondary,
                     contentDescription = stringResource(R.string.wallet),
-                    contentScale = ContentScale.FillWidth,
                     modifier = Modifier.fillMaxWidth(0.5f),
                     alpha = 0.25f
                 )
             } else {
-                Image(
+                Icon(
                     painter = painterResource(id = R.drawable.icon_monochrome),
-                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary),
+                    tint = MaterialTheme.colorScheme.secondary,
                     contentDescription = stringResource(R.string.wallet),
-                    contentScale = ContentScale.FillWidth,
                     modifier = Modifier.fillMaxWidth(0.5f),
                     alpha = 0.25f
                 )
