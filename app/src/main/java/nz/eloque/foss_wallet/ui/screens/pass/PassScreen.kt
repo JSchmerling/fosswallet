@@ -127,6 +127,7 @@ fun Actions(
 
     val expanded = remember { mutableStateOf(false) }
     val isLoading = remember { mutableStateOf(false) }
+    val queryState by passViewModel.queryState.collectAsStateWithLifecycle()
 
     Box(
         modifier = Modifier

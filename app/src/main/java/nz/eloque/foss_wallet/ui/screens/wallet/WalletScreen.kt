@@ -20,6 +20,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableStateSetOf
 import androidx.compose.runtime.remember
@@ -64,6 +65,7 @@ fun WalletScreen(
     val biometric = remember { Biometric(activity, snackbarHostState, coroutineScope) }
 
     val loading = remember { mutableStateOf(false) }
+    val queryState by passViewModel.queryState.collectAsStateWithLifecycle()
 
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
         println("selected file URI $uris")
