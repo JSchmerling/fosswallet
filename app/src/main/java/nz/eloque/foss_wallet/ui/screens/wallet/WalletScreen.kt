@@ -20,7 +20,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableStateSetOf
 import androidx.compose.runtime.remember
@@ -31,8 +30,6 @@ import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-//import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,8 +51,7 @@ import java.net.URLEncoder
 @Composable
 fun WalletScreen(
     navController: NavHostController,
-    passViewModel: PassViewModel,
-    snackbarHostState: SnackbarHostState
+    passViewModel: PassViewModel
 ) {
     val context = LocalContext.current
     val clipboard = LocalClipboard.current
@@ -64,10 +60,10 @@ fun WalletScreen(
 
     val listState = rememberLazyListState()
     val activity = remember(context) { context as FragmentActivity }
+    val snackbarHostState = remember { SnackbarHostState() }
     val biometric = remember { Biometric(activity, snackbarHostState, coroutineScope) }
 
     val loading = remember { mutableStateOf(false) }
-    val queryState by passViewModel.queryState.collectAsStateWithLifecycle()
 
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
         println("selected file URI $uris")
@@ -101,7 +97,7 @@ fun WalletScreen(
         navController = navController,
         title = stringResource(id = Screen.Wallet.resourceId),
         actions = {
-            if (queryState.isAuthenticated) {
+            if (passViewModel.isAuthenticated) {
                 IconButton(onClick = { passViewModel.conceal() }) {
                     Icon(
                         imageVector = Icons.Default.VisibilityOff,

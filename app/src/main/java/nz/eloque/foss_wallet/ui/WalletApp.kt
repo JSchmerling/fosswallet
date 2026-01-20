@@ -11,15 +11,12 @@ import androidx.compose.material.icons.automirrored.filled.LibraryBooks
 import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.ContentPasteGo
-import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Wallet
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -63,7 +60,6 @@ fun WalletApp(
     passViewModel: PassViewModel = viewModel(),
     settingsViewModel: SettingsViewModel = viewModel(),
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
 
     Surface(
         modifier = modifier
@@ -78,7 +74,7 @@ fun WalletApp(
             popExitTransition = { slideOutOfContainer(SlideDirection.End, tween()) }
         ) {
             composable(Screen.Wallet.route) {
-                WalletScreen(navController, passViewModel, snackbarHostState)
+                WalletScreen(navController, passViewModel)
             }
             composable(Screen.Archive.route) {
                 ArchiveScreen(navController, passViewModel)
@@ -91,7 +87,7 @@ fun WalletApp(
                 arguments = listOf(navArgument("url") { type = NavType.StringType })
             ) { backStackEntry ->
                 var url = backStackEntry.arguments?.getString("url")!!
-                url = URLDecoder.decode(url);
+                url = URLDecoder.decode(url)
                 WebviewScreen(navController, passViewModel, url)
             }
             composable(Screen.Settings.route) {

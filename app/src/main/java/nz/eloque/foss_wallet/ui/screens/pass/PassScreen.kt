@@ -43,7 +43,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -128,7 +127,6 @@ fun Actions(
 
     val expanded = remember { mutableStateOf(false) }
     val isLoading = remember { mutableStateOf(false) }
-    val queryState by passViewModel.queryState.collectAsStateWithLifecycle()
 
     Box(
         modifier = Modifier
@@ -142,7 +140,7 @@ fun Actions(
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false }
         ) {
-            if (queryState.isPinned) {
+            if (passViewModel.isPinned) {
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.unpin)) },
                     leadingIcon = {
@@ -191,7 +189,7 @@ fun Actions(
                         when (result) {
                             is UpdateResult.Success -> if (result.content is UpdateContent.Pass) {
                                 snackbarHostState.showSnackbar(
-                                    message =  resources.getString(R.string.update_successful),
+                                    message = resources.getString(R.string.update_successful),
                                     duration = SnackbarDuration.Short
                                 )
                             }
@@ -217,7 +215,7 @@ fun Actions(
                 }
             }
 
-            if (queryState.isHidden) {
+            if (passViewModel.isHidden) {
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.unhide)) },
                     leadingIcon = {
@@ -227,7 +225,7 @@ fun Actions(
                         )
                     },
                     onClick = {
-                        if (queryState.isAuthenticated) {
+                        if (passViewModel.isAuthenticated) {
                             passViewModel.unhide(pass)
                         } else {
                             biometric.prompt(
@@ -247,7 +245,7 @@ fun Actions(
                         )
                     },
                     onClick = {
-                        if (queryState.isAuthenticated) {
+                        if (passViewModel.isAuthenticated) {
                             passViewModel.hide(pass)
                         } else {
                             biometric.prompt(
