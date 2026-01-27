@@ -72,7 +72,6 @@ fun PassScreen(
     val coroutineScope = rememberCoroutineScope()
     val passFlow: Flow<LocalizedPassWithTags> = passViewModel.passFlowById(passId).mapNotNull { it ?: LocalizedPassWithTags.placeholder() }
     val localizedPass by remember(passFlow) { passFlow }.collectAsState(initial = LocalizedPassWithTags.placeholder())
-//    val pass = localizedPass.pass
 
     val tagFlow = passViewModel.allTags
     val allTags by remember(tagFlow) { tagFlow }.collectAsState(initial = setOf())
@@ -80,13 +79,6 @@ fun PassScreen(
     val isPinned by passViewModel.isPinned.collectAsState()
     val isHidden by passViewModel.isHidden.collectAsState()
     val isAuthenticated by passViewModel.isAuthenticated.collectAsState()
-
-    LaunchedEffect(localizedPass.pass.id) {
-        withContext(Dispatchers.IO) {
-            passViewModel.pinned(localizedPass.pass)
-            passViewModel.hidden(localizedPass.pass)
-        }
-    }
 
     AllowOnLockscreen {
         val snackbarHostState = remember { SnackbarHostState() }
