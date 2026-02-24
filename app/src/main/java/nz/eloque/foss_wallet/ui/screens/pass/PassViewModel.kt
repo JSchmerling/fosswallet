@@ -52,6 +52,9 @@ class PassViewModel @Inject constructor(
     fun reveal() { _isAuthenticated.value = true }
     fun conceal() { _isAuthenticated.value = false }
     
+    fun archive(pass: Pass) = passStore.archive(pass)
+    fun unarchive(pass: Pass) = passStore.unarchive(pass)
+
     fun barcodePosition(): BarcodePosition = settingsStore.barcodePosition()
 
     fun increasePassViewBrightness(): Boolean = settingsStore.increasePassViewBrightness()

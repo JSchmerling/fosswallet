@@ -11,10 +11,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AppShortcut
+import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Sync
+import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.PushPin
@@ -247,6 +249,27 @@ fun Actions(
                             )
                         }
                     }
+            if (pass.archived) {
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.unarchive)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Unarchive,
+                            contentDescription = stringResource(R.string.unarchive)
+                        )
+                    },
+                    onClick = { passViewModel.unarchive(pass) }
+                )
+            } else {
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.archive)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Archive,
+                            contentDescription = stringResource(R.string.archive)
+                        )
+                    },
+                    onClick = { passViewModel.archive(pass) }
                 )
             }
 
