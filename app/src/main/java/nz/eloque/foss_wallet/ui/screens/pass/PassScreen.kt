@@ -249,6 +249,9 @@ fun Actions(
                             )
                         }
                     }
+                )
+            }
+            
             if (pass.archived) {
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.unarchive)) },
