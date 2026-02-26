@@ -6,6 +6,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -20,11 +21,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import nz.eloque.foss_wallet.model.LocalizedPassWithTags
 import nz.eloque.foss_wallet.model.PassColors
 import nz.eloque.foss_wallet.model.Tag
 import nz.eloque.foss_wallet.persistence.BarcodePosition
 import nz.eloque.foss_wallet.ui.components.FullscreenBarcode
+import nz.eloque.foss_wallet.ui.components.HideIndicator
 import nz.eloque.foss_wallet.ui.components.PinIndicator
 import nz.eloque.foss_wallet.ui.components.SelectionIndicator
 import nz.eloque.foss_wallet.ui.effects.UpdateBrightness
@@ -47,12 +50,13 @@ fun ShortPassCard(
     var showBarcode by remember { mutableStateOf(false) }
 
     Box(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().padding(top = if (pass.pass.pinned || pass.pass.hidden) 8.dp else 0.dp)
     ) {
         ElevatedCard(
             colors = cardColors,
             modifier = modifier
                 .fillMaxWidth()
+                .padding(top = if (pass.pass.pinned || pass.pass.hidden) 8.dp else 0.dp)
                 .scale(scale)
                 .combinedClickable(
                     onClick = onClick,
@@ -67,7 +71,8 @@ fun ShortPassCard(
                 allTags = allTags,
             )
         }
-        if (pass.pass.pinned) { PinIndicator(Modifier.align(Alignment.TopEnd), selected) }
+        if (pass.pass.hidden) { HideIndicator(Modifier.align(Alignment.TopCenter)) }
+        if (pass.pass.pinned) { PinIndicator(Modifier.align(Alignment.TopCenter)) }
         if (selected) { SelectionIndicator(Modifier.align(Alignment.TopEnd)) }
     }
 
