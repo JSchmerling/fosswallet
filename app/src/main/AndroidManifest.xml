@@ -110,9 +110,9 @@
         </activity>
 
         <activity
-            android:name="com.journeyapps.barcodescanner.CaptureActivity"
-            android:screenOrientation="fullSensor"
-            tools:replace="screenOrientation" />
+            android:name=".ui.screens.create.ScanActivity"
+            android:theme="@style/Theme.FossWallet.NoActionBar"
+            android:screenOrientation="fullSensor" />
 
         <provider
             android:name=".app.PassProvider"

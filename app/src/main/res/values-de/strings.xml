@@ -17,6 +17,7 @@
     <string name="add_pass">Pass hinzufügen</string>
     <string name="about">Über</string>
     <string name="webview">URL öffnen</string>
+    <string name="open_from_clipboard">Aus Zwischenablage öffnen</string>
     <string name="source_code">Quellcode</string>
     <string name="made_with_love">Mit ❤ gemacht in Deutschland</string>
     <string name="to">nach</string>
@@ -67,6 +68,10 @@
     <string name="pass_imported">Pass erfolgreich importiert</string>
     <string name="barcode_position_bottom">Unten</string>
     <string name="create_pass">Pass erstellen</string>
+    <string name="manual_entry">Manuelle Eingabe</string>
+    <string name="advanced">Erweitert</string>
+    <string name="scan_code">Code scannen</string>
+    <string name="continue_to_details">Weiter</string>
     <string name="pass_name">Name des Passes</string>
     <string name="barcode_value">Wert des Barcodes</string>
     <string name="pass_type">Passtyp</string>
@@ -95,7 +100,10 @@
     <string name="add_another_barcode">Einen weiteren Barcode hinzufügen</string>
     <string name="barcode_alt_text">Alternativer Barcode-Text</string>
     <string name="save">Speichern</string>
+    <string name="import_pass">Pass importieren</string>
+    <string name="no_text_in_clipboard">Kein Text in der Zwischenablage</string>
     <string name="additional_fields">Zusätzliche Felder</string>
+    <string name="pass_location">Ort</string>
     <string name="brightness">Helligkeit</string>
     <string name="pass_background_color">Hintergrundfarbe</string>
     <string name="pass_relevant_end">Ende</string>
