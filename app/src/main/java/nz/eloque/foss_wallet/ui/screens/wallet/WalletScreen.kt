@@ -30,6 +30,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavHostController
@@ -55,7 +56,6 @@ fun WalletScreen(
 ) {
     val context = LocalContext.current
     val resources = LocalResources.current
-    val clipboard = LocalClipboard.current
 
     val contentResolver = context.contentResolver
     val coroutineScope = rememberCoroutineScope()
