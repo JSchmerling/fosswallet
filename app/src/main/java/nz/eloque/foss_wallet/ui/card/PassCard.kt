@@ -48,13 +48,12 @@ fun ShortPassCard(
     var showBarcode by remember { mutableStateOf(false) }
 
     Box(
-        modifier = Modifier.fillMaxWidth().padding(top = if (pass.pass.pinned || pass.pass.hidden) 8.dp else 0.dp)
+        modifier = Modifier.fillMaxWidth()
     ) {
         ElevatedCard(
             colors = cardColors,
             modifier = modifier
                 .fillMaxWidth()
-                .padding(top = if (pass.pass.pinned || pass.pass.hidden) 8.dp else 0.dp)
                 .scale(scale)
                 .combinedClickable(
                     onClick = onClick,
