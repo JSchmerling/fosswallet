@@ -6,7 +6,6 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -21,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import nz.eloque.foss_wallet.model.LocalizedPassWithTags
 import nz.eloque.foss_wallet.model.PassColors
 import nz.eloque.foss_wallet.model.Tag
@@ -68,7 +66,9 @@ fun ShortPassCard(
                 allTags = allTags,
             )
         }
-        if (selected) { SelectionIndicator(Modifier.align(Alignment.TopEnd)) }
+        if (selected) {
+            SelectionIndicator(Modifier.align(Alignment.TopEnd))
+        }
     }
 
     pass.pass.barCodes.firstOrNull()?.let { barcode ->
