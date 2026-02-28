@@ -78,7 +78,27 @@ fun GroupCard(
                 ShortPassCard(
                     pass = item,
                     allTags = allTags,
-                    onClick = { onClick.invoke(item.pass) },
+                    onClick = {
+                        if (selectedPasses.isNotEmpty()) {
+                            val allGroupPassesSelected = passes.all { selectedPasses.contains(it) }
+                            if (allGroupPassesSelected) {
+                                selectedPasses.removeAll(passes.toSet())
+                            } else {
+                                selectedPasses.addAll(passes)
+                            }
+                        } else {
+                            onClick.invoke(item.pass)
+                        }
+                    },
+                    onLongClick = {
+                        val allGroupPassesSelected = passes.all { selectedPasses.contains(it) }
+                        if (allGroupPassesSelected) {
+                            selectedPasses.removeAll(passes.toSet())
+                        } else {
+                            selectedPasses.addAll(passes)
+                        }
+                    },
+                    selected = selectedPasses.contains(item),
                     toned = true,
                     barcodePosition = walletViewModel.barcodePosition(),
                     increaseBrightness = walletViewModel.increasePassViewBrightness()

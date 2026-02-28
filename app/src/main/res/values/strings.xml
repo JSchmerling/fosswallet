@@ -15,6 +15,9 @@
     <string name="no_barcode_format_given">No barcode format given! Defaulting to QR code. This code might not get scanned correctly.</string>
     <string name="date">Date</string>
     <string name="delete">Delete</string>
+    <string name="delete_confirmation_message">Delete selected pass(es)? This cannot be undone.</string>
+    <string name="dont_ask_again">Don\'t ask me again</string>
+    <string name="ask_before_delete">Ask before delete</string>
     <string name="invalid_pass_toast">Pass could not be loaded. Are you sure this is a valid .pkpass?</string>
     <string name="add_pass">Add pass</string>
     <string name="import_pass">Import pass</string>
@@ -100,6 +103,7 @@
     <string name="help_translate">Help translate</string>
     <string name="choose_image">Choose image</string>
     <string name="clear_selection">Clear selection</string>
+    <string name="select_all">Select all</string>
     <string name="add_tag">Add tag</string>
     <string name="additional_fields">Additional fields</string>
     <string name="pass_location">Location</string>
