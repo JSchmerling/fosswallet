@@ -122,4 +122,5 @@
     <string name="pass_foreground_color">Vordergrundfarbe</string>
     <string name="strip">Streifen</string>
     <string name="pass_expiration_date">Ablaufdatum</string>
+    <string name="barcode_step_title">Barcode hinzufügen</string>
 </resources>

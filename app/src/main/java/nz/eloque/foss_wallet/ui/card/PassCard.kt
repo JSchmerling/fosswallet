@@ -36,6 +36,7 @@ fun ShortPassCard(
     allTags: Set<Tag>,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
+    onLongClick: () -> Unit,
     selected: Boolean = false,
     increaseBrightness: Boolean = false,
     barcodePosition: BarcodePosition,
@@ -55,9 +56,8 @@ fun ShortPassCard(
                 .scale(scale)
                 .combinedClickable(
                     onClick = onClick,
-                    onLongClick = {
-                        pass.pass.barCodes.firstOrNull()?.let { showBarcode = true }
-                    }
+                    onLongClick = onLongClick,
+                    onDoubleClick = { pass.pass.barCodes.firstOrNull()?.let { showBarcode = true}}
                 )
         ) {
             ShortPassContent(

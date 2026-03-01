@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,7 +31,7 @@ class WalletViewModel @Inject constructor(
     application: Application,
     private val passStore: PassStore,
     private val tagRepository: TagRepository,
-    private val settingsStore: SettingsStore
+    val settingsStore: SettingsStore
 ) : AndroidViewModel(application) {
 
     private val _isAuthenticated = MutableStateFlow(false)
@@ -48,6 +49,9 @@ class WalletViewModel @Inject constructor(
 
     init {
         update()
+        viewModelScope.launch(Dispatchers.IO) {
+            passStore.archiveExpiredPasses()
+        }
     }
 
     private fun update() {

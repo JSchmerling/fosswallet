@@ -20,6 +20,7 @@ import nz.eloque.foss_wallet.persistence.loader.PassLoader
 import nz.eloque.foss_wallet.persistence.localization.PassLocalizationRepository
 import nz.eloque.foss_wallet.persistence.pass.PassRepository
 import nz.eloque.foss_wallet.shortcut.Shortcut
+import java.time.Instant
 import java.util.Locale
 
 class PassStore @Inject constructor(
@@ -40,7 +41,7 @@ class PassStore @Inject constructor(
     fun filtered(query: String) = passRepository.filtered(query).map { passes -> passes.map { it.applyLocalization(Locale.getDefault().language) } }
 
     fun create(pass: Pass, bitmaps: PassBitmaps) {
-        passRepository.insert(pass, bitmaps, null)
+        passRepository.insert(withAutoArchive(pass), bitmaps, null)
     }
 
     fun add(loadResult: PassLoadResult): ImportResult {
@@ -64,6 +65,7 @@ class PassStore @Inject constructor(
                         archived = pass.archived,
                         hidden = pass.hidden,
                         pinned = pass.pinned,
+                        autoArchive = pass.autoArchive,
                         renderLegacy = pass.renderLegacy
                     )
                 )
@@ -106,9 +108,16 @@ class PassStore @Inject constructor(
     private fun insert(loadResult: PassLoadResult) {
         transactionalExecutor.runTransactionally {
             val passWithLocalization = loadResult.pass
-            passRepository.insert(passWithLocalization.pass, loadResult.bitmaps, loadResult.originalPass)
+            passRepository.insert(withAutoArchive(passWithLocalization.pass), loadResult.bitmaps, loadResult.originalPass)
             passWithLocalization.localizations.map { it.copy(passId = passWithLocalization.pass.id) }.forEach { localizationRepository.insert(it) }
         }
+    }
+
+    fun archiveExpiredPasses() = passRepository.archiveExpiredPasses()
+
+    private fun withAutoArchive(pass: Pass, now: Instant = Instant.now()): Pass {
+        val expired = pass.expirationDate?.toInstant()?.let { expiration -> !expiration.isAfter(now) } ?: false
+        return if (pass.autoArchive && expired) pass.copy(archived = true) else pass
     }
 
     fun deleteGroup(groupId: Long) = passRepository.deleteGroup(groupId)
