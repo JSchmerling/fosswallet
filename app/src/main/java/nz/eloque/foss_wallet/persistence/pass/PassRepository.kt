@@ -68,7 +68,7 @@ class PassRepository @Inject constructor(
     suspend fun unarchive(pass: Pass) = passDao.unarchive(pass.id)
     fun toggleLegacyRendering(pass: Pass) = passDao.setLegacyRendering(pass.id, !pass.renderLegacy)
 
-    fun archiveExpiredPasses(now: Instant = Instant.now()) {
+    suspend fun archiveExpiredPasses(now: Instant = Instant.now()) {
         passDao.nonArchivedWithExpirationDate()
             .filter { pass ->
                 pass.expirationDate?.toInstant()?.let { expiration -> !expiration.isAfter(now) } ?: false
