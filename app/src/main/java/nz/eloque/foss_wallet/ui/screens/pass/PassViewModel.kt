@@ -34,8 +34,17 @@ class PassViewModel @Inject constructor(
 
     fun delete(pass: Pass) = passStore.delete(pass)
 
-    fun archive(pass: Pass) = passStore.archive(pass)
-    fun unarchive(pass: Pass) = passStore.unarchive(pass)
+    fun archive(pass: Pass) {
+        viewModelScope.launch {
+            passStore.archive(pass)
+        }
+    }
+    
+    fun unarchive(pass: Pass) {
+        viewModelScope.launch {
+            passStore.unarchive(pass)
+        }
+    }
 
     fun barcodePosition(): BarcodePosition = settingsStore.barcodePosition()
 
