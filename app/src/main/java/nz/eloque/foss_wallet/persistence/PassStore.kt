@@ -78,9 +78,9 @@ class PassStore @Inject constructor(
         }
     }
 
-    fun archive(pass: Pass) = passRepository.archive(pass)
+    suspend fun archive(pass: Pass) = passRepository.archive(pass)
 
-    fun unarchive(pass: Pass) = passRepository.unarchive(pass)
+    suspend fun unarchive(pass: Pass) = passRepository.unarchive(pass)
 
     suspend fun tag(pass: Pass, tag: Tag) = passRepository.tag(pass, tag)
 
