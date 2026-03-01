@@ -2,6 +2,7 @@ package nz.eloque.foss_wallet.ui.screens.pass
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import nz.eloque.foss_wallet.api.UpdateResult
