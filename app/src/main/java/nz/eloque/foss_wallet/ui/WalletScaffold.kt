@@ -26,7 +26,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import nz.eloque.foss_wallet.R
-import nz.eloque.foss_wallet.ui.components.AbbreviatingText
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,7 +33,6 @@ import nz.eloque.foss_wallet.ui.components.AbbreviatingText
 fun WalletScaffold(
     navController: NavController,
     modifier: Modifier = Modifier,
-    title: String = stringResource(R.string.wallet),
     toolWindow: Boolean = false,
     actions: @Composable RowScope.() -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
@@ -47,8 +45,8 @@ fun WalletScaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBar(
-                title = { AbbreviatingText(
-                    title,
+                title = { Text(
+                    text = stringResource(R.string.app_name),
                     style = MaterialTheme.typography.headlineMedium,
                     maxLines = 1,
                 ) },
