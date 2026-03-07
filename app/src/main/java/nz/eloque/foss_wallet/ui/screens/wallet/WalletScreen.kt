@@ -111,14 +111,14 @@ fun WalletScreen(
                     )
                 }
             }
-            IconButton(onClick = {
-                navController.navigate(Screen.Archive.route)
-            }) {
-                Icon(
-                    imageVector = Screen.Archive.icon,
-                    contentDescription = stringResource(R.string.the_archive)
-                )
-            }
+            SelectionMenu(
+                icon = Icons.AutoMirrored.Default.Sort,
+                contentDescription = R.string.filter,
+                options = SortOption.all(),
+                selectedOption = sortOption,
+                onOptionSelected = onSortChange,
+                optionLabel = { resources.getString(it.l18n) }
+            )
             IconButton(onClick = {
                 navController.navigate(Screen.Settings.route)
             }) {
