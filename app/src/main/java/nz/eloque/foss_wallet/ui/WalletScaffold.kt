@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import nz.eloque.foss_wallet.R
+import nz.eloque.foss_wallet.ui.components.NavigationRow
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,6 +40,7 @@ fun WalletScaffold(
     bottomBar: @Composable () -> Unit = {},
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     content: @Composable (scrollBehavior: TopAppBarScrollBehavior) -> Unit,
+    showNavigation: Boolean = false,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
@@ -57,7 +59,7 @@ fun WalletScaffold(
                         }
                     } else {
                         Box {
-                            
+                            Image(painter = painterResource(id = R.drawable.icon), contentDescription = null)
                         } 
                     }
                 },
@@ -66,7 +68,7 @@ fun WalletScaffold(
             )
         },
         contentWindowInsets = WindowInsets.statusBars,
-        bottomBar = bottomBar,
+        bottomBar = if (showNavigation) NavigationRow(navController: NavController),
         floatingActionButton = {
             Box(
                 modifier = Modifier.padding(
@@ -83,7 +85,7 @@ fun WalletScaffold(
             .padding(innerPadding)
             .padding(horizontal = 8.dp)
         ) {
-            content.invoke(scrollBehavior)
+            content(scrollBehavior)
         }
     }
 }
