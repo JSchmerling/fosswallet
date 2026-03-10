@@ -16,10 +16,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 import nz.eloque.foss_wallet.R
+import nz.eloque.foss_wallet.ui.Screen
 
 @Composable
-fun NavigationRow() {
+fun NavigationRow(navController: NavController) {
     var selectedTabIndex by remember { mutableStateOf(1) }
 
     NavigationBar {
@@ -31,7 +33,14 @@ fun NavigationRow() {
         )
         NavigationBarItem(
             selected = selectedTabIndex == 1,
-            onClick = { selectedTabIndex = 1 },
+            onClick = {
+                selectedTabIndex = 1
+                navController.navigate(Screen.Wallet.route) {
+                    launchSingleTop = true
+                    restoreState = true
+                    popUpTo(navController.graph.startDestinationId) { saveState = true }
+                }
+            },
             icon = { Icon(
                 imageVector = if (selectedTabIndex == 1) Icons.Filled.Wallet else Icons.Outlined.Wallet,
                 contentDescription = stringResource(R.string.wallet)
@@ -40,7 +49,14 @@ fun NavigationRow() {
         )
         NavigationBarItem(
             selected = selectedTabIndex == 2,
-            onClick = { selectedTabIndex = 2 },
+            onClick = {
+                selectedTabIndex = 2
+                navController.navigate(Screen.Archive.route) {
+                    launchSingleTop = true
+                    restoreState = true
+                    popUpTo(navController.graph.startDestinationId) { saveState = true }
+                }
+            },
             icon = { Icon(
                 imageVector = if (selectedTabIndex == 2) Icons.Filled.Archive else Icons.Outlined.Archive,
                 contentDescription = stringResource(R.string.the_archive)
