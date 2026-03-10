@@ -69,13 +69,16 @@ fun WalletScaffold(
                             Icon(imageVector = Icons.AutoMirrored.Default.ArrowBack, contentDescription = stringResource(R.string.back))
                         }
                     } else {
-                        Box {
+                        Box(
+                            modifier = Modifier.size(48.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
                             Image(
                                 painter = painterResource(id = R.drawable.icon),
                                 contentDescription = null,
-                                modifier = Modifier.fillMaxSize()
+                                modifier = Modifier.size(24.dp)
                             )
-                        } 
+                        }
                     }
                 },
                 actions = actions,
