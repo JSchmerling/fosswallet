@@ -1,12 +1,16 @@
 package nz.eloque.foss_wallet.ui.components
 
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material.icons.filled.Wallet
 import androidx.compose.material.icons.outlined.Archive
 import androidx.compose.material.icons.outlined.Wallet
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
@@ -15,10 +19,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import nz.eloque.foss_wallet.R
-import nz.eloque.foss_wallet.ui.components.SearchBar
 import nz.eloque.foss_wallet.ui.Screen
 
 @Composable
@@ -27,9 +32,23 @@ fun NavigationRow(navController: NavController) {
     var searchBarVisible by remember { mutableStateOf(false) }
 
     if (searchBarVisible) {
-        SearchBar(
-            onClose = { searchBarVisible = false }
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            IconButton(onClick = { searchBarVisible = false }) {
+                Icon(
+                    imageVector = Icons.Default.SearchOff,
+                    contentDescription = stringResource(R.string.reduce_searchbar)
+                )
+            }
+            FilterBar(
+                onSearch = { walletViewModel.filter(it) },
+                modifier = Modifier
+                    .padding(start = 4.dp, bottom = 4.dp)
+                    .weight(1f)
+            )
+        }
     } else {
         NavigationBar {
             NavigationBarItem(
@@ -76,4 +95,3 @@ fun NavigationRow(navController: NavController) {
         }
     }
 }
-        
