@@ -50,48 +50,32 @@ fun FilterBlock(
     val resources = LocalResources.current
 
     var lastScrollIndex by remember { mutableIntStateOf(0) }
-    var filtersShown by remember { mutableStateOf(true) }
 
     LaunchedEffect(listState) {
         snapshotFlow { listState.firstVisibleItemIndex }
-            .collect { currentIndex ->
-                filtersShown = currentIndex <= lastScrollIndex
-                lastScrollIndex = currentIndex
-            }
+            .collect { currentIndex -> lastScrollIndex = currentIndex }
     }
     
-    Column {
-        AnimatedVisibility(
-            visible = filtersShown,
-            enter = expandVertically(
-                animationSpec = tween(durationMillis = 300)
-            ) + fadeIn(animationSpec = tween(300)),
-            exit = shrinkVertically(
-                animationSpec = tween(durationMillis = 300)
-            ) + fadeOut(animationSpec = tween(300))
-        ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                ChipSelector(
-                    options = PassType.all(),
-                    selectedOptions = passTypesToShow,
-                    onOptionSelected = { passTypesToShow.add(it) },
-                    onOptionDeselected = { passTypesToShow.remove(it) },
-                    optionLabel = { resources.getString(it.label) },
-                    modifier = Modifier.fillMaxWidth()
-                )
-                TagRow(
-                    tags = tags,
-                    selectedTag = tagToFilterFor.value,
-                    onTagSelected = { tagToFilterFor.value = it },
-                    onTagDeselected = { tagToFilterFor.value = null },
-                    walletViewModel = walletViewModel,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        }
+    Row(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        ChipSelector(
+            options = PassType.all(),
+            selectedOptions = passTypesToShow,
+            onOptionSelected = { passTypesToShow.add(it) },
+            onOptionDeselected = { passTypesToShow.remove(it) },
+            optionLabel = { resources.getString(it.label) },
+            modifier = Modifier.fillMaxWidth()
+        )
+        TagRow(
+            tags = tags,
+            selectedTag = tagToFilterFor.value,
+            onTagSelected = { tagToFilterFor.value = it },
+            onTagDeselected = { tagToFilterFor.value = null },
+            walletViewModel = walletViewModel,
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
