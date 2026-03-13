@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MoreHoriz
@@ -49,11 +50,12 @@ fun WalletScreen(
     walletViewModel: WalletViewModel,
 ) {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val contentResolver = context.contentResolver
+    val sortOption = walletViewModel.sortOptionState.collectAsState().value
+    
     val coroutineScope = rememberCoroutineScope()
-
     val listState = rememberLazyListState()
-
     val loading = remember { mutableStateOf(false) }
 
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
