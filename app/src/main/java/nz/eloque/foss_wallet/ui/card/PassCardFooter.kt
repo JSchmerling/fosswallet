@@ -56,17 +56,20 @@ fun PassCardFooter(
         var tagChooserShown by remember { mutableStateOf(false) }
 
         val context = LocalContext.current
-        val passFile = pass.originalPassFile(context)
-    
-        if (passFile != null) { ShareButton(passFile) }
 
-        IconButton(
-            onClick = { Shortcut.create(context, pass, pass.description) }
-        ) {
-            Icon(
-                imageVector = Icons.Default.AppShortcut,
-                contentDescription = stringResource(R.string.add_shortcut)
-            )
+        if (!readOnly) {
+            val passFile = pass.originalPassFile(context)
+    
+            if (passFile != null) { ShareButton(passFile) }
+
+            IconButton(
+                onClick = { Shortcut.create(context, pass, pass.description) }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.AppShortcut,
+                    contentDescription = stringResource(R.string.add_shortcut)
+                )
+            }
         }
         
         if (pass.relevantDates.any { it is PassRelevantDate.DateInterval }) {
