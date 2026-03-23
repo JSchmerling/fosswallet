@@ -34,11 +34,9 @@ private fun Bitmap.backgroundColor(): Color? {
     return foundColor?.takeIf { it.alpha != 0f }
 }
 
-private fun Color.clamp(): Color {
-    return this.copy(
-        alpha = this.alpha.round(),
-        red = this.red.round(),
-        blue = this.blue.round(),
-        green = this.green.round()
-    )
-}
+private fun Color.clamp(): Color = this.copy(
+    alpha = this.alpha.round(),
+    red = this.red.round(),
+    blue = this.blue.round(),
+    green = this.green.round()
+)
