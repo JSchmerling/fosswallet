@@ -118,3 +118,6 @@ fun Throwable.asString(): String {
     this.printStackTrace(pw)
     return sw.toString()
 }
+
+fun Float.round(): Float = (this * 10).toInt() / 10f
+
