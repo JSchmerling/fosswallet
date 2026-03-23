@@ -33,10 +33,3 @@ private fun Bitmap.backgroundColor(): Color? {
     val foundColor = colorMap.entries.firstOrNull { (_, count) -> count > threshold * bitmapSize }?.key
     return foundColor?.takeIf { it.alpha != 0f }
 }
-
-private fun Color.clamp(): Color = this.copy(
-    alpha = this.alpha.round(),
-    red = this.red.round(),
-    blue = this.blue.round(),
-    green = this.green.round()
-)
