@@ -140,10 +140,6 @@ fun WalletView(
         val groups = sortedPasses.filter { it.first != null }
         val ungrouped = sortedPasses.filter { it.first == null }.flatMap { it.second }
 
-        item {
-            
-        }
-
         items(groups) { (groupId, passes) ->
             GroupCard(
                 groupId = groupId!!,
