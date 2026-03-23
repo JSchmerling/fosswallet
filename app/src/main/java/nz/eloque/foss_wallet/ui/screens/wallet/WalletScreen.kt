@@ -34,6 +34,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.model.LocalizedPassWithTags
+import nz.eloque.foss_wallet.model.SortOption
 import nz.eloque.foss_wallet.persistence.loader.Loader
 import nz.eloque.foss_wallet.persistence.loader.LoaderResult
 import nz.eloque.foss_wallet.ui.Screen
@@ -87,7 +88,7 @@ fun WalletScreen(
     val selectedPasses = remember { mutableStateSetOf<LocalizedPassWithTags>() }
     val visiblePasses = remember { mutableStateOf<Set<LocalizedPassWithTags>>(emptySet()) }
     val allVisibleSelected = visiblePasses.value.isNotEmpty() && visiblePasses.value.all { selectedPasses.contains(it) }
-
+    
     WalletScaffold(
         navController = navController,
         title = stringResource(id = Screen.Wallet.resourceId),
@@ -118,7 +119,7 @@ fun WalletScreen(
                 contentDescription = R.string.filter,
                 options = SortOption.all(),
                 selectedOption = sortOption,
-                onOptionSelected = onSortChange,
+                onOptionSelected = { walletViewModel.setSortOption(it) },
                 optionLabel = { resources.getString(it.l18n) }
             )
             IconButton(onClick = {
