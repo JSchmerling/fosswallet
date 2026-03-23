@@ -71,37 +71,6 @@ fun SelectionActions(
         horizontalAlignment = Alignment.End
     ) {
         FloatingActionButton(
-            containerColor = MaterialTheme.colorScheme.error,
-            onClick = {
-                showDeleteDialog.value = true
-            },
-        ) {
-            Icon(imageVector = Icons.Default.Delete, contentDescription = stringResource(R.string.delete))
-        }
-        if (isArchive) {
-            FloatingActionButton(
-                onClick = {
-                    coroutineScope.launch(Dispatchers.IO) {
-                        selectedPasses.forEach { walletViewModel.unarchive(it.pass) }
-                        selectedPasses.clear()
-                    }
-                },
-            ) {
-                Icon(imageVector = Icons.Default.Unarchive, contentDescription = stringResource(R.string.unarchive))
-            }
-        } else {
-            FloatingActionButton(
-                onClick = {
-                    coroutineScope.launch(Dispatchers.IO) {
-                        selectedPasses.forEach { walletViewModel.archive(it.pass) }
-                        selectedPasses.clear()
-                    }
-                },
-            ) {
-                Icon(imageVector = Icons.Default.Archive, contentDescription = stringResource(R.string.archive))
-            }
-        }
-        FloatingActionButton(
             onClick = {
                 coroutineScope.launch(Dispatchers.IO) {
                     share(selectedPasses.map { it.pass }, context)
