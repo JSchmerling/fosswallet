@@ -148,11 +148,6 @@ fun Actions(
                     Shortcut.create(context, pass, pass.description)
                 }
             )
-
-            val passFile = pass.originalPassFile(context)
-            if (passFile != null) {
-                PassShareButton(passFile)
-            }
             
             if (pass.updatable()) {
                 val uriHandler = LocalUriHandler.current
