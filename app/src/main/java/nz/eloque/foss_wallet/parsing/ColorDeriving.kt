@@ -30,7 +30,7 @@ private fun Bitmap.backgroundColor(): Color? {
         colorMap.merge(Color(this[this.width - 1, i]).clamp(), 1, Int::plus)
     }
     val foundColor = colorMap.entries.firstOrNull { (_, count) -> count > threshold * bitmapSize }?.key
-    return foundColor?.coerceOpacity()
+    return foundColor?.takeIf { it.alpha != 0f }
 }
 
 private fun Color.clamp(): Color {
@@ -42,10 +42,4 @@ private fun Color.clamp(): Color {
     )
 }
 
-private fun Float.round(): Float {
-    return (this * 10).toInt() / 10f
-}
-
-private fun Color.coerceOpacity(): Color {
-    return if (this.alpha == 0f) Color.White else this
-}
+private fun Float.round(): Float = (this * 10).toInt() / 10f
