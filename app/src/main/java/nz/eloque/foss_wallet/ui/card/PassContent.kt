@@ -102,6 +102,7 @@ fun PassContent(
             onTagClick = onTagClick,
             onTagAdd = onTagAdd,
             onTagCreate = onTagCreate,
+            extended = true
         )
     }
 }
