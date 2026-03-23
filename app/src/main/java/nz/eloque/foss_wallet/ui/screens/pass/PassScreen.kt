@@ -139,16 +139,6 @@ fun Actions(
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false }
         ) {
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.add_shortcut)) },
-                leadingIcon =  {
-                    Icon(imageVector = Icons.Default.AppShortcut, contentDescription = stringResource(R.string.add_shortcut))
-                },
-                onClick = {
-                    Shortcut.create(context, pass, pass.description)
-                }
-            )
-            
             if (pass.updatable()) {
                 val uriHandler = LocalUriHandler.current
                 UpdateButton(isLoading = isLoading.value) {
