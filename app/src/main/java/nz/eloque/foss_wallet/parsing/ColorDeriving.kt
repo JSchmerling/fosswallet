@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.get
 import nz.eloque.foss_wallet.model.PassColors
+import nz.eloque.foss_wallet.utils.ExtensionFunctions
 
 fun Bitmap?.derivePassColors(): PassColors? {
     if (this == null) return null
@@ -41,5 +42,3 @@ private fun Color.clamp(): Color {
         green = this.green.round()
     )
 }
-
-private fun Float.round(): Float = (this * 10).toInt() / 10f
