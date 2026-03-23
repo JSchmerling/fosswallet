@@ -1,6 +1,5 @@
 package nz.eloque.foss_wallet.ui.screens.wallet
 
-import android.annotation.SuppressLint
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -41,9 +40,9 @@ import nz.eloque.foss_wallet.ui.Screen
 import nz.eloque.foss_wallet.ui.WalletScaffold
 import nz.eloque.foss_wallet.ui.components.FabMenu
 import nz.eloque.foss_wallet.ui.components.FabMenuItem
+import nz.eloque.foss_wallet.ui.components.SelectionMenu
 import nz.eloque.foss_wallet.utils.PkpassMimeTypes
 
-@SuppressLint("LocalContextGetResourceValueCall")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WalletScreen(
