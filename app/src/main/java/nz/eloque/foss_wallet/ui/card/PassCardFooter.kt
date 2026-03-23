@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AppShortcut
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChipDefaults
@@ -29,6 +30,8 @@ import nz.eloque.foss_wallet.model.Tag
 import nz.eloque.foss_wallet.ui.components.CalendarButton
 import nz.eloque.foss_wallet.ui.components.ChipRow
 import nz.eloque.foss_wallet.ui.components.LocationButton
+import nz.eloque.foss_wallet.ui.components.ShareButton
+import nz.eloque.foss_wallet.ui.components.ShortcutButton
 import nz.eloque.foss_wallet.ui.components.tag.TagChooser
 
 
@@ -52,6 +55,20 @@ fun PassCardFooter(
 
         var tagChooserShown by remember { mutableStateOf(false) }
 
+        val context = LocalContext.current
+        val passFile = pass.originalPassFile(context)
+    
+        if (passFile != null) { ShareButton(passFile) }
+
+        IconButton(
+            onClick = { Shortcut.create(context, pass, pass.description) }
+        ) {
+            Icon(
+                imageVector = Icons.Default.AppShortcut,
+                contentDescription = stringResource(R.string.add_shortcut)
+            )
+        }
+        
         if (pass.relevantDates.any { it is PassRelevantDate.DateInterval }) {
             val interval: PassRelevantDate.DateInterval = pass.relevantDates.filter {
                 it is PassRelevantDate.DateInterval
