@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Archive
-import androidx.compose.material.icons.filled.LinearScale
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material.icons.filled.Wallet
@@ -42,12 +41,8 @@ fun NavigationRow(
 ) {
     var selectedTabIndex by remember { mutableStateOf(1) }
     var imeVisible by remember { mutableStateOf(false) }
-    var navBarVisible by remember { mutableStateOf(true) }
 
-    BackHandler(enabled = imeVisible) { 
-        imeVisible = false
-        navBarVisible = true
-    }
+    BackHandler(enabled = imeVisible) { imeVisible = false }
     
     AnimatedVisibility(
         visible = imeVisible,
@@ -64,30 +59,19 @@ fun NavigationRow(
                     .padding(start = 4.dp, bottom = 4.dp)
                     .weight(1f)
             )
-            if (imeVisible) {
-                IconButton(
-                    onClick = { imeVisible = false }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.SearchOff,
-                        contentDescription = stringResource(R.string.reduce_ime)
-                    )
-                }
-            } else {
-                IconButton(
-                    onClick = { navBarVisible = true }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.LinearScale,
-                        contentDescription = stringResource(R.string.show_navbar)
-                    )
-                }
+            IconButton(
+                onClick = { imeVisible = false }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.SearchOff,
+                    contentDescription = stringResource(R.string.close_ime)
+                )
             }
         }
     }
     
     AnimatedVisibility(
-        visible = navBarVisible,
+        visible = !imeVisible,
         enter = fadeIn() + expandVertically(),
         exit = fadeOut() + shrinkVertically()
     ) {
@@ -96,7 +80,6 @@ fun NavigationRow(
                 selected = selectedTabIndex == 0,
                 onClick = {
                     selectedTabIndex = 0
-                    navBarVisible = false
                     imeVisible = true
                 },
                 icon = { Icon(Icons.Default.Search, contentDescription = stringResource(R.string.search)) },
