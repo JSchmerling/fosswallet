@@ -18,6 +18,7 @@ import androidx.compose.material.icons.outlined.Archive
 import androidx.compose.material.icons.outlined.Wallet
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearScale
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
@@ -77,7 +78,7 @@ fun NavigationRow(
                     onClick = { imeVisible = false }
                 ) {
                     Icon(
-                        imageVector = Icons.Default.SearchOff,
+                        imageVector = Icons.Default.LinearScale,
                         contentDescription = stringResource(R.string.show_navbar)
                     )
                 }
