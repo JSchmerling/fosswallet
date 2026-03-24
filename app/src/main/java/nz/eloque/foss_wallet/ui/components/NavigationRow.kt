@@ -40,16 +40,16 @@ fun NavigationRow(
     walletViewModel: WalletViewModel
 ) {
     var selectedTabIndex by remember { mutableStateOf(1) }
+    var imeVisible by remember { mutableStateOf(false) }
     var navBarVisible by remember { mutableStateOf(true) }
-    var searchBarVisible by remember { mutableStateOf(false) }
 
-    BackHandler(enabled = searchBarVisible) { 
-        searchBarVisible = false
+    BackHandler(enabled = imeVisible) { 
+        imeVisible = false
         navBarVisible = true
     }
     
     AnimatedVisibility(
-        visible = searchBarVisible,
+        visible = imeVisible,
         enter = fadeIn() + expandVertically(),
         exit = fadeOut() + shrinkVertically()
     ) {
@@ -73,7 +73,7 @@ fun NavigationRow(
     }
     
     AnimatedVisibility(
-        visible = !searchBarVisible,
+        visible = navBarVisible,
         enter = fadeIn() + expandVertically(),
         exit = fadeOut() + shrinkVertically()
     ) {
@@ -82,7 +82,8 @@ fun NavigationRow(
                 selected = selectedTabIndex == 0,
                 onClick = {
                     selectedTabIndex = 0
-                    searchBarVisible = true
+                    navBarVisible = false
+                    imeVisible = true
                 },
                 icon = { Icon(Icons.Default.Search, contentDescription = stringResource(R.string.search)) },
                 label = { Text(stringResource(R.string.search)) }
