@@ -64,10 +64,10 @@ private fun ZonedDateTime.pretty(dateFormatter: DateTimeFormatter, ignoresTimezo
 }
 
 fun Color.clamp(): Color = copy(
-    alpha = this.alpha.round(),
     red = this.red.round(),
     blue = this.blue.round(),
-    green = this.green.round()
+    green = this.green.round(),
+    alpha = this.alpha.round()
 )
 
 fun Color.darken(factor: Float = 0.3f): Color = copy(
@@ -116,6 +116,7 @@ fun LazyListState.isScrollingUp(): Boolean {
         }
     }.value
 }
+
 fun Throwable.asString(): String {
     val sw = StringWriter()
     val pw = PrintWriter(sw)
