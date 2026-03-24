@@ -35,7 +35,10 @@ import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.ui.Screen
 
 @Composable
-fun NavigationRow(navController: NavController) {
+fun NavigationRow(
+    navController: NavController,
+    walletViewModel: WalletViewModel
+) {
     var selectedTabIndex by remember { mutableStateOf(1) }
     var searchBarVisible by remember { mutableStateOf(false) }
 
