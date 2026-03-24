@@ -168,6 +168,7 @@ fun WalletScreen(
                 )
             }
         },
+        bottomBar = { NavigationRow(navController, walletViewModel) },
     ) { scrollBehavior ->
         WalletView(
             navController = navController,
