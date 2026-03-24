@@ -21,17 +21,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.model.LocalizedPassWithTags
 import nz.eloque.foss_wallet.model.PassRelevantDate
 import nz.eloque.foss_wallet.model.Tag
+import nz.eloque.foss_wallet.shortcut.Shortcut
 import nz.eloque.foss_wallet.ui.components.CalendarButton
 import nz.eloque.foss_wallet.ui.components.ChipRow
 import nz.eloque.foss_wallet.ui.components.LocationButton
 import nz.eloque.foss_wallet.ui.components.ShareButton
-import nz.eloque.foss_wallet.ui.components.ShortcutButton
 import nz.eloque.foss_wallet.ui.components.tag.TagChooser
 
 
