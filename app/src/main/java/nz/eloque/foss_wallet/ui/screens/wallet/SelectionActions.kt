@@ -5,15 +5,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Archive
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -35,7 +31,6 @@ import nz.eloque.foss_wallet.utils.isScrollingUp
 
 @Composable
 fun SelectionActions(
-    isArchive: Boolean,
     selectedPasses: SnapshotStateSet<LocalizedPassWithTags>,
     listState: LazyListState,
     walletViewModel: WalletViewModel,
