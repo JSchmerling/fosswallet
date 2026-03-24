@@ -63,7 +63,10 @@ fun NavigationRow(
                     .padding(start = 4.dp, bottom = 4.dp)
                     .weight(1f)
             )
-            IconButton(onClick = { searchBarVisible = false }) {
+            IconButton(
+                onClick = {
+                    imeVisible = false
+                }) {
                 Icon(
                     imageVector = Icons.Default.SearchOff,
                     contentDescription = stringResource(R.string.reduce_searchbar)
