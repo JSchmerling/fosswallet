@@ -11,8 +11,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Archive
+import androidx.compose.material.icons.filled.KeyboardHide
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material.icons.filled.Wallet
 import androidx.compose.material.icons.outlined.Archive
 import androidx.compose.material.icons.outlined.Wallet
@@ -63,7 +63,7 @@ fun NavigationRow(
                 onClick = { imeVisible = false }
             ) {
                 Icon(
-                    imageVector = Icons.Default.SearchOff,
+                    imageVector = Icons.Default.KeyboardHide,
                     contentDescription = stringResource(R.string.close_ime)
                 )
             }
