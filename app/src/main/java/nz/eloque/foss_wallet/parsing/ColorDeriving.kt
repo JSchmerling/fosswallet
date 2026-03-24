@@ -19,7 +19,7 @@ fun Bitmap?.derivePassColors(): PassColors? {
 }
 
 private fun Bitmap.backgroundColor(): Color? {
-    val bitmapSize = 2 * this.width + 2 * this.height
+    val bitmapSize = 2 * (this.width + this.height)
     val threshold = 0.75
     val colorMap = HashMap<Color, Int>()
     for (i in 0 until this.width) {
