@@ -39,32 +39,37 @@ fun NavigationRow(navController: NavController) {
     var selectedTabIndex by remember { mutableStateOf(1) }
     var searchBarVisible by remember { mutableStateOf(false) }
 
-    if (searchBarVisible) {
-        BackHandler(enabled = searchBarVisible) { searchBarVisible = false }
-        AnimatedVisibility(
-            visible = searchBarVisible,
-            enter = fadeIn() + expandVertically(),
-            exit = fadeOut() + shrinkVertically()
+    BackHandler(enabled = searchBarVisible) { searchBarVisible = false }
+    
+    AnimatedVisibility(
+        visible = searchBarVisible,
+        enter = fadeIn() + expandVertically(),
+        exit = fadeOut() + shrinkVertically()
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                FilterBar(
-                    onSearch = { walletViewModel.filter(it) },
-                    modifier = Modifier
-                        .padding(start = 4.dp, bottom = 4.dp)
-                        .weight(1f)
+            FilterBar(
+                onSearch = { walletViewModel.filter(it) },
+                modifier = Modifier
+                    .padding(start = 4.dp, bottom = 4.dp)
+                    .weight(1f)
+            )
+            IconButton(onClick = { searchBarVisible = false }) {
+                Icon(
+                    imageVector = Icons.Default.SearchOff,
+                    contentDescription = stringResource(R.string.reduce_searchbar)
                 )
-                IconButton(onClick = { searchBarVisible = false }) {
-                    Icon(
-                        imageVector = Icons.Default.SearchOff,
-                        contentDescription = stringResource(R.string.reduce_searchbar)
-                    )
-                }
             }
         }
-    } else {
+    }
+    
+    AnimatedVisibility(
+        visible = !searchBarVisible,
+        enter = fadeIn() + expandVertically(),
+        exit = fadeOut() + shrinkVertically()
+    ) {
         NavigationBar {
             NavigationBarItem(
                 selected = selectedTabIndex == 0,
