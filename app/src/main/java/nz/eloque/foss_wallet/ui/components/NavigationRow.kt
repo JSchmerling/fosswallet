@@ -1,5 +1,12 @@
 package nz.eloque.foss_wallet.ui.components
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
@@ -22,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.ui.Screen
@@ -32,22 +40,29 @@ fun NavigationRow(navController: NavController) {
     var searchBarVisible by remember { mutableStateOf(false) }
 
     if (searchBarVisible) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
+        BackHandler(enabled = searchBarVisible) { searchBarVisible = false }
+        AnimatedVisibility(
+            visible = searchBarVisible,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically()
         ) {
-            IconButton(onClick = { searchBarVisible = false }) {
-                Icon(
-                    imageVector = Icons.Default.SearchOff,
-                    contentDescription = stringResource(R.string.reduce_searchbar)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                FilterBar(
+                    onSearch = { walletViewModel.filter(it) },
+                    modifier = Modifier
+                        .padding(start = 4.dp, bottom = 4.dp)
+                        .weight(1f)
                 )
+                IconButton(onClick = { searchBarVisible = false }) {
+                    Icon(
+                        imageVector = Icons.Default.SearchOff,
+                        contentDescription = stringResource(R.string.reduce_searchbar)
+                    )
+                }
             }
-            FilterBar(
-                onSearch = { walletViewModel.filter(it) },
-                modifier = Modifier
-                    .padding(start = 4.dp, bottom = 4.dp)
-                    .weight(1f)
-            )
         }
     } else {
         NavigationBar {
