@@ -71,8 +71,9 @@ fun NavigationRow(
                         imageVector = Icons.Default.SearchOff,
                         contentDescription = stringResource(R.string.reduce_ime)
                     )
-                } else {
-                    IconButton(
+                }
+            } else {
+                IconButton(
                     onClick = { imeVisible = false }
                 ) {
                     Icon(
