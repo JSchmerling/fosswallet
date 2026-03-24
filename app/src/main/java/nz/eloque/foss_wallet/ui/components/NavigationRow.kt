@@ -64,7 +64,7 @@ fun NavigationRow(
             ) {
                 Icon(
                     imageVector = Icons.Default.KeyboardHide,
-                    contentDescription = stringResource(R.string.close_ime)
+                    contentDescription = stringResource(R.string.dismiss_ime)
                 )
             }
         }
