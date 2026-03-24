@@ -70,12 +70,7 @@ fun ArchiveScreen(
         },
         floatingActionButton = {
             if (selectedPasses.isNotEmpty()) {
-                SelectionActions(
-                    true,
-                    selectedPasses,
-                    listState,
-                    walletViewModel
-                )
+                SelectionActions(selectedPasses, listState, walletViewModel)
             }
         },
     ) { scrollBehavior ->
