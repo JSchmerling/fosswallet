@@ -1,8 +1,5 @@
 package nz.eloque.foss_wallet.ui
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
@@ -88,13 +85,7 @@ fun WalletScaffold(
         contentWindowInsets = WindowInsets.statusBars,
         bottomBar = {
             if (showNavigation) {
-                AnimatedVisibility(
-                    visible = showNavBar,
-                    enter = slideInVertically(initialOffsetY = { it }),
-                    exit = slideOutVertically(targetOffsetY = { it })
-                ) {
-                    NavigationRow(navController = navController)
-                }
+                NavigationRow(navController = navController)
             }
         },
         floatingActionButton = {
