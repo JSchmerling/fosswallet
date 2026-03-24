@@ -75,7 +75,7 @@ fun NavigationRow(
                 }
             } else {
                 IconButton(
-                    onClick = { imeVisible = false }
+                    onClick = { navBarVisible = true }
                 ) {
                     Icon(
                         imageVector = Icons.Default.LinearScale,
