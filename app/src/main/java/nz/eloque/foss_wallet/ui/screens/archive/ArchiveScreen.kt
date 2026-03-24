@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.model.LocalizedPassWithTags
+import nz.eloque.foss_wallet.ui.components.NavigationRow
 import nz.eloque.foss_wallet.ui.WalletScaffold
 import nz.eloque.foss_wallet.ui.Screen
 import nz.eloque.foss_wallet.ui.screens.wallet.SelectionActions
