@@ -53,9 +53,9 @@ fun PassCardFooter(
         var tagChooserShown by remember { mutableStateOf(false) }
 
         pass.relevantDates.filterIsInstance<PassRelevantDate.DateInterval>().firstOrNull()?.let {
-            CalendarButton(title = pass.description, start = it.startDate, end = it.endDate)
+            CalendarButton(pass.description, it.startDate, it.endDate)
         } ?: pass.relevantDates.filterIsInstance<PassRelevantDate.Date>().firstOrNull()?.let {
-            CalendarButton(title = pass.description, start = it.date, end = pass.expirationDate)
+            CalendarButton(pass.description, it.date, pass.expirationDate)
         }
         pass.locations.firstOrNull()?.let { LocationButton(it) }
 
