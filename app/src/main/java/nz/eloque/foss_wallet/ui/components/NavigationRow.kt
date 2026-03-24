@@ -40,9 +40,13 @@ fun NavigationRow(
     walletViewModel: WalletViewModel
 ) {
     var selectedTabIndex by remember { mutableStateOf(1) }
+    var navBarVisible by remember { mutableStateOf(true) }
     var searchBarVisible by remember { mutableStateOf(false) }
 
-    BackHandler(enabled = searchBarVisible) { searchBarVisible = false }
+    BackHandler(enabled = searchBarVisible) { 
+        searchBarVisible = false
+        navBarVisible = true
+    }
     
     AnimatedVisibility(
         visible = searchBarVisible,
