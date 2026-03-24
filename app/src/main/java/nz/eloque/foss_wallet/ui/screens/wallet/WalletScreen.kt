@@ -135,12 +135,7 @@ fun WalletScreen(
         },
         floatingActionButton = {
             if (selectedPasses.isNotEmpty()) {
-                SelectionActions(
-                    false,
-                    selectedPasses,
-                    listState,
-                    walletViewModel
-                )
+                SelectionActions(selectedPasses, listState, walletViewModel)
             } else {
                 FabMenu(
                     items = listOf(
