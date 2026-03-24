@@ -48,7 +48,6 @@ fun WalletScaffold(
     bottomBar: @Composable () -> Unit = {},
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     content: @Composable (scrollBehavior: TopAppBarScrollBehavior) -> Unit,
-    showNavigation: Boolean = false,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
@@ -83,11 +82,7 @@ fun WalletScaffold(
             )
         },
         contentWindowInsets = WindowInsets.statusBars,
-        bottomBar = {
-            if (showNavigation) {
-                NavigationRow(navController = navController)
-            }
-        },
+        bottomBar = bottomBar,
         floatingActionButton = {
             Box(
                 modifier = Modifier.padding(
