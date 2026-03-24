@@ -46,6 +46,9 @@ fun PassCardFooter(
     onTagCreate: (Tag) -> Unit = {},
     readOnly: Boolean = false,
 ) {
+    val context = LocalContext.current
+    var tagChooserShown by remember { mutableStateOf(false) }
+    
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -53,11 +56,7 @@ fun PassCardFooter(
     ) {
         val pass = localizedPass.pass
         val tags = localizedPass.tags
-
-        var tagChooserShown by remember { mutableStateOf(false) }
-
-        val context = LocalContext.current
-
+        
         if (!readOnly) {
             val passFile = pass.originalPassFile(context)
     
