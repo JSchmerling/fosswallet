@@ -63,14 +63,23 @@ fun NavigationRow(
                     .padding(start = 4.dp, bottom = 4.dp)
                     .weight(1f)
             )
-            IconButton(
-                onClick = {
-                    imeVisible = false
-                }) {
-                Icon(
-                    imageVector = Icons.Default.SearchOff,
-                    contentDescription = stringResource(R.string.reduce_searchbar)
-                )
+            if (imeVisible) {
+                IconButton(
+                    onClick = { imeVisible = false }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.SearchOff,
+                        contentDescription = stringResource(R.string.reduce_ime)
+                    )
+                } else {
+                    IconButton(
+                    onClick = { imeVisible = false }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.SearchOff,
+                        contentDescription = stringResource(R.string.show_navbar)
+                    )
+                }
             }
         }
     }
