@@ -58,6 +58,7 @@ fun NavigationRow(
                 modifier = Modifier
                     .padding(start = 4.dp, bottom = 4.dp)
                     .weight(1f)
+                    .onFocusChanged { focusState -> if (focusState.isFocused) { imeVisible = true } }
             )
             IconButton(
                 onClick = { imeVisible = false }
