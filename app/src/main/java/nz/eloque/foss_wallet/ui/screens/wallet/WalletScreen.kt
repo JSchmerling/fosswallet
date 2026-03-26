@@ -20,7 +20,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableStateSetOf
 import androidx.compose.runtime.remember
@@ -94,7 +93,6 @@ fun WalletScreen(
     
     WalletScaffold(
         navController = navController,
-        title = stringResource(id = Screen.Wallet.resourceId),
         actions = {
             if (selectedPasses.isNotEmpty()) {
                 IconButton(

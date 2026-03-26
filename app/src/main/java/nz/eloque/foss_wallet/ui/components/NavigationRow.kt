@@ -23,23 +23,26 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.ui.Screen
+import nz.eloque.foss_wallet.ui.screens.wallet.WalletViewModel
 
 @Composable
 fun NavigationRow(
     navController: NavController,
     walletViewModel: WalletViewModel
 ) {
-    var selectedTabIndex by remember { mutableStateOf(1) }
+    var selectedTabIndex by remember { mutableIntStateOf(1) }
     var imeVisible by remember { mutableStateOf(false) }
 
     BackHandler(enabled = imeVisible) { imeVisible = false }
