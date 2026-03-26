@@ -12,9 +12,10 @@ import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import nz.eloque.foss_wallet.R
+import nz.eloque.foss_wallet.share.share
 
 @Composable
-fun PassShareButton(
+fun ShareButton(
     file: File
 ) {
     val context = LocalContext.current

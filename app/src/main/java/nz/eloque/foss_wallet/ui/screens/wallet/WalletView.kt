@@ -1,5 +1,6 @@
 package nz.eloque.foss_wallet.ui.screens.wallet
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -55,6 +56,7 @@ import nz.eloque.foss_wallet.ui.card.ShortPassCard
 import nz.eloque.foss_wallet.ui.components.GroupCard
 import nz.eloque.foss_wallet.ui.components.SwipeToDismiss
 
+@SuppressLint("FlowOperatorInvokedInComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WalletView(
@@ -86,6 +88,7 @@ fun WalletView(
     val passToDelete = remember { mutableStateOf<LocalizedPassWithTags?>(null) }
 
     val sortedPasses = passes
+        .asSequence()
         .filter { localizedPass -> passTypesToShow.any { localizedPass.pass.type.isSameType(it) } }
         .filter { localizedPass -> tagToFilterFor.value == null || localizedPass.tags.contains(tagToFilterFor.value) }
         .sortedWith(sortOption.comparator)
@@ -139,6 +142,17 @@ fun WalletView(
     ) {
         val groups = sortedPasses.filter { it.first != null }
         val ungrouped = sortedPasses.filter { it.first == null }.flatMap { it.second }
+
+        item {
+            FilterBlock(
+                walletViewModel = walletViewModel,
+                listState = listState,
+                passTypesToShow = passTypesToShow,
+                tags = tags,
+                tagToFilterFor = tagToFilterFor
+            )
+        }
+
 
         items(groups) { (groupId, passes) ->
             GroupCard(
