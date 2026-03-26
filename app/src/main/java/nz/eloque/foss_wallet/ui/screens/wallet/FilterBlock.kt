@@ -12,6 +12,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,12 +35,12 @@ fun FilterBlock(
     tagToFilterFor: MutableState<Tag?>,
 ) {
     val resources = LocalResources.current
-    val filtersShown = true
+    val visible = rememberIsScrollingUp(listState)
 
     Column {
 
         AnimatedVisibility(
-            visible = filtersShown,
+            visible = visible,
             enter = expandVertically(
                 animationSpec = tween(durationMillis = 300)
             ) + fadeIn(animationSpec = tween(300)),
@@ -67,4 +72,24 @@ fun FilterBlock(
             }
         }
     }
+}
+
+@Composable
+private fun rememberIsScrollingUp(listState: LazyListState): Boolean {
+    var previousIndex by remember(listState) { mutableIntStateOf(listState.firstVisibleItemIndex) }
+    var previousOffset by remember(listState) { mutableIntStateOf(listState.firstVisibleItemScrollOffset) }
+
+    return remember(listState) {
+        derivedStateOf {
+            if (previousIndex != listState.firstVisibleItemIndex) {
+                (previousIndex > listState.firstVisibleItemIndex).also {
+                    previousIndex = listState.firstVisibleItemIndex
+                }
+            } else {
+                (previousOffset >= listState.firstVisibleItemScrollOffset).also {
+                    previousOffset = listState.firstVisibleItemScrollOffset
+                }
+            }
+        }
+    }.value
 }
