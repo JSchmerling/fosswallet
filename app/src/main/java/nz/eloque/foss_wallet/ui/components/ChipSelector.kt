@@ -33,7 +33,7 @@ fun <T> ChipSelector(
     optionLabel: (T) -> String,
     modifier: Modifier = Modifier,
     selectedIcon: ImageVector = Icons.Default.Check,
-    dropdownOptions: Map<String, List<String>>? = null, // Label -> Optionen
+    dropdownOptions: Map<String, List<String>>? = null, // Label -> Options
     onDropdownOptionSelected: ((String, String) -> Unit)? = null,
 ) {
     Row(
