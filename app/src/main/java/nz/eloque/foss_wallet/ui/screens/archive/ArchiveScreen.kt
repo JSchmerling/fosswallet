@@ -70,7 +70,11 @@ fun ArchiveScreen(
         },
         floatingActionButton = {
             if (selectedPasses.isNotEmpty()) {
-                SelectionActions(selectedPasses, listState, walletViewModel)
+                SelectionActions(
+                    selectedPasses,
+                    listState,
+                    walletViewModel
+                )
             }
         },
         bottomBar = { NavigationRow(navController, walletViewModel, tabIndex = 2) },
