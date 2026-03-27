@@ -29,7 +29,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -45,17 +48,19 @@ fun NavigationRow(
     tabIndex: Int = 1,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
     
+    val focusRequester = remember { FocusRequester() }
     var selectedTabIndex by remember { mutableIntStateOf(tabIndex) }
-    var imeVisible by remember { mutableStateOf(false) }
+    var keyboardVisible by remember { mutableStateOf(false) }
 
     BackHandler(enabled = imeVisible) {
-        imeVisible = false
+        keyboardVisible = false
         keyboardController?.hide()
     }
     
     AnimatedVisibility(
-        visible = imeVisible,
+        visible = keyboardVisible,
         enter = fadeIn() + expandVertically(expandFrom = Alignment.Bottom),
         exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Bottom)
     ) {
@@ -66,29 +71,31 @@ fun NavigationRow(
             FilterBar(
                 onSearch = { walletViewModel.filter(it) },
                 modifier = Modifier
+                   
                     .padding(start = 4.dp, bottom = 4.dp)
                     .weight(1f)
+                    .focusRequester(focusRequester)
                     .onFocusChanged { focusState -> if (focusState.isFocused) { 
-                        imeVisible = true
+                        keyboardVisible = true
                         keyboardController?.show()
                     } }
             )
             IconButton(
                 onClick = { 
-                    imeVisible = false
+                    keyboardVisible = false
                     keyboardController?.hide()
                 }
             ) {
                 Icon(
                     imageVector = Icons.Default.KeyboardHide,
-                    contentDescription = stringResource(R.string.dismiss_ime)
+                    contentDescription = stringResource(R.string.dismiss_keyboard)
                 )
             }
         }
     }
     
     AnimatedVisibility(
-        visible = !imeVisible,
+        visible = !keyboardVisible,
         enter = fadeIn() + expandVertically(expandFrom = Alignment.Bottom),
         exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Bottom)
     ) {
@@ -97,7 +104,7 @@ fun NavigationRow(
                 selected = selectedTabIndex == 0,
                 onClick = {
                     selectedTabIndex = 0
-                    imeVisible = true
+                    keyboardVisible = true
                     keyboardController?.show()
                 },
                 icon = { Icon(Icons.Default.Search, contentDescription = stringResource(R.string.search)) },
