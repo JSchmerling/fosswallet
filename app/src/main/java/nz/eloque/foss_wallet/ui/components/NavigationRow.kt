@@ -54,7 +54,7 @@ fun NavigationRow(
     var selectedTabIndex by remember { mutableIntStateOf(tabIndex) }
     var keyboardVisible by remember { mutableStateOf(false) }
 
-    BackHandler(enabled = imeVisible) {
+    BackHandler(enabled = keyboardVisible) {
         keyboardVisible = false
         keyboardController?.hide()
     }
@@ -71,7 +71,6 @@ fun NavigationRow(
             FilterBar(
                 onSearch = { walletViewModel.filter(it) },
                 modifier = Modifier
-                   
                     .padding(start = 4.dp, bottom = 4.dp)
                     .weight(1f)
                     .focusRequester(focusRequester)
