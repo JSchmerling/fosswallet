@@ -90,7 +90,7 @@ fun WalletScreen(
     val selectedPasses = remember { mutableStateSetOf<LocalizedPassWithTags>() }
     val visiblePasses = remember { mutableStateOf<Set<LocalizedPassWithTags>>(emptySet()) }
     val allVisibleSelected = visiblePasses.value.isNotEmpty() && visiblePasses.value.all { selectedPasses.contains(it) }
-    
+
     WalletScaffold(
         navController = navController,
         actions = {
@@ -134,7 +134,11 @@ fun WalletScreen(
         },
         floatingActionButton = {
             if (selectedPasses.isNotEmpty()) {
-                SelectionActions(selectedPasses, listState, walletViewModel)
+                SelectionActions(
+                    selectedPasses,
+                    listState,
+                    walletViewModel
+                )
             } else {
                 FabMenu(
                     items = listOf(
