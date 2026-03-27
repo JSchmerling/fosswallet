@@ -40,9 +40,10 @@ import nz.eloque.foss_wallet.ui.screens.wallet.WalletViewModel
 @Composable
 fun NavigationRow(
     navController: NavController,
-    walletViewModel: WalletViewModel
+    walletViewModel: WalletViewModel,
+    tab: Int = 1,
 ) {
-    var selectedTabIndex by remember { mutableIntStateOf(1) }
+    var selectedTabIndex by remember { mutableIntStateOf(tab) }
     var imeVisible by remember { mutableStateOf(false) }
 
     BackHandler(enabled = imeVisible) { imeVisible = false }
