@@ -28,6 +28,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -97,7 +99,7 @@ fun NavigationRow(
                 onClick = {
                     selectedTabIndex = 0
                     imeVisible = true
-                    keyboardController?.hide()
+                    keyboardController?.show()
                 },
                 icon = { Icon(Icons.Default.Search, contentDescription = stringResource(R.string.search)) },
                 label = { Text(stringResource(R.string.search)) }
