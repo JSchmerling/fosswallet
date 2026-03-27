@@ -88,7 +88,6 @@ fun WalletView(
     val passToDelete = remember { mutableStateOf<LocalizedPassWithTags?>(null) }
 
     val sortedPasses = passes
-        .asSequence()
         .filter { localizedPass -> passTypesToShow.any { localizedPass.pass.type.isSameType(it) } }
         .filter { localizedPass -> tagToFilterFor.value == null || localizedPass.tags.contains(tagToFilterFor.value) }
         .sortedWith(sortOption.comparator)
@@ -152,7 +151,6 @@ fun WalletView(
                 tagToFilterFor = tagToFilterFor
             )
         }
-
 
         items(groups) { (groupId, passes) ->
             GroupCard(
