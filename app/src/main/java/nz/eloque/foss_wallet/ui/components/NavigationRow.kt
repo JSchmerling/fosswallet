@@ -47,6 +47,8 @@ fun NavigationRow(
     tabIndex: Int = 1,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+    val focusRequester = remember { FocusRequester() }
+    
     var selectedTabIndex by remember { mutableIntStateOf(tabIndex) }
     var imeVisible by remember { mutableStateOf(false) }
 
@@ -57,8 +59,8 @@ fun NavigationRow(
     
     AnimatedVisibility(
         visible = imeVisible,
-        enter = fadeIn() + expandVertically(),
-        exit = fadeOut() + shrinkVertically()
+        enter = fadeIn() + expandVertically(expandFrom = Alignment.Bottom),
+        exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Bottom)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -69,6 +71,7 @@ fun NavigationRow(
                 modifier = Modifier
                     .padding(start = 4.dp, bottom = 4.dp)
                     .weight(1f)
+                    .focusRequester(focusRequester)
                     .onFocusChanged { focusState -> if (focusState.isFocused) { 
                         imeVisible = true
                         keyboardController?.show()
@@ -90,8 +93,8 @@ fun NavigationRow(
     
     AnimatedVisibility(
         visible = !imeVisible,
-        enter = fadeIn() + expandVertically(),
-        exit = fadeOut() + shrinkVertically()
+        enter = fadeIn() + expandVertically(expandFrom = Alignment.Bottom),
+        exit = fadeOut() + shrinkVertically(shrinkTowards = Alignment.Bottom)
     ) {
         NavigationBar {
             NavigationBarItem(
@@ -99,6 +102,7 @@ fun NavigationRow(
                 onClick = {
                     selectedTabIndex = 0
                     imeVisible = true
+                    focusRequester.requestFocus()
                     keyboardController?.show()
                 },
                 icon = { Icon(Icons.Default.Search, contentDescription = stringResource(R.string.search)) },
