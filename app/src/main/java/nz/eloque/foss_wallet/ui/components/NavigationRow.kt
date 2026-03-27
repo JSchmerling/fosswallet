@@ -28,8 +28,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -47,7 +48,10 @@ fun NavigationRow(
     var selectedTabIndex by remember { mutableIntStateOf(tabIndex) }
     var imeVisible by remember { mutableStateOf(false) }
 
-    BackHandler(enabled = imeVisible) { imeVisible = false }
+    BackHandler(enabled = imeVisible) {
+        imeVisible = false
+        keyboardController?.hide()
+    }
     
     AnimatedVisibility(
         visible = imeVisible,
@@ -93,6 +97,7 @@ fun NavigationRow(
                 onClick = {
                     selectedTabIndex = 0
                     imeVisible = true
+                    keyboardController?.hide()
                 },
                 icon = { Icon(Icons.Default.Search, contentDescription = stringResource(R.string.search)) },
                 label = { Text(stringResource(R.string.search)) }
