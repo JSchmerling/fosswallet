@@ -73,7 +73,7 @@ fun ArchiveScreen(
                 SelectionActions(selectedPasses, listState, walletViewModel)
             }
         },
-        bottomBar = { NavigationRow(navController, walletViewModel, tab = 2) },
+        bottomBar = { NavigationRow(navController, walletViewModel, tabIndex = 2) },
     ) { scrollBehavior ->
         WalletView(
             navController = navController,
