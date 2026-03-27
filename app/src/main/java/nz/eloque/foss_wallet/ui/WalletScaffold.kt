@@ -51,7 +51,7 @@ fun WalletScaffold(
         topBar = {
             TopAppBar(
                 title = { AbbreviatingText(
-                    text = title,
+                    title,
                     style = MaterialTheme.typography.headlineMedium,
                     maxLines = 1,
                 ) },
