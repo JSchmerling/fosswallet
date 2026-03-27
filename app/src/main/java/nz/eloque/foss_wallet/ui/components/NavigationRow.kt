@@ -41,9 +41,9 @@ import nz.eloque.foss_wallet.ui.screens.wallet.WalletViewModel
 fun NavigationRow(
     navController: NavController,
     walletViewModel: WalletViewModel,
-    tab: Int = 1,
+    tabIndex: Int = 1,
 ) {
-    var selectedTabIndex by remember { mutableIntStateOf(tab) }
+    var selectedTabIndex by remember { mutableIntStateOf(tabIndex) }
     var imeVisible by remember { mutableStateOf(false) }
 
     BackHandler(enabled = imeVisible) { imeVisible = false }
@@ -62,7 +62,9 @@ fun NavigationRow(
                 modifier = Modifier
                     .padding(start = 4.dp, bottom = 4.dp)
                     .weight(1f)
-                    .onFocusChanged { focusState -> if (focusState.isFocused) { imeVisible = true } }
+                    .onFocusChanged { focusState -> if (focusState.isFocused) { 
+                        imeVisible = true
+                    } }
             )
             IconButton(
                 onClick = { imeVisible = false }
