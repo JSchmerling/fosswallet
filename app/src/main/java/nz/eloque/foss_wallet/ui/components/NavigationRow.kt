@@ -43,6 +43,7 @@ fun NavigationRow(
     walletViewModel: WalletViewModel,
     tabIndex: Int = 1,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
     var selectedTabIndex by remember { mutableIntStateOf(tabIndex) }
     var imeVisible by remember { mutableStateOf(false) }
 
@@ -64,10 +65,14 @@ fun NavigationRow(
                     .weight(1f)
                     .onFocusChanged { focusState -> if (focusState.isFocused) { 
                         imeVisible = true
+                        keyboardController?.show()
                     } }
             )
             IconButton(
-                onClick = { imeVisible = false }
+                onClick = { 
+                    imeVisible = false
+                    keyboardController?.hide()
+                }
             ) {
                 Icon(
                     imageVector = Icons.Default.KeyboardHide,
