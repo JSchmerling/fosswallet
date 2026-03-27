@@ -28,8 +28,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -47,7 +45,6 @@ fun NavigationRow(
     tabIndex: Int = 1,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    val focusRequester = remember { FocusRequester() }
     
     var selectedTabIndex by remember { mutableIntStateOf(tabIndex) }
     var imeVisible by remember { mutableStateOf(false) }
@@ -71,7 +68,6 @@ fun NavigationRow(
                 modifier = Modifier
                     .padding(start = 4.dp, bottom = 4.dp)
                     .weight(1f)
-                    .focusRequester(focusRequester)
                     .onFocusChanged { focusState -> if (focusState.isFocused) { 
                         imeVisible = true
                         keyboardController?.show()
@@ -102,7 +98,6 @@ fun NavigationRow(
                 onClick = {
                     selectedTabIndex = 0
                     imeVisible = true
-                    focusRequester.requestFocus()
                     keyboardController?.show()
                 },
                 icon = { Icon(Icons.Default.Search, contentDescription = stringResource(R.string.search)) },
