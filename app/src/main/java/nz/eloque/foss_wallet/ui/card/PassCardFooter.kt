@@ -36,6 +36,7 @@ import nz.eloque.foss_wallet.ui.components.tag.TagChooser
 @Composable
 fun PassCardFooter(
     localizedPass: LocalizedPassWithTags,
+    snackbarHostState: SnackbarHostState,
     allTags: Set<Tag>,
     onTagClick: (Tag) -> Unit = {},
     onTagAdd: (Tag) -> Unit = {},
@@ -53,11 +54,11 @@ fun PassCardFooter(
         var tagChooserShown by remember { mutableStateOf(false) }
 
         pass.relevantDates.filterIsInstance<PassRelevantDate.DateInterval>().firstOrNull()?.let {
-            CalendarButton(pass.description, it.startDate, it.endDate)
+            CalendarButton(pass.description, snackbarHostState, it.startDate, it.endDate)
         } ?: pass.relevantDates.filterIsInstance<PassRelevantDate.Date>().firstOrNull()?.let {
-            CalendarButton(pass.description, it.date, pass.expirationDate)
+            CalendarButton(pass.description, snackbarHostState, it.date, pass.expirationDate)
         }
-        pass.locations.firstOrNull()?.let { LocationButton(it) }
+        pass.locations.firstOrNull()?.let { LocationButton(it, snackbarHostState) }
 
         Spacer(modifier = Modifier.width(8.dp))
 
