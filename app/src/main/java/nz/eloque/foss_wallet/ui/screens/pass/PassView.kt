@@ -42,6 +42,7 @@ import java.time.Instant
 @Composable
 fun PassView(
     localizedPass: LocalizedPassWithTags,
+    snackbarHostState: SnackbarHostState,
     allTags: Set<Tag>,
     onTagClick: (Tag) -> Unit,
     onTagAdd: (Tag) -> Unit,
@@ -66,6 +67,7 @@ fun PassView(
     ) {
         PassCard(
             localizedPass = localizedPass,
+            snackbarHostState = snackbarHostState,
             allTags = allTags,
             onTagClick = onTagClick,
             onTagAdd = onTagAdd,
