@@ -1,6 +1,15 @@
-package ing.schmerl.dphi_keyboard.shortcut
+package ing.schmerl.dphi_keyboard.launcher
 
-
+import android.content.Context
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.glance.GlanceTheme
+import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.SizeMode
+import androidx.glance.currentState
 
 class SquareWidget : GlanceAppWidget() {
 
