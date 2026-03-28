@@ -66,6 +66,7 @@ fun ShortPassCard(
 @Composable
 fun PassCard(
     localizedPass: LocalizedPassWithTags,
+    snackbarHostState: SnackbarHostState,
     allTags: Set<Tag>,
     onTagClick: (Tag) -> Unit,
     onTagAdd: (Tag) -> Unit,
