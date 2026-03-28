@@ -9,7 +9,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -23,14 +22,14 @@ import java.time.temporal.ChronoUnit
 @Composable
 fun CalendarButton(
     title: String,
+    snackbarHostState: SnackbarHostState,
     start: ZonedDateTime,
     end: ZonedDateTime?,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val resources = LocalResources.current
-    val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
 
     IconButton(onClick = {
         val intent = Intent(Intent.ACTION_EDIT).also {
