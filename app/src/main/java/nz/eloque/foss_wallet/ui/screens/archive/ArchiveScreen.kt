@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.model.LocalizedPassWithTags
+import nz.eloque.foss_wallet.ui.components.NavigationRow
 import nz.eloque.foss_wallet.ui.WalletScaffold
 import nz.eloque.foss_wallet.ui.Screen
 import nz.eloque.foss_wallet.ui.screens.wallet.SelectionActions
@@ -35,7 +36,6 @@ fun ArchiveScreen(
 
     WalletScaffold(
         navController = navController,
-        title = stringResource(id = R.string.the_archive),
         toolWindow = true,
         actions = {
             if (selectedPasses.isNotEmpty()) {
@@ -71,13 +71,13 @@ fun ArchiveScreen(
         floatingActionButton = {
             if (selectedPasses.isNotEmpty()) {
                 SelectionActions(
-                    true,
                     selectedPasses,
                     listState,
                     walletViewModel
                 )
             }
         },
+        bottomBar = { NavigationRow(navController, walletViewModel, tabIndex = 2) },
     ) { scrollBehavior ->
         WalletView(
             navController = navController,

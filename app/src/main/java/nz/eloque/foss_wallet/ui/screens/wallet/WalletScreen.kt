@@ -1,12 +1,12 @@
 package nz.eloque.foss_wallet.ui.screens.wallet
 
-import android.annotation.SuppressLint
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MoreHoriz
@@ -18,6 +18,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableStateSetOf
@@ -26,6 +27,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.Dispatchers
@@ -33,15 +35,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.model.LocalizedPassWithTags
+import nz.eloque.foss_wallet.model.SortOption
 import nz.eloque.foss_wallet.persistence.loader.Loader
 import nz.eloque.foss_wallet.persistence.loader.LoaderResult
 import nz.eloque.foss_wallet.ui.Screen
 import nz.eloque.foss_wallet.ui.WalletScaffold
 import nz.eloque.foss_wallet.ui.components.FabMenu
 import nz.eloque.foss_wallet.ui.components.FabMenuItem
+import nz.eloque.foss_wallet.ui.components.NavigationRow
+import nz.eloque.foss_wallet.ui.components.SelectionMenu
 import nz.eloque.foss_wallet.utils.PkpassMimeTypes
 
-@SuppressLint("LocalContextGetResourceValueCall")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WalletScreen(
@@ -49,11 +53,12 @@ fun WalletScreen(
     walletViewModel: WalletViewModel,
 ) {
     val context = LocalContext.current
+    val resources = LocalResources.current
     val contentResolver = context.contentResolver
+    val sortOption = walletViewModel.sortOptionState.collectAsState().value
+    
     val coroutineScope = rememberCoroutineScope()
-
     val listState = rememberLazyListState()
-
     val loading = remember { mutableStateOf(false) }
 
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
@@ -88,7 +93,6 @@ fun WalletScreen(
 
     WalletScaffold(
         navController = navController,
-        title = stringResource(id = Screen.Wallet.resourceId),
         actions = {
             if (selectedPasses.isNotEmpty()) {
                 IconButton(
@@ -111,14 +115,14 @@ fun WalletScreen(
                     )
                 }
             }
-            IconButton(onClick = {
-                navController.navigate(Screen.Archive.route)
-            }) {
-                Icon(
-                    imageVector = Screen.Archive.icon,
-                    contentDescription = stringResource(R.string.the_archive)
-                )
-            }
+            SelectionMenu(
+                icon = Icons.AutoMirrored.Default.Sort,
+                contentDescription = R.string.filter,
+                options = SortOption.all(),
+                selectedOption = sortOption,
+                onOptionSelected = { walletViewModel.setSortOption(it) },
+                optionLabel = { resources.getString(it.l18n) }
+            )
             IconButton(onClick = {
                 navController.navigate(Screen.Settings.route)
             }) {
@@ -131,7 +135,6 @@ fun WalletScreen(
         floatingActionButton = {
             if (selectedPasses.isNotEmpty()) {
                 SelectionActions(
-                    false,
                     selectedPasses,
                     listState,
                     walletViewModel
@@ -168,6 +171,7 @@ fun WalletScreen(
                 )
             }
         },
+        bottomBar = { NavigationRow(navController, walletViewModel) },
     ) { scrollBehavior ->
         WalletView(
             navController = navController,

@@ -1,5 +1,6 @@
 package nz.eloque.foss_wallet.ui.screens.wallet
 
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -55,6 +56,7 @@ import nz.eloque.foss_wallet.ui.card.ShortPassCard
 import nz.eloque.foss_wallet.ui.components.GroupCard
 import nz.eloque.foss_wallet.ui.components.SwipeToDismiss
 
+@SuppressLint("FlowOperatorInvokedInComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WalletView(
@@ -143,8 +145,7 @@ fun WalletView(
         item {
             FilterBlock(
                 walletViewModel = walletViewModel,
-                sortOption = sortOption,
-                onSortChange = { walletViewModel.setSortOption(it) },
+                listState = listState,
                 passTypesToShow = passTypesToShow,
                 tags = tags,
                 tagToFilterFor = tagToFilterFor

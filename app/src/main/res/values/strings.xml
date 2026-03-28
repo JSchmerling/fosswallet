@@ -129,4 +129,5 @@
     <string name="no_barcode_found">No barcode found</string>
     <string name="no_map_app_found">No map app found</string>
     <string name="no_calendar_app_found">No calendar app found</string>
+    <string name="dismiss_keyboard">Dismiss keyboard</string>
 </resources>

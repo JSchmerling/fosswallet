@@ -8,84 +8,39 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Sort
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalResources
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.model.PassType
-import nz.eloque.foss_wallet.model.SortOption
 import nz.eloque.foss_wallet.model.Tag
 import nz.eloque.foss_wallet.ui.components.ChipSelector
-import nz.eloque.foss_wallet.ui.components.FilterBar
-import nz.eloque.foss_wallet.ui.components.SelectionMenu
 import nz.eloque.foss_wallet.ui.components.tag.TagRow
 
 @Composable
 fun FilterBlock(
     walletViewModel: WalletViewModel,
-    sortOption: SortOption,
-    onSortChange: (SortOption) -> Unit,
+    listState: LazyListState,
     passTypesToShow: SnapshotStateList<PassType>,
     tags: Set<Tag>,
     tagToFilterFor: MutableState<Tag?>,
 ) {
     val resources = LocalResources.current
-
-    var filtersShown by remember { mutableStateOf(false) }
+    val visible = rememberIsScrollingUp(listState)
 
     Column {
 
-
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-            FilterBar(
-                onSearch = { walletViewModel.filter(it) },
-                modifier = Modifier
-                    .padding(start = 6.dp, bottom = 6.dp)
-                    .weight(1f)
-            )
-            SelectionMenu(
-                icon = Icons.AutoMirrored.Default.Sort,
-                contentDescription = R.string.filter,
-                options = SortOption.all(),
-                selectedOption = sortOption,
-                onOptionSelected = onSortChange,
-                optionLabel = { resources.getString(it.l18n) }
-            )
-            IconButton(onClick = {
-                filtersShown = !filtersShown
-            }) {
-                if (filtersShown) {
-                    Icon(imageVector = Icons.Default.KeyboardArrowUp, contentDescription = stringResource(R.string.collapse))
-                } else {
-                    Icon(imageVector = Icons.Default.KeyboardArrowDown, contentDescription = stringResource(R.string.expand))
-                }
-            }
-        }
-
         AnimatedVisibility(
-            visible = filtersShown,
+            visible = visible,
             enter = expandVertically(
                 animationSpec = tween(durationMillis = 300)
             ) + fadeIn(animationSpec = tween(300)),
@@ -117,4 +72,24 @@ fun FilterBlock(
             }
         }
     }
+}
+
+@Composable
+private fun rememberIsScrollingUp(listState: LazyListState): Boolean {
+    var previousIndex by remember(listState) { mutableIntStateOf(listState.firstVisibleItemIndex) }
+    var previousOffset by remember(listState) { mutableIntStateOf(listState.firstVisibleItemScrollOffset) }
+
+    return remember(listState) {
+        derivedStateOf {
+            if (previousIndex != listState.firstVisibleItemIndex) {
+                (previousIndex > listState.firstVisibleItemIndex).also {
+                    previousIndex = listState.firstVisibleItemIndex
+                }
+            } else {
+                (previousOffset >= listState.firstVisibleItemScrollOffset).also {
+                    previousOffset = listState.firstVisibleItemScrollOffset
+                }
+            }
+        }
+    }.value
 }

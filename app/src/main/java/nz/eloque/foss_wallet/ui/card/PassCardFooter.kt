@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AppShortcut
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChipDefaults
@@ -20,15 +21,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.model.LocalizedPassWithTags
 import nz.eloque.foss_wallet.model.PassRelevantDate
 import nz.eloque.foss_wallet.model.Tag
+import nz.eloque.foss_wallet.shortcut.Shortcut
 import nz.eloque.foss_wallet.ui.components.CalendarButton
 import nz.eloque.foss_wallet.ui.components.ChipRow
 import nz.eloque.foss_wallet.ui.components.LocationButton
+import nz.eloque.foss_wallet.ui.components.ShareButton
 import nz.eloque.foss_wallet.ui.components.tag.TagChooser
 
 
@@ -42,6 +46,8 @@ fun PassCardFooter(
     onTagCreate: (Tag) -> Unit = {},
     readOnly: Boolean = false,
 ) {
+    val context = LocalContext.current
+    
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -51,7 +57,22 @@ fun PassCardFooter(
         val tags = localizedPass.tags
 
         var tagChooserShown by remember { mutableStateOf(false) }
+        
+        if (!readOnly) {
+            val passFile = pass.originalPassFile(context)
+    
+            if (passFile != null) { ShareButton(passFile) }
 
+            IconButton(
+                onClick = { Shortcut.create(context, pass, pass.description) }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.AppShortcut,
+                    contentDescription = stringResource(R.string.add_shortcut)
+                )
+            }
+        }
+        
         if (pass.relevantDates.any { it is PassRelevantDate.DateInterval }) {
             val interval: PassRelevantDate.DateInterval = pass.relevantDates.filter {
                 it is PassRelevantDate.DateInterval
