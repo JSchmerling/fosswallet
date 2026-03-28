@@ -47,7 +47,7 @@ fun PassCardFooter(
     readOnly: Boolean = false,
 ) {
     val context = LocalContext.current
-    var tagChooserShown by remember { mutableStateOf(false) }
+    
     
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -62,6 +62,7 @@ fun PassCardFooter(
     
             if (passFile != null) { ShareButton(passFile) }
 
+            var tagChooserShown by remember { mutableStateOf(false) }
             IconButton(
                 onClick = { Shortcut.create(context, pass, pass.description) }
             ) {
