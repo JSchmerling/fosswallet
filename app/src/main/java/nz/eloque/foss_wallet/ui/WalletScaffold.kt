@@ -1,5 +1,10 @@
 package nz.eloque.foss_wallet.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,7 +54,9 @@ fun WalletScaffold(
     content: @Composable (scrollBehavior: TopAppBarScrollBehavior) -> Unit,
     subRow: @Composable () -> Unit = {},
 ) {
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val visible by remember { derivedStateOf { scrollBehavior.state.collapsedFraction < 0.5f } }
+    
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
@@ -79,9 +86,13 @@ fun WalletScaffold(
                         }
                     },
                     actions = actions,
-                    scrollBehavior = scrollBehavior
+                    scrollBehavior = null
                 )
-                subRow
+                AnimatedVisibility(
+                    visible = visible,
+                    enter = expandVertically() + fadeIn(),
+                    exit = shrinkVertically() + fadeOut(),
+                ) { subRow() }
             }
         },
         contentWindowInsets = WindowInsets.statusBars,
