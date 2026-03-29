@@ -1,4 +1,4 @@
-package nz.eloque.foss_wallet.ui.screens.wallet
+package nz.eloque.foss_wallet.ui.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -35,12 +35,12 @@ fun FilterBlock(
     tagToFilterFor: MutableState<Tag?>,
 ) {
     val resources = LocalResources.current
-    val visible = rememberIsScrollingUp(listState)
+    val isScrollingUp = rememberIsScrollingUp(listState)
 
     Column {
 
         AnimatedVisibility(
-            visible = visible,
+            visible = isScrollingUp,
             enter = expandVertically(
                 animationSpec = tween(durationMillis = 300)
             ) + fadeIn(animationSpec = tween(300)),
