@@ -82,6 +82,7 @@ fun ArchiveScreen(
         WalletView(
             navController = navController,
             walletViewModel = walletViewModel,
+            snackbarHostState = snackbarHostState,
             archive = true,
             emptyIcon = Icons.Default.Archive,
             listState = listState,

@@ -36,7 +36,7 @@ fun LocationButton(
                 })
             } catch (e: ActivityNotFoundException) {
                 Log.e("LocationButton", "No map app found!", e)
-                scope.launch {
+                coroutineScope.launch {
                     snackbarHostState.showSnackbar(message = resources.getString(R.string.no_calendar_app_found))
                 }
             }

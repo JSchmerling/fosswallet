@@ -10,6 +10,7 @@ import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -28,6 +29,7 @@ import nz.eloque.foss_wallet.utils.darken
 @Composable
 fun ShortPassCard(
     pass: LocalizedPassWithTags,
+    snackbarHostState: SnackbarHostState,
     allTags: Set<Tag>,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
@@ -53,6 +55,7 @@ fun ShortPassCard(
         ) {
             ShortPassContent(
                 localizedPass = pass,
+                snackbarHostState = snackbarHostState,
                 cardColors = cardColors,
                 allTags = allTags,
             )
@@ -94,6 +97,7 @@ fun PassCard(
     ) {
         PassContent(
             localizedPass = localizedPass,
+            snackbarHostState = snackbarHostState,
             cardColors = cardColors,
             allTags = allTags,
             onTagClick = onTagClick,
@@ -126,6 +130,7 @@ fun passCardColors(passColors: PassColors?, toned: Boolean = false): CardColors 
 private fun PasscardPreview() {
     PassCard(
         localizedPass = LocalizedPassWithTags.placeholder(),
+        snackbarHostState = remember { SnackbarHostState() },
         allTags = setOf(Tag("Tag 1", Color(0, 0, 0)), Tag("Tag 2", Color(100, 100, 100))),
         onTagClick = {},
         onTagAdd = {},

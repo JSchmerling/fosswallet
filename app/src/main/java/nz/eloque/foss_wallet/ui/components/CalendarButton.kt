@@ -45,7 +45,7 @@ fun CalendarButton(
             context.startActivity(intent)
         } catch (e: ActivityNotFoundException) {
             Log.e("DateView", "No calendar app found!", e)
-            scope.launch {
+            coroutineScope.launch {
                 snackbarHostState.showSnackbar(message = resources.getString(R.string.no_calendar_app_found))
             }
         }

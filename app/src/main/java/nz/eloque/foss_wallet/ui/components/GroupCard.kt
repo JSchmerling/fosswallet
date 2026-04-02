@@ -24,6 +24,7 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -50,6 +51,7 @@ import nz.eloque.foss_wallet.ui.screens.wallet.WalletViewModel
 fun GroupCard(
     groupId: Long,
     passes: List<LocalizedPassWithTags>,
+    snackbarHostState: SnackbarHostState,
     allTags: Set<Tag>,
     selectedPasses: MutableSet<LocalizedPassWithTags>,
     walletViewModel: WalletViewModel,
@@ -77,6 +79,7 @@ fun GroupCard(
                 val item = passes[index]
                 ShortPassCard(
                     pass = item,
+                    snackbarHostState = snackbarHostState,
                     allTags = allTags,
                     onClick = {
                         if (selectedPasses.isNotEmpty()) {

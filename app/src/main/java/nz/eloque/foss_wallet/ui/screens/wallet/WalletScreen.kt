@@ -172,6 +172,7 @@ fun WalletScreen(
         WalletView(
             navController = navController,
             walletViewModel = walletViewModel,
+            snackbarHostState = snackbarHostState,
             listState = listState,
             scrollBehavior = scrollBehavior,
             selectedPasses = selectedPasses,

@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material.icons.filled.Wallet
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
@@ -61,6 +62,7 @@ fun WalletView(
     navController: NavController,
     walletViewModel: WalletViewModel,
     modifier: Modifier = Modifier,
+    snackbarHostState: SnackbarHostState,
     emptyIcon: ImageVector = Icons.Default.Wallet,
     archive: Boolean = false,
     listState: LazyListState = rememberLazyListState(),
@@ -155,6 +157,7 @@ fun WalletView(
             GroupCard(
                 groupId = groupId!!,
                 passes = passes,
+                snackbarHostState = snackbarHostState,
                 allTags = tags,
                 onClick = {
                     navController.navigate("pass/${it.id}")
@@ -182,6 +185,7 @@ fun WalletView(
             ) {
                 ShortPassCard(
                     pass = pass,
+                    snackbarHostState = snackbarHostState,
                     allTags = tags,
                     onClick = {
                         if (selectedPasses.isNotEmpty()) {

@@ -84,7 +84,7 @@ fun PassScreen(
         ) { scrollBehavior ->
             PassView(
                 localizedPass = localizedPass,
-                snackbarHostState: SnackbarHostState,
+                snackbarHostState = snackbarHostState,
                 allTags = allTags,
                 onTagClick = { coroutineScope.launch(Dispatchers.IO) { passViewModel.untag(localizedPass.pass, it) } },
                 onTagAdd = { coroutineScope.launch(Dispatchers.IO) { passViewModel.tag(localizedPass.pass, it) } },

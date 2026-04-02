@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.CardColors
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -22,6 +23,7 @@ import nz.eloque.foss_wallet.ui.screens.pass.AsyncPassImage
 @Composable
 fun ShortPassContent(
     localizedPass: LocalizedPassWithTags,
+    snackbarHostState: SnackbarHostState,
     allTags: Set<Tag>,
     cardColors: CardColors,
     modifier: Modifier = Modifier,
@@ -51,6 +53,7 @@ fun ShortPassContent(
         }
         PassCardFooter(
             localizedPass = localizedPass,
+            snackbarHostState = snackbarHostState,
             allTags = allTags,
             readOnly = true,
         )
@@ -64,6 +67,7 @@ private fun List<PassField>.empty(): Boolean {
 @Composable
 fun PassContent(
     localizedPass: LocalizedPassWithTags,
+    snackbarHostState: SnackbarHostState,
     allTags: Set<Tag>,
     onTagClick: (Tag) -> Unit,
     onTagAdd: (Tag) -> Unit,
@@ -98,6 +102,7 @@ fun PassContent(
         content()
         PassCardFooter(
             localizedPass = localizedPass,
+            snackbarHostState = snackbarHostState,
             allTags = allTags,
             onTagClick = onTagClick,
             onTagAdd = onTagAdd,
