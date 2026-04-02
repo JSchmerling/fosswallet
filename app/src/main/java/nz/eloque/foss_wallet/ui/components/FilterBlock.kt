@@ -25,6 +25,7 @@ import nz.eloque.foss_wallet.model.PassType
 import nz.eloque.foss_wallet.model.Tag
 import nz.eloque.foss_wallet.ui.components.ChipSelector
 import nz.eloque.foss_wallet.ui.components.tag.TagRow
+import nz.eloque.foss_wallet.ui.screens.wallet.WalletViewModel
 
 @Composable
 fun FilterBlock(

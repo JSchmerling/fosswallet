@@ -29,6 +29,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,7 +53,7 @@ fun WalletScaffold(
     floatingActionButton: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-    content: @Composable (scrollBehavior: TopAppBarScrollBehavior) -> Unit,
+    //content: @Composable (scrollBehavior: TopAppBarScrollBehavior) -> Unit,
     subRow: @Composable () -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -113,7 +115,7 @@ fun WalletScaffold(
             .padding(innerPadding)
             .padding(horizontal = 8.dp)
         ) {
-            content.invoke(scrollBehavior)
+            //content.invoke(scrollBehavior)
         }
     }
 }
