@@ -6,6 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.RadioButtonChecked
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -52,7 +53,7 @@ fun <T, F> SelectionMenu(
                     text = { Text(multiOptionLabel(option)) },
                     leadingIcon = {
                         if (selected) {
-                            Icon(Icons.Default.Check, contentDescription = stringResource(R.string.selected))
+                            Icon(Icons.Default.RadioButtonChecked, contentDescription = stringResource(R.string.selected))
                         }
                     },
                     onClick = { if (selected) onOptionDeselected(option) else onOptionSelected(option) }
