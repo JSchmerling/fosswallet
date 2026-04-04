@@ -32,8 +32,7 @@ fun <T, F> SelectionMenu(
     selectedOption: T,
     selectedFilterOptions: Collection<F>,
     onOptionSelected: (T) -> Unit,
-    onFilterSelected: (F) -> Unit,
-    onFilterDeselected: (F) -> Unit,
+    onOptionDeselected: (F) -> Unit,
     modifier: Modifier = Modifier,
     @StringRes contentDescription: Int = R.string.more_options,
 ) {
@@ -56,7 +55,7 @@ fun <T, F> SelectionMenu(
                             Icon(Icons.Default.Check, contentDescription = stringResource(R.string.selected))
                         }
                     },
-                    onClick = { if (selected) onFilterDeselected(option) else onFilterSelected(option) }
+                    onClick = { if (selected) onOptionDeselected(option) else onOptionSelected(option) }
                 )
             }
 
