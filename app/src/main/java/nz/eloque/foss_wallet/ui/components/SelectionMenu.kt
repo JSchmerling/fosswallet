@@ -19,13 +19,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import nz.eloque.foss_wallet.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T, F> SelectionMenu(
+fun <T, F> CombinedMenu(
     options: List<T>,
     selectedOption: T,
     filterOptions: Collection<F>,
@@ -36,16 +35,13 @@ fun <T, F> SelectionMenu(
     optionLabel: (T) -> String,
     filterLabel: (F) -> String,
     modifier: Modifier = Modifier,
-    icon: ImageVector = Icons.Default.Menu,
-    selectedIcon: ImageVector = Icons.Default.Check,
-    filterIcon: ImageVector = Icons.Default.FilterList,
     @StringRes contentDescription: Int = R.string.more_options,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
     Box(modifier = modifier) {
         IconButton(onClick = { expanded = !expanded }) {
-            Icon(icon, contentDescription = stringResource(contentDescription))
+            Icon(Icons.Default.Menu, contentDescription = stringResource(contentDescription))
         }
         DropdownMenu(
             expanded = expanded,
@@ -57,9 +53,9 @@ fun <T, F> SelectionMenu(
                     text = { Text(filterLabel(filter)) },
                     leadingIcon = {
                         if (selected) {
-                            Icon(selectedIcon, contentDescription = stringResource(R.string.selected))
+                            Icon(Icons.Default.Check, contentDescription = stringResource(R.string.selected))
                         } else {
-                            Icon(filterIcon, contentDescription = null)
+                            Icon(Icons.Default.FilterList, contentDescription = null)
                         }
                     },
                     onClick = {
@@ -75,7 +71,7 @@ fun <T, F> SelectionMenu(
                     text = { Text(optionLabel(option)) },
                     trailingIcon = {
                         if (option == selectedOption) {
-                            Icon(selectedIcon, stringResource(R.string.selected))
+                            Icon(Icons.Default.Check, stringResource(R.string.selected))
                         }
                     },
                     onClick = { onOptionSelected(option) }
