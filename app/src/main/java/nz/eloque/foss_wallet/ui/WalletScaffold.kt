@@ -53,7 +53,7 @@ fun WalletScaffold(
     floatingActionButton: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-    //content: @Composable (scrollBehavior: TopAppBarScrollBehavior) -> Unit,
+    content: @Composable (scrollBehavior: TopAppBarScrollBehavior) -> Unit,
     subRow: @Composable () -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -115,7 +115,7 @@ fun WalletScaffold(
             .padding(innerPadding)
             .padding(horizontal = 8.dp)
         ) {
-            //content.invoke(scrollBehavior)
+            content.invoke(scrollBehavior)
         }
     }
 }
