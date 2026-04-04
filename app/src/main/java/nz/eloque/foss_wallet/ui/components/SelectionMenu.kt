@@ -27,10 +27,10 @@ import nz.eloque.foss_wallet.R
 fun <T, F> SelectionMenu(
     multiOptions: Collection<F>,
     singleOptions: List<T>,
-    singleOptionLabel: (F) -> String,
     multiOptionLabel: (T) -> String,
-    selectedOption: T,
-    selectedFilterOptions: Collection<F>,
+    singleOptionLabel: (F) -> String,
+    selectedMultiOptions: Collection<F>,
+    selectedSingleOption: T,
     onOptionSelected: (T) -> Unit,
     onOptionDeselected: (F) -> Unit,
     modifier: Modifier = Modifier,
@@ -47,7 +47,7 @@ fun <T, F> SelectionMenu(
             onDismissRequest = { expanded = false }
         ) {
             multiOptions.forEach { option -> // multi select
-                val selected = selectedFilterOptions.contains(option)
+                val selected = selectedMultiOptions.contains(option)
                 DropdownMenuItem(
                     text = { Text(multiOptionLabel(option)) },
                     leadingIcon = {
@@ -65,7 +65,7 @@ fun <T, F> SelectionMenu(
                 DropdownMenuItem(
                     text = { Text(singleOptionLabel(option)) },
                     trailingIcon = {
-                        if (option == selectedOption) {
+                        if (option == selectedSingleOption) {
                             Icon(Icons.Default.Check, stringResource(R.string.selected))
                         }
                     },
