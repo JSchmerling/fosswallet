@@ -25,15 +25,15 @@ import nz.eloque.foss_wallet.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T, F> SelectionMenu(
-    options: List<T>,
+    multiOptions: Collection<F>,
+    singleOptions: List<T>,
+    singleOptionLabel: (F) -> String,
+    multiOptionLabel: (T) -> String,
     selectedOption: T,
-    filterOptions: Collection<F>,
     selectedFilterOptions: Collection<F>,
     onOptionSelected: (T) -> Unit,
     onFilterSelected: (F) -> Unit,
     onFilterDeselected: (F) -> Unit,
-    optionLabel: (T) -> String,
-    filterLabel: (F) -> String,
     modifier: Modifier = Modifier,
     @StringRes contentDescription: Int = R.string.more_options,
 ) {
@@ -47,28 +47,24 @@ fun <T, F> SelectionMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            filterOptions.forEach { filter -> // multi select
-                val selected = selectedFilterOptions.contains(filter)
+            multiOptions.forEach { option -> // multi select
+                val selected = selectedFilterOptions.contains(option)
                 DropdownMenuItem(
-                    text = { Text(filterLabel(filter)) },
+                    text = { Text(multiOptionLabel(option)) },
                     leadingIcon = {
                         if (selected) {
                             Icon(Icons.Default.Check, contentDescription = stringResource(R.string.selected))
-                        } else {
-                            Icon(Icons.Default.FilterList, contentDescription = null)
                         }
                     },
-                    onClick = {
-                        if (selected) onFilterDeselected(filter) else onFilterSelected(filter)
-                    }
+                    onClick = { if (selected) onFilterDeselected(option) else onFilterSelected(option) }
                 )
             }
 
             HorizontalDivider()
 
-            options.forEach { option -> // single select
+            singleOptions.forEach { option -> // single select
                 DropdownMenuItem(
-                    text = { Text(optionLabel(option)) },
+                    text = { Text(singleOptionLabel(option)) },
                     trailingIcon = {
                         if (option == selectedOption) {
                             Icon(Icons.Default.Check, stringResource(R.string.selected))
