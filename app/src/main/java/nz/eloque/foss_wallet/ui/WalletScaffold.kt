@@ -1,10 +1,5 @@
 package nz.eloque.foss_wallet.ui
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,7 +24,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -57,8 +51,7 @@ fun WalletScaffold(
     subRow: @Composable () -> Unit = {},
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-    val visible by remember { derivedStateOf { scrollBehavior.state.collapsedFraction < 0.5f } }
-    
+
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
@@ -88,13 +81,9 @@ fun WalletScaffold(
                         }
                     },
                     actions = actions,
-                    scrollBehavior = null
+                    scrollBehavior = scrollBehavior
                 )
-                AnimatedVisibility(
-                    visible = visible,
-                    enter = expandVertically() + fadeIn(),
-                    exit = shrinkVertically() + fadeOut(),
-                ) { subRow() }
+                subRow()
             }
         },
         contentWindowInsets = WindowInsets.statusBars,
@@ -105,6 +94,7 @@ fun WalletScaffold(
                     bottom = WindowInsets.navigationBars
                         .asPaddingValues()
                         .calculateBottomPadding()
+                        .nestedScroll(scrollBehavior.nestedScrollConnection)
                 )
             ) {
                 floatingActionButton()
