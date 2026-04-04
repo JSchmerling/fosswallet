@@ -4,16 +4,20 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -21,36 +25,62 @@ import nz.eloque.foss_wallet.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T> SelectionMenu(
+fun <T, F> SelectionMenu(
     options: List<T>,
     selectedOption: T,
+    filterOptions: Collection<F>,
+    selectedFilterOptions: Collection<F>,
+    onOptionSelected: (T) -> Unit,
+    onFilterSelected: (F) -> Unit,
+    onFilterDeselected: (F) -> Unit,
+    optionLabel: (T) -> String,
+    filterLabel: (F) -> String,
     modifier: Modifier = Modifier,
     icon: ImageVector = Icons.Default.Menu,
+    selectedIcon: ImageVector = Icons.Default.Check,
+    filterIcon: ImageVector = Icons.Default.FilterList,
     @StringRes contentDescription: Int = R.string.more_options,
-    onOptionSelected: (T) -> Unit,
-    optionLabel: (T) -> String
 ) {
-    val expanded = remember { mutableStateOf(false) }
-    Box(
-        modifier = modifier
-    ) {
-        IconButton(onClick = { expanded.value = !expanded.value }) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Box(modifier = modifier) {
+        IconButton(onClick = { expanded = !expanded }) {
             Icon(icon, contentDescription = stringResource(contentDescription))
         }
         DropdownMenu(
-            expanded = expanded.value,
-            onDismissRequest = { expanded.value = false }
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
         ) {
+            filterOptions.forEach { filter ->
+                val selected = selectedFilterOptions.contains(filter)
+                DropdownMenuItem(
+                    text = { Text(filterLabel(filter)) },
+                    leadingIcon = {
+                        if (selected) {
+                            Icon(selectedIcon, contentDescription = stringResource(R.string.selected))
+                        } else {
+                            Icon(filterIcon, contentDescription = null)
+                        }
+                    },
+                    onClick = {
+                        if (selected) onFilterDeselected(filter) else onFilterSelected(filter)
+                    }
+                )
+            }
+
+            HorizontalDivider()
+
             options.forEach { option ->
                 DropdownMenuItem(
                     text = { Text(optionLabel(option)) },
-                    trailingIcon = { if (option == selectedOption) {
-                        Icon(Icons.Default.Check, stringResource(R.string.selected))
-                    } },
+                    trailingIcon = {
+                        if (option == selectedOption) {
+                            Icon(selectedIcon, stringResource(R.string.selected))
+                        }
+                    },
                     onClick = { onOptionSelected(option) }
                 )
             }
         }
     }
-
 }
