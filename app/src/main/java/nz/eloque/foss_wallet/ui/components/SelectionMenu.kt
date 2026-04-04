@@ -53,7 +53,7 @@ fun <T, F> SelectionMenu(
                     text = { Text(multiOptionLabel(option)) },
                     leadingIcon = {
                         if (selected) {
-                            Icon(Icons.Default.RadioButtonChecked, contentDescription = stringResource(R.string.selected))
+                            Icon(Icons.Default.Check, contentDescription = stringResource(R.string.selected))
                         }
                     },
                     onClick = { if (selected) onOptionDeselected(option) else onOptionSelected(option) }
@@ -67,7 +67,7 @@ fun <T, F> SelectionMenu(
                     text = { Text(singleOptionLabel(option)) },
                     trailingIcon = {
                         if (option == selectedSingleOption) {
-                            Icon(Icons.Default.Check, stringResource(R.string.selected))
+                            Icon(Icons.Default.RadioButtonChecked, stringResource(R.string.selected))
                         }
                     },
                     onClick = { onOptionSelected(option) }
