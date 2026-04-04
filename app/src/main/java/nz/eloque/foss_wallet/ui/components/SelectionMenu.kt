@@ -24,7 +24,7 @@ import nz.eloque.foss_wallet.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun <T, F> CombinedMenu(
+fun <T, F> SelectionMenu(
     options: List<T>,
     selectedOption: T,
     filterOptions: Collection<F>,
@@ -47,7 +47,7 @@ fun <T, F> CombinedMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            filterOptions.forEach { filter ->
+            filterOptions.forEach { filter -> // multi select
                 val selected = selectedFilterOptions.contains(filter)
                 DropdownMenuItem(
                     text = { Text(filterLabel(filter)) },
@@ -66,7 +66,7 @@ fun <T, F> CombinedMenu(
 
             HorizontalDivider()
 
-            options.forEach { option ->
+            options.forEach { option -> // single select
                 DropdownMenuItem(
                     text = { Text(optionLabel(option)) },
                     trailingIcon = {
