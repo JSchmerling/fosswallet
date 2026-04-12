@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -57,7 +58,7 @@ class SettingsViewModel
 
         fun refresh() = update()
 
-        fun enableSync(enabled: Boolean) {
+        fun enableSync(enabled: Boolean) = viewModelScope.launch(Dispatchers.IO) {
             settingsStore.enableSync(enabled)
             if (enabled) {
                 updateScheduler.enableSync()
@@ -67,23 +68,23 @@ class SettingsViewModel
             update()
         }
 
-        fun setSyncInterval(duration: Duration) {
+        fun setSyncInterval(duration: Duration) = viewModelScope.launch(Dispatchers.IO) {
             settingsStore.setSyncInterval(duration)
             updateScheduler.updateSyncInterval()
             update()
         }
 
-        fun setBarcodePosition(barcodePosition: BarcodePosition) {
+        fun setBarcodePosition(barcodePosition: BarcodePosition) = viewModelScope.launch(Dispatchers.IO) {
             settingsStore.setBarcodePosition(barcodePosition)
             update()
         }
 
-        fun enablePassViewBrightness(enabled: Boolean) {
+        fun enablePassViewBrightness(enabled: Boolean) = viewModelScope.launch(Dispatchers.IO) {
             settingsStore.enablePassViewBrightness(enabled)
             update()
         }
 
-        fun setAskBeforeDelete(enabled: Boolean) {
+        fun setAskBeforeDelete(enabled: Boolean) = viewModelScope.launch(Dispatchers.IO) {
             settingsStore.setDeleteConfirmationEnabled(enabled)
             update()
         }
