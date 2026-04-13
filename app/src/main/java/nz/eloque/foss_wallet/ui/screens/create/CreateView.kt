@@ -79,9 +79,6 @@ import com.github.skydoves.colorpicker.compose.ColorEnvelope
 import com.github.skydoves.colorpicker.compose.HsvColorPicker
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 import com.google.zxing.BarcodeFormat
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.model.BarCode
 import nz.eloque.foss_wallet.model.PassColors
@@ -107,7 +104,6 @@ fun CreateView(
 ) {
     val context = LocalContext.current
     val resources = LocalResources.current
-    val coroutineScope = rememberCoroutineScope()
 
     var iconUrl by remember { mutableStateOf<Uri?>(null) }
     var logoUrl by remember { mutableStateOf<Uri?>(null) }
@@ -611,60 +607,56 @@ fun CreateView(
                     enabled = createValid,
                     onClick = {
                         isSaving = true
-                        coroutineScope.launch(Dispatchers.IO) {
-                            val relevantDates =
-                                when {
-                                    relevantStart != null && relevantEnd != null -> {
-                                        listOf(
-                                            PassRelevantDate.DateInterval(relevantStart!!, relevantEnd!!),
-                                        )
-                                    }
-
-                                    relevantStart != null -> {
-                                        listOf(PassRelevantDate.Date(relevantStart!!))
-                                    }
-
-                                    else -> {
-                                        emptyList()
-                                    }
-                                }
-
-                            val colors =
-                                if (allColorsBlank) {
-                                    null
-                                } else {
-                                    val fallbackColor = requireNotNull(backgroundColor ?: foregroundColor ?: labelColor)
-                                    PassColors(
-                                        background = backgroundColor ?: fallbackColor,
-                                        foreground = foregroundColor ?: fallbackColor,
-                                        label = labelColor ?: fallbackColor,
+                        val relevantDates =
+                            when {
+                                relevantStart != null && relevantEnd != null -> {
+                                    listOf(
+                                        PassRelevantDate.DateInterval(relevantStart!!, relevantEnd!!),
                                     )
                                 }
 
-                            val savedPassId =
-                                createViewModel.savePass(
-                                    name = name,
-                                    organization = organization,
-                                    serialNumber = serialNumber,
-                                    type = type,
-                                    barcodes = barCodeModels,
-                                    logoText = logoText,
-                                    colors = colors,
-                                    location = location,
-                                    relevantDates = relevantDates,
-                                    expirationDate = expirationDate,
-                                    iconUrl = iconUrl,
-                                    logoUrl = logoUrl,
-                                    stripUrl = stripUrl,
-                                    thumbnailUrl = thumbnailUrl,
-                                    footerUrl = footerUrl,
-                                )
-                            withContext(Dispatchers.Main) {
-                                isSaving = false
-                                navController.navigate("pass/$savedPassId") {
-                                    popUpTo(Screen.Wallet.route)
+                                relevantStart != null -> {
+                                    listOf(PassRelevantDate.Date(relevantStart!!))
+                                }
+
+                                else -> {
+                                    emptyList()
                                 }
                             }
+
+                        val colors =
+                            if (allColorsBlank) {
+                                null
+                            } else {
+                                val fallbackColor = requireNotNull(backgroundColor ?: foregroundColor ?: labelColor)
+                                PassColors(
+                                    background = backgroundColor ?: fallbackColor,
+                                    foreground = foregroundColor ?: fallbackColor,
+                                    label = labelColor ?: fallbackColor,
+                                )
+                            }
+
+                        val savedPassId =
+                            createViewModel.savePass(
+                                name = name,
+                                organization = organization,
+                                serialNumber = serialNumber,
+                                type = type,
+                                barcodes = barCodeModels,
+                                logoText = logoText,
+                                colors = colors,
+                                location = location,
+                                relevantDates = relevantDates,
+                                expirationDate = expirationDate,
+                                iconUrl = iconUrl,
+                                logoUrl = logoUrl,
+                                stripUrl = stripUrl,
+                                thumbnailUrl = thumbnailUrl,
+                                footerUrl = footerUrl,
+                            )
+                            isSaving = false
+                            navController.navigate("pass/$savedPassId") {
+                                popUpTo(Screen.Wallet.route)
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
@@ -840,7 +832,6 @@ private fun LocationPickerDialog(
 ) {
     val context = LocalContext.current
     val resources = LocalResources.current
-    val coroutineScope = rememberCoroutineScope()
 
     var query by remember { mutableStateOf("") }
     var isSearching by remember { mutableStateOf(false) }
@@ -873,19 +864,17 @@ private fun LocationPickerDialog(
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Button(
                         onClick = {
-                            coroutineScope.launch(Dispatchers.IO) {
-                                isSearching = true
-                                error = null
-                                try {
-                                    results = createViewModel.geocode(query)
-                                    if (results.isEmpty()) {
-                                        error = resources.getString(R.string.no_search_results)
-                                    }
-                                } catch (e: Exception) {
-                                    error = e.message ?: resources.getString(R.string.exception)
-                                } finally {
-                                    isSearching = false
+                            isSearching = true
+                            error = null
+                            try {
+                                results = createViewModel.geocode(query)
+                                if (results.isEmpty()) {
+                                    error = resources.getString(R.string.no_search_results)
                                 }
+                            } catch (e: Exception) {
+                                error = e.message ?: resources.getString(R.string.exception)
+                            } finally {
+                                isSearching = false
                             }
                         },
                         enabled = query.isNotBlank() && !isSearching,
