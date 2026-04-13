@@ -14,6 +14,7 @@ import android.os.Build
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.createBitmap
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import coil.ImageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
@@ -22,6 +23,8 @@ import coil.size.Scale
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import jakarta.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.model.BarCode
@@ -49,7 +52,7 @@ class CreateViewModel
             val longitude: Double,
         )
 
-        suspend fun savePass(
+        fun savePass(
             name: String,
             organization: String,
             serialNumber: String,
@@ -65,7 +68,7 @@ class CreateViewModel
             stripUrl: Uri?,
             thumbnailUrl: Uri?,
             footerUrl: Uri?,
-        ): String {
+        ): String = viewModelScope.launch(Dispatchers.IO) {
             val pass =
                 PassCreator.create(
                     name = name,
@@ -164,7 +167,7 @@ class CreateViewModel
             private const val FOOTER_SIZE = 768
         }
 
-        suspend fun geocode(query: String): List<GeocodeResult> {
+        fun geocode(query: String): List<GeocodeResult> = viewModelScope.launch(Dispatchers.IO) {
             if (query.isBlank()) return emptyList()
 
             val geocoder = Geocoder(context, Locale.getDefault())
