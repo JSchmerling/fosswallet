@@ -42,9 +42,7 @@ import nz.eloque.foss_wallet.ui.components.tag.TagRow
 fun FilterBlock(
     walletViewModel: WalletViewModel,
     onSortChange: (SortOption) -> Unit,
-    passTypesToShow: SnapshotStateList<PassType>,
     tags: Set<Tag>,
-    tagToFilterFor: MutableState<Tag?>,
 ) {
     val sortOption = walletViewModel.sortOptionState.collectAsState().value
     val passTypesToShow = remember { PassType.all().toMutableStateList() }
