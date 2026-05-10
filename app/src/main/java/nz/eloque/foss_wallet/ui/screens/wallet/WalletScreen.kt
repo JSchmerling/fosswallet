@@ -89,7 +89,12 @@ fun WalletScreen(
 
     WalletScaffold(
         navController = navController,
-        title = stringResource(id = Screen.Wallet.resourceId),
+        filterBar = {
+            FilterBar(
+                onSearch = { walletViewModel.filter(it) },
+                modifier = Modifier.weight(1f),
+            )
+        },
         actions = {
             if (selectedPasses.isNotEmpty()) {
                 IconButton(
