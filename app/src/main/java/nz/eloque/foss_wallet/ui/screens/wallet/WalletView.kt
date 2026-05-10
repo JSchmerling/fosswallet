@@ -80,14 +80,11 @@ fun WalletView(
         }
     }.collectAsState(listOf())
 
+    val sortOption = walletViewModel.sortOptionState.collectAsState().value
     val tagFlow = walletViewModel.allTags
     val tags by tagFlow.collectAsState(setOf())
 
     val passTypesToShow = remember { PassType.all().toMutableStateList() }
-
-    val sortOption = walletViewModel.sortOptionState.collectAsState().value
-
-    val tagToFilterFor = remember { mutableStateOf<Tag?>(null) }
     val passToDelete = remember { mutableStateOf<LocalizedPassWithTags?>(null) }
 
     val sortedPasses =
@@ -147,17 +144,6 @@ fun WalletView(
     ) {
         val groups = sortedPasses.filter { it.first != null }
         val ungrouped = sortedPasses.filter { it.first == null }.flatMap { it.second }
-
-        item {
-            FilterBlock(
-                walletViewModel = walletViewModel,
-                sortOption = sortOption,
-                onSortChange = { walletViewModel.setSortOption(it) },
-                passTypesToShow = passTypesToShow,
-                tags = tags,
-                tagToFilterFor = tagToFilterFor,
-            )
-        }
 
         items(groups) { (groupId, passes) ->
             GroupCard(
