@@ -41,80 +41,33 @@ import nz.eloque.foss_wallet.ui.components.tag.TagRow
 @Composable
 fun FilterBlock(
     walletViewModel: WalletViewModel,
-    sortOption: SortOption,
     onSortChange: (SortOption) -> Unit,
-    passTypesToShow: SnapshotStateList<PassType>,
     tags: Set<Tag>,
-    tagToFilterFor: MutableState<Tag?>,
 ) {
     val resources = LocalResources.current
+    
+    val sortOption = walletViewModel.sortOptionState.collectAsState().value
+    val passTypesToShow = remember { PassType.all().toMutableStateList() }
+    val tagToFilterFor = remember { mutableStateOf<Tag?>(null) }
 
-    var filtersShown by remember { mutableStateOf(false) }
-
-    Column {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            FilterBar(
-                onSearch = { walletViewModel.filter(it) },
-                modifier =
-                    Modifier
-                        .padding(start = 6.dp, bottom = 6.dp)
-                        .weight(1f),
-            )
-            SelectionMenu(
-                icon = Icons.AutoMirrored.Default.Sort,
-                contentDescription = R.string.filter,
-                options = SortOption.all(),
-                selectedOption = sortOption,
-                onOptionSelected = onSortChange,
-                optionLabel = { resources.getString(it.l18n) },
-            )
-            IconButton(onClick = {
-                filtersShown = !filtersShown
-            }) {
-                if (filtersShown) {
-                    Icon(imageVector = Icons.Default.KeyboardArrowUp, contentDescription = stringResource(R.string.collapse))
-                } else {
-                    Icon(imageVector = Icons.Default.KeyboardArrowDown, contentDescription = stringResource(R.string.expand))
-                }
-            }
-        }
-
-        AnimatedVisibility(
-            visible = filtersShown,
-            enter =
-                expandVertically(
-                    animationSpec = tween(durationMillis = 300),
-                ) + fadeIn(animationSpec = tween(300)),
-            exit =
-                shrinkVertically(
-                    animationSpec = tween(durationMillis = 300),
-                ) + fadeOut(animationSpec = tween(300)),
-        ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                ChipSelector(
-                    options = PassType.all(),
-                    selectedOptions = passTypesToShow,
-                    onOptionSelected = { passTypesToShow.add(it) },
-                    onOptionDeselected = { passTypesToShow.remove(it) },
-                    optionLabel = { resources.getString(it.label) },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                TagRow(
-                    tags = tags,
-                    selectedTag = tagToFilterFor.value,
-                    onTagSelected = { tagToFilterFor.value = it },
-                    onTagDeselected = { tagToFilterFor.value = null },
-                    walletViewModel = walletViewModel,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-            }
-        }
-    }
+    SelectionMenu(
+        singleOptions = SortOption.all(),
+        multiOptions = PassType.all(),
+        singleOptionLabel = { resources.getString(it.l18n) },
+        multiOptionLabel = { resources.getString(it.label) },
+        selectedSingleOption = sortOption,
+        selectedMultiOptions = passTypesToShow,
+        onSingleOptionSelected = { walletViewModel.setSortOption(it) },
+        onMultiOptionSelected = { passTypesToShow.add(it) },
+        onMultiOptionDeselected = { passTypesToShow.remove(it) },
+        contentDescription = R.string.filter,
+    )
+    TagRow(
+        tags = tags,
+        selectedTag = tagToFilterFor.value,
+        onTagSelected = { tagToFilterFor.value = it },
+        onTagDeselected = { tagToFilterFor.value = null },
+        walletViewModel = walletViewModel,
+        modifier = Modifier,
+    )
 }
