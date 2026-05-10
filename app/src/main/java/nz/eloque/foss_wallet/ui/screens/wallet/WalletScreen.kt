@@ -173,6 +173,12 @@ fun WalletScreen(
                 )
             }
         },
+        subRow = {
+            FilterBlock(
+                walletViewModel = walletViewModel,
+                tags = tags,
+            )
+        },
     ) { scrollBehavior ->
         WalletView(
             navController = navController,
