@@ -13,7 +13,6 @@ plugins {
 
 kotlin {
     compilerOptions {
-        freeCompilerArgs.add("-Xwhen-guards")
         jvmTarget = JvmTarget.JVM_17
     }
 }
@@ -35,7 +34,7 @@ android {
         }
     }
     namespace = "nz.eloque.foss_wallet"
-    compileSdk = 36
+    compileSdk = 37
 
     buildFeatures {
         compose = true
@@ -45,9 +44,9 @@ android {
     defaultConfig {
         applicationId = "nz.eloque.foss_wallet"
         minSdk = 28
-        targetSdk = 36
-        versionCode = 107
-        versionName = "0.44.0"
+        targetSdk = 37
+        versionCode = 109
+        versionName = "0.45.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -58,6 +57,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
