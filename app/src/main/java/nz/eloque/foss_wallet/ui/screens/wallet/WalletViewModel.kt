@@ -42,7 +42,7 @@ class WalletViewModel
         val filteredPasses = queryState.flatMapMerge { passStore.filtered(it.query) }
 
         val allTags = tagRepository.all()
-        
+
         private val _sortOptionState: MutableStateFlow<SortOption> = MutableStateFlow(SortOption.TimeAdded)
         val sortOptionState = _sortOptionState.asStateFlow()
 
