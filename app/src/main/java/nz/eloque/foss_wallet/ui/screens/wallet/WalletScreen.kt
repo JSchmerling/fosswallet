@@ -63,8 +63,6 @@ fun WalletScreen(
     val tagFlow = walletViewModel.allTags
     val tags by tagFlow.collectAsState(setOf())
 
-    val isArchive by walletViewModel.isArchive.collectAsState()
-
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
             println("selected file URI $uris")
@@ -128,9 +126,7 @@ fun WalletScreen(
                     )
                 }
             }
-            if (isArchive) {
-                /* TODO */
-            } else {
+            else {
                 IconButton(onClick = {
                     navController.navigate(Screen.Archive.route)
                 }) {
@@ -152,7 +148,7 @@ fun WalletScreen(
         floatingActionButton = {
             if (selectedPasses.isNotEmpty()) {
                 SelectionActions(
-                    isArchive,
+                    false,
                     selectedPasses,
                     listState,
                     walletViewModel,
@@ -202,8 +198,6 @@ fun WalletScreen(
         WalletView(
             navController = navController,
             walletViewModel = walletViewModel,
-            archive = isArchive,
-            emptyIcon = if (isArchive) Icons.Default.Archive else Icons.Default.Wallet,
             listState = listState,
             scrollBehavior = scrollBehavior,
             selectedPasses = selectedPasses,
