@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.MoreHoriz
-import androidx.compose.material.icons.filled.Wallet
 import androidx.compose.material.icons.outlined.Deselect
 import androidx.compose.material.icons.outlined.SelectAll
 import androidx.compose.material3.CircularProgressIndicator
@@ -126,15 +124,13 @@ fun WalletScreen(
                     )
                 }
             }
-            else {
-                IconButton(onClick = {
-                    navController.navigate(Screen.Archive.route)
-                }) {
-                    Icon(
-                        imageVector = Screen.Archive.icon,
-                        contentDescription = stringResource(R.string.the_archive),
-                    )
-                }
+            IconButton(onClick = {
+                navController.navigate(Screen.Archive.route)
+            }) {
+                Icon(
+                    imageVector = Screen.Archive.icon,
+                    contentDescription = stringResource(R.string.the_archive),
+                )
             }
             IconButton(onClick = {
                 navController.navigate(Screen.Settings.route)
@@ -153,7 +149,7 @@ fun WalletScreen(
                     listState,
                     walletViewModel,
                 )
-            } else if (!isArchive) {
+            } else {
                 FabMenu(
                     items =
                         listOf(
