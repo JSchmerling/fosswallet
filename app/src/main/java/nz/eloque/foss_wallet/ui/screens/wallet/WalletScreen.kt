@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material.icons.filled.Wallet
 import androidx.compose.material.icons.outlined.Deselect
 import androidx.compose.material.icons.outlined.SelectAll
 import androidx.compose.material3.CircularProgressIndicator
@@ -60,6 +62,8 @@ fun WalletScreen(
 
     val tagFlow = walletViewModel.allTags
     val tags by tagFlow.collectAsState(setOf())
+
+    val isArchive by walletViewModel.isArchive.collectAsState()
 
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
@@ -124,13 +128,17 @@ fun WalletScreen(
                     )
                 }
             }
-            IconButton(onClick = {
-                navController.navigate(Screen.Archive.route)
-            }) {
-                Icon(
-                    imageVector = Screen.Archive.icon,
-                    contentDescription = stringResource(R.string.the_archive),
-                )
+            if (isArchive) {
+                /* TODO */
+            } else {
+                IconButton(onClick = {
+                    navController.navigate(Screen.Archive.route)
+                }) {
+                    Icon(
+                        imageVector = Screen.Archive.icon,
+                        contentDescription = stringResource(R.string.the_archive),
+                    )
+                }
             }
             IconButton(onClick = {
                 navController.navigate(Screen.Settings.route)
@@ -144,12 +152,12 @@ fun WalletScreen(
         floatingActionButton = {
             if (selectedPasses.isNotEmpty()) {
                 SelectionActions(
-                    false,
+                    isArchive,
                     selectedPasses,
                     listState,
                     walletViewModel,
                 )
-            } else {
+            } else if (!isArchive) {
                 FabMenu(
                     items =
                         listOf(
@@ -194,6 +202,8 @@ fun WalletScreen(
         WalletView(
             navController = navController,
             walletViewModel = walletViewModel,
+            archive = isArchive,
+            emptyIcon = if (isArchive) Icons.Default.Archive else Icons.Default.Wallet,
             listState = listState,
             scrollBehavior = scrollBehavior,
             selectedPasses = selectedPasses,
