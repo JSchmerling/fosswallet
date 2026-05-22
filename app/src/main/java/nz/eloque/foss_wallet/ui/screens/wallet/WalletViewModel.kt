@@ -43,6 +43,9 @@ class WalletViewModel
 
         val allTags = tagRepository.all()
 
+        private val _isArchive = MutableStateFlow(false)
+        val isArchive: StateFlow<Boolean> = _isArchive.asStateFlow()
+        
         private val _sortOptionState: MutableStateFlow<SortOption> = MutableStateFlow(SortOption.TimeAdded)
         val sortOptionState = _sortOptionState.asStateFlow()
 
