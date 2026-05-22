@@ -80,15 +80,15 @@ fun WalletView(
         }
     }.collectAsState(listOf())
 
-    val sortOption = walletViewModel.sortOptionState.collectAsState().value
     val tagFlow = walletViewModel.allTags
     val tags by tagFlow.collectAsState(setOf())
 
     val passTypesToShow = remember { PassType.all().toMutableStateList() }
+
+    val sortOption = walletViewModel.sortOptionState.collectAsState().value
+    
     val tagToFilterFor = remember { mutableStateOf<Tag?>(null) }
     val passToDelete = remember { mutableStateOf<LocalizedPassWithTags?>(null) }
-    
-    val sortOption = walletViewModel.sortOptionState.collectAsState().value
     
     val sortedPasses =
         passes
