@@ -45,7 +45,7 @@ fun WalletScaffold(
     subRow: (@Composable RowScope.() -> Unit)? = null,
     content: @Composable (scrollBehavior: TopAppBarScrollBehavior) -> Unit,
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
