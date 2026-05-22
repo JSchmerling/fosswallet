@@ -8,7 +8,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.LibraryBooks
-import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.ContentPasteGo
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Info
@@ -35,7 +34,6 @@ import nz.eloque.foss_wallet.shortcut.Shortcut
 import nz.eloque.foss_wallet.ui.screens.LibrariesScreen
 import nz.eloque.foss_wallet.ui.screens.UpdateFailureScreen
 import nz.eloque.foss_wallet.ui.screens.about.AboutScreen
-import nz.eloque.foss_wallet.ui.screens.archive.ArchiveScreen
 import nz.eloque.foss_wallet.ui.screens.create.AdvancedAddScreen
 import nz.eloque.foss_wallet.ui.screens.create.CreateScreen
 import nz.eloque.foss_wallet.ui.screens.create.CreateViewModel
@@ -59,8 +57,6 @@ sealed class Screen(
     data object Scan : Screen("scan", Icons.Default.QrCodeScanner, R.string.barcode)
 
     data object Wallet : Screen("wallet", Icons.Default.Wallet, R.string.wallet)
-
-    data object Archive : Screen("archive", Icons.Default.Archive, R.string.the_archive)
 
     data object About : Screen("about", Icons.Default.Info, R.string.about)
 
@@ -122,9 +118,6 @@ fun WalletApp(
             }
             composable(Screen.Scan.route) {
                 ScanScreen(navController, scanViewModel)
-            }
-            composable(Screen.Archive.route) {
-                ArchiveScreen(navController, walletViewModel)
             }
             composable(Screen.About.route) {
                 AboutScreen(navController)
