@@ -86,10 +86,10 @@ fun WalletView(
     val passTypesToShow = remember { PassType.all().toMutableStateList() }
 
     val sortOption = walletViewModel.sortOptionState.collectAsState().value
-    
+  
     val tagToFilterFor = remember { mutableStateOf<Tag?>(null) }
     val passToDelete = remember { mutableStateOf<LocalizedPassWithTags?>(null) }
-    
+
     val sortedPasses =
         passes
             .filter { localizedPass -> passTypesToShow.any { localizedPass.pass.type.isSameType(it) } }
