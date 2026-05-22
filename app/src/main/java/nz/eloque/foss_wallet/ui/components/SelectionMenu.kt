@@ -47,6 +47,20 @@ fun <T, F> SelectionMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
+            singleOptions.forEach { option -> // single select
+                DropdownMenuItem(
+                    text = { Text(singleOptionLabel(option)) },
+                    leadingIcon = {
+                        if (option == selectedSingleOption) {
+                            Icon(Icons.Default.RadioButtonChecked, stringResource(R.string.selected))
+                        }
+                    },
+                    onClick = { onSingleOptionSelected(option) }
+                )
+            }
+
+            HorizontalDivider()
+
             multiOptions.forEach { option -> // multi select
                 val selected = selectedMultiOptions.contains(option)
                 DropdownMenuItem(
@@ -57,20 +71,6 @@ fun <T, F> SelectionMenu(
                         }
                     },
                     onClick = { if (selected) onMultiOptionDeselected(option) else onMultiOptionSelected(option) }
-                )
-            }
-
-            HorizontalDivider()
-
-            singleOptions.forEach { option -> // single select
-                DropdownMenuItem(
-                    text = { Text(singleOptionLabel(option)) },
-                    leadingIcon = {
-                        if (option == selectedSingleOption) {
-                            Icon(Icons.Default.RadioButtonChecked, stringResource(R.string.selected))
-                        }
-                    },
-                    onClick = { onSingleOptionSelected(option) }
                 )
             }
         }
