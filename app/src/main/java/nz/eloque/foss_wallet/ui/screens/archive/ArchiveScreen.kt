@@ -39,6 +39,7 @@ fun ArchiveScreen(
             FilterBar(
                 onSearch = { walletViewModel.filter(it) },
                 modifier = Modifier.weight(1f),
+                archive = true,
             )
         },
         toolWindow = true,
@@ -64,14 +65,6 @@ fun ArchiveScreen(
                             },
                     )
                 }
-            }
-            IconButton(onClick = {
-                navController.navigate(Screen.Wallet.route)
-            }) {
-                Icon(
-                    imageVector = Screen.Wallet.icon,
-                    contentDescription = stringResource(R.string.wallet),
-                )
             }
             IconButton(onClick = {
                 navController.navigate(Screen.Settings.route)
