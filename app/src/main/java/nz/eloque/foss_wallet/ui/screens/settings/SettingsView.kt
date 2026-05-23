@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalResources
@@ -28,7 +27,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import nz.eloque.foss_wallet.R
@@ -43,7 +41,6 @@ import kotlin.time.toDuration
 fun SettingsView(settingsViewModel: SettingsViewModel) {
     val context = LocalContext.current
     val resources = LocalResources.current
-    val coroutineScope = rememberCoroutineScope()
     val settings = settingsViewModel.uiState.collectAsState()
     val passFlow = settingsViewModel.passFlow
     val passes by remember(passFlow) { passFlow.map { it } }.collectAsState(listOf())
@@ -65,7 +62,7 @@ fun SettingsView(settingsViewModel: SettingsViewModel) {
             SettingsSwitch(
                 title = stringResource(R.string.enable),
                 checked = settings.value.enableSync,
-                onCheckedChange = { coroutineScope.launch(Dispatchers.IO) { settingsViewModel.enableSync(it) } },
+                onCheckedChange = { settingsViewModel.enableSync(it) },
             )
             HorizontalDivider()
             SubmittableTextField(
@@ -76,11 +73,9 @@ fun SettingsView(settingsViewModel: SettingsViewModel) {
                 imageVector = Icons.Default.Save,
                 inputValidator = { isNaturalNumber(it) },
                 onSubmit = {
-                    coroutineScope.launch(Dispatchers.IO) {
-                        settingsViewModel.setSyncInterval(
-                            Integer.parseInt(it).toDuration(DurationUnit.MINUTES),
-                        )
-                    }
+                    settingsViewModel.setSyncInterval(
+                        Integer.parseInt(it).toDuration(DurationUnit.MINUTES),
+                    )
                 },
                 enabled = settings.value.enableSync,
                 clearOnSubmit = false,
@@ -92,20 +87,14 @@ fun SettingsView(settingsViewModel: SettingsViewModel) {
             SettingsSwitch(
                 title = stringResource(R.string.pass_view_brightness),
                 checked = settings.value.increasePassViewBrightness,
-                onCheckedChange = { coroutineScope.launch(Dispatchers.IO) { settingsViewModel.enablePassViewBrightness(it) } },
+                onCheckedChange = { settingsViewModel.enablePassViewBrightness(it) },
             )
             HorizontalDivider()
             ComboBox(
                 title = stringResource(R.string.barcode_position),
                 options = BarcodePosition.all(),
                 selectedOption = settings.value.barcodePosition,
-                onOptionSelected = {
-                    coroutineScope.launch(Dispatchers.IO) {
-                        settingsViewModel.setBarcodePosition(
-                            it,
-                        )
-                    }
-                },
+                onOptionSelected = { settingsViewModel.setBarcodePosition(it) },
                 optionLabel = { resources.getString(it.label) },
             )
         }
@@ -115,9 +104,7 @@ fun SettingsView(settingsViewModel: SettingsViewModel) {
             SettingsSwitch(
                 title = stringResource(R.string.ask_before_delete),
                 checked = settings.value.askBeforeDelete,
-                onCheckedChange = {
-                    coroutineScope.launch(Dispatchers.IO) { settingsViewModel.setAskBeforeDelete(it) }
-                },
+                onCheckedChange = { settingsViewModel.setAskBeforeDelete(it) },
             )
         }
         Section(
@@ -126,11 +113,7 @@ fun SettingsView(settingsViewModel: SettingsViewModel) {
             SettingsButton(
                 title = stringResource(R.string.export) + " (.pkpasses)",
                 icon = Icons.Default.Share,
-                onClick = {
-                    coroutineScope.launch(Dispatchers.IO) {
-                        share(passes.map { it.pass }, context)
-                    }
-                },
+                onClick = { share(passes.map { it.pass }, context) },
             )
             Text(
                 text = stringResource(R.string.created_pass_export_warning),
