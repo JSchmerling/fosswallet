@@ -30,6 +30,7 @@ import nz.eloque.foss_wallet.R
 fun FilterBar(
     onSearch: (String) -> Unit,
     modifier: Modifier = Modifier,
+    archive: Boolean = false,
 ) {
     val focusManager = LocalFocusManager.current
     var isFocused by rememberSaveable { mutableStateOf(false) }
@@ -42,7 +43,7 @@ fun FilterBar(
             SearchBarDefaults.InputField(
                 query = query,
                 leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = stringResource(R.string.search)) },
-                placeholder = { Text(stringResource(R.string.search)) },
+                placeholder = { Text(stringResource(R.string.search) + if (archive) "(${stringResource(R.string.archive)})" else "" },
                 onQueryChange = {
                     query = it
                     onSearch.invoke(it)
