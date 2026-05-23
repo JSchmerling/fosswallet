@@ -48,33 +48,33 @@ class SettingsStore
     constructor(
         private val prefs: SharedPreferences,
     ) {
-        fun isSyncEnabled(): Boolean = prefs.getBoolean(SYNC_ENABLED, false)
+        suspend fun isSyncEnabled(): Boolean = prefs.getBoolean(SYNC_ENABLED, false)
 
-        fun enableSync(enabled: Boolean) = prefs.edit { putBoolean(SYNC_ENABLED, enabled) }
+        suspend fun enableSync(enabled: Boolean) = prefs.edit { putBoolean(SYNC_ENABLED, enabled) }
 
-        fun increasePassViewBrightness(): Boolean = prefs.getBoolean(PASS_VIEW_BRIGHTNESS, false)
+        suspend fun increasePassViewBrightness(): Boolean = prefs.getBoolean(PASS_VIEW_BRIGHTNESS, false)
 
-        fun enablePassViewBrightness(enabled: Boolean) = prefs.edit { putBoolean(PASS_VIEW_BRIGHTNESS, enabled) }
+        suspend fun enablePassViewBrightness(enabled: Boolean) = prefs.edit { putBoolean(PASS_VIEW_BRIGHTNESS, enabled) }
 
-        fun syncInterval(): Duration {
+        suspend fun syncInterval(): Duration {
             val amount = prefs.getLong(SYNC_INTERVAL, 60)
             return amount.toDuration(DurationUnit.MINUTES)
         }
 
-        fun setSyncInterval(duration: Duration) =
+        suspend fun setSyncInterval(duration: Duration) =
             prefs.edit {
                 putLong(SYNC_INTERVAL, duration.toLong(DurationUnit.MINUTES))
             }
 
-        fun barcodePosition(): BarcodePosition = BarcodePosition.of(prefs.getString(BARCODE_POSITION, BarcodePosition.Center.key)!!)
+        suspend fun barcodePosition(): BarcodePosition = BarcodePosition.of(prefs.getString(BARCODE_POSITION, BarcodePosition.Center.key)!!)
 
-        fun setBarcodePosition(barcodePosition: BarcodePosition) = prefs.edit { putString(BARCODE_POSITION, barcodePosition.key) }
+        suspend fun setBarcodePosition(barcodePosition: BarcodePosition) = prefs.edit { putString(BARCODE_POSITION, barcodePosition.key) }
 
-        fun sortOption(): SortOption = SortOptionSerializer.deserialize(prefs.getString(SORT_OPTION, "")!!) ?: SortOption.TimeAdded
+        suspend fun sortOption(): SortOption = SortOptionSerializer.deserialize(prefs.getString(SORT_OPTION, "")!!) ?: SortOption.TimeAdded
 
-        fun setSortOption(sortOption: SortOption) = prefs.edit { putString(SORT_OPTION, SortOptionSerializer.serialize(sortOption)) }
+        suspend fun setSortOption(sortOption: SortOption) = prefs.edit { putString(SORT_OPTION, SortOptionSerializer.serialize(sortOption)) }
 
-        fun deleteConfirmationEnabled(): Boolean = prefs.getBoolean(DELETE_CONFIRMATION_ENABLED, true)
+        suspend fun deleteConfirmationEnabled(): Boolean = prefs.getBoolean(DELETE_CONFIRMATION_ENABLED, true)
 
-        fun setDeleteConfirmationEnabled(enabled: Boolean) = prefs.edit { putBoolean(DELETE_CONFIRMATION_ENABLED, enabled) }
+        suspend fun setDeleteConfirmationEnabled(enabled: Boolean) = prefs.edit { putBoolean(DELETE_CONFIRMATION_ENABLED, enabled) }
     }
