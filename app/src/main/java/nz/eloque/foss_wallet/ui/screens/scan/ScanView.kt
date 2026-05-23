@@ -13,7 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,8 +21,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import de.nielstron.bcbp.IataBcbp
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.model.BarCode
@@ -76,17 +73,12 @@ fun ScanView(
 
             val bcbp = IataBcbp.parse(it.message)
             if (bcbp != null) {
-                val coroutineScope = rememberCoroutineScope()
                 TextButton(
                     onClick = {
-                        coroutineScope.launch(Dispatchers.IO) {
-                            val passId = scanViewModel.saveBcbpPass(it, bcbp)
-                            withContext(Dispatchers.Main) {
-                                navController.navigate("pass/$passId") {
-                                    popUpTo(Screen.Scan.route) {
-                                        inclusive = true
-                                    }
-                                }
+                        val passId = scanViewModel.saveBcbpPass(it, bcbp)
+                        navController.navigate("pass/$passId") {
+                            popUpTo(Screen.Scan.route) {
+                                inclusive = true
                             }
                         }
                     },
