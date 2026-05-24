@@ -132,7 +132,7 @@ fun Actions(
         DeleteConfirmationDialog(
             settingsStore = passViewModel.settingsStore,
             onConfirm = {
-                coroutineScope.launch(Dispatchers.IO) { passViewModel.delete(pass) }
+                passViewModel.delete(pass)
                 navController.popBackStack()
                 Toast.makeText(context, resources.getString(R.string.pass_deleted), Toast.LENGTH_SHORT).show()
             },
