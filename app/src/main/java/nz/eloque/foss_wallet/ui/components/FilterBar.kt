@@ -1,6 +1,7 @@
 package nz.eloque.foss_wallet.ui.components
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material.icons.Icons
@@ -23,10 +24,10 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import nz.eloque.foss_wallet.icons.Filled.SearchArchive
 import nz.eloque.foss_wallet.R
+import nz.eloque.foss_wallet.ui.icons.SearchArchive
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun FilterBar(
     onSearch: (String) -> Unit,
@@ -44,7 +45,7 @@ fun FilterBar(
             SearchBarDefaults.InputField(
                 query = query,
                 leadingIcon = { Icon(imageVector = if (archive) Icons.Default.SearchArchive else Icons.Default.Search, contentDescription = stringResource(R.string.search)) },
-                placeholder = { Text(stringResource(R.string.search) + if (archive) "(${stringResource(R.string.archive)})" else "" },
+                placeholder = { Text(stringResource(R.string.search) + if (archive) "(${stringResource(R.string.archive)})" else "") },
                 onQueryChange = {
                     query = it
                     onSearch.invoke(it)
