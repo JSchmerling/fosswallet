@@ -31,10 +31,10 @@ class ScanViewModel
         @param:ApplicationContext private val context: Context,
         private val passStore: PassStore,
     ) : AndroidViewModel(application) {
-        fun saveBcbpPass(
+        suspend fun saveBcbpPass(
             barcode: BarCode,
             bcbp: IataBcbp.Parsed,
-        ): String = viewModelScope.launch(Dispatchers.IO) {
+        ): String {
             val flightDate = bcbp.flightDate?.atStartOfDay(ZoneId.systemDefault())
 
             val headerFields =
