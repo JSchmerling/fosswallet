@@ -101,12 +101,16 @@ fun SettingsView(settingsViewModel: SettingsViewModel) {
                 selectedOption = settings.value.barcodePosition,
                 onOptionSelected = {
                     coroutineScope.launch(Dispatchers.IO) {
-                        settingsViewModel.setBarcodePosition(
-                            it,
-                        )
+                        settingsViewModel.setBarcodePosition(it)
                     }
                 },
                 optionLabel = { resources.getString(it.label) },
+            )
+            SettingsSlider(
+                title = stringResource(R.string.barcode_size),
+                steps = 3,
+                valueRange = 0f..1f,
+                onValueChange = settingsViewModel.setBarcodeSize(it)
             )
         }
         Section(
