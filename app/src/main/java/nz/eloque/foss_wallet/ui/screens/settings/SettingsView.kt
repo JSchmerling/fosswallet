@@ -95,23 +95,23 @@ fun SettingsView(settingsViewModel: SettingsViewModel) {
                 onCheckedChange = { coroutineScope.launch(Dispatchers.IO) { settingsViewModel.enablePassViewBrightness(it) } },
             )
             HorizontalDivider()
-            ComboBox(
-                title = stringResource(R.string.barcode_position),
-                options = BarcodePosition.all(),
-                selectedOption = settings.value.barcodePosition,
-                onOptionSelected = {
-                    coroutineScope.launch(Dispatchers.IO) {
-                        settingsViewModel.setBarcodePosition(it)
-                    }
-                },
-                optionLabel = { resources.getString(it.label) },
-            )
             SettingsSlider(
                 title = stringResource(R.string.barcode_size),
                 steps = 3,
                 valueRange = 0f..1f,
                 onValueChange = settingsViewModel.setBarcodeSize(it)
             )
+            HorizontalDivider()
+            SettingsPosition(
+                title = stringResource(R.string.barcode_position),
+                options = BarcodePosition.all(),
+                selectedOption = settings.value.barcodePosition,
+                onOptionSelected = {
+                    settingsViewModel.setBarcodePosition(it)
+                },
+                optionLabel = { resources.getString(it.label) },
+            )
+            
         }
         Section(
             heading = stringResource(R.string.delete),
