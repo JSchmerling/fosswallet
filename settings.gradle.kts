@@ -16,9 +16,6 @@ dependencyResolutionManagement {
         }
         mavenCentral()
         maven {
-            url = uri("https://raw.githubusercontent.com/SeineEloquenz/compose-kit/maven/")
-        }
-        maven {
             url = uri("https://jitpack.io")
         }
     }
@@ -38,7 +35,7 @@ val localComposeKitPath = providers.environmentVariable("LOCAL_COMPOSE_KIT").orN
 if (localComposeKitPath != null) {
     includeBuild(localComposeKitPath) {
         dependencySubstitution {
-            substitute(module("nz.eloque.compose-kit:lib")).using(project(":lib"))
+            substitute(module("com.github.SeineEloquenz.compose-kit:lib-android")).using(project(":lib"))
         }
     }
 }
