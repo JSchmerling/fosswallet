@@ -20,6 +20,7 @@ import nz.eloque.foss_wallet.R
 import nz.eloque.foss_wallet.model.LocalizedPassWithTags
 import nz.eloque.foss_wallet.ui.Screen
 import nz.eloque.foss_wallet.ui.WalletScaffoldWithFilterBar
+import nz.eloque.foss_wallet.ui.icons.filled.ArchiveSearch
 import nz.eloque.foss_wallet.ui.screens.wallet.FilterBlock
 import nz.eloque.foss_wallet.ui.screens.wallet.SelectionActions
 import nz.eloque.foss_wallet.ui.screens.wallet.WalletView
@@ -41,7 +42,7 @@ fun ArchiveScreen(
 
     WalletScaffoldWithFilterBar(
         navController = navController,
-        imageVector = Icons.Default.Archive,
+        imageVector = Icons.Default.ArchiveSearch,
         onSearch = { walletViewModel.filter(it) },
         toolWindow = true,
         actions = {
