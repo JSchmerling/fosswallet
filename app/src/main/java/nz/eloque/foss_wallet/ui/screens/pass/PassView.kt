@@ -68,6 +68,7 @@ fun PassView(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         modifier =
             modifier
+                .padding(top = 10.dp)
                 .nestedScroll(scrollBehavior.nestedScrollConnection)
                 .verticalScroll(rememberScrollState()),
     ) {
